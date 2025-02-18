@@ -1,0 +1,74 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-body setting-scrolling-div">
+      <div class="custom-modal-header fw-bold">Update Display Orientation</div>
+      <div class="clock-setting-box mt35">
+        <div class="row">
+          <div class="col-12">
+            <div class="row mt10">
+              <div class="col-12">
+                <div class="col-xs-12 col-sm-6 float-left text-align-left">
+                  Display Orientation
+                </div>
+                <div class="col-xs-12 col-sm-6 float-left text-align-left">
+                  <select
+                    name="orientation"
+                    [(ngModel)]="selected_orientation"
+                    id="orientation"
+                    class="btn btn-secondary"
+                    style="height: 35px; width: 210px"
+                    (change)="updateLMD()"
+                  >
+                    <option
+                      *ngFor="
+                        let option of orientationList
+                          | CustomSort : 'asc' : 'name'
+                      "
+                      [ngValue]="option.value"
+                    >
+                      {{ option.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div
+                class="col-12 mt15"
+                *ngIf="selected_mirror.deviceType != 'Linked Browser'"
+              >
+                <div class="col-xs-12 col-sm-6 float-left text-align-left">
+                  Set Layout Designer to match Display Dimensions
+                </div>
+                <div class="col-xs-12 col-sm-6 float-left text-align-left">
+                  <div class="switchToggle">
+                    <input
+                      type="checkbox"
+                      id="lmd-switch"
+                      [(ngModel)]="selectedLmdSetting"
+                      (change)="updateLayoutMatch(selectedLmdSetting)"
+                    />
+                    <label for="lmd-switch">Toggle</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="col-12 text-align-left fs-13 mt15">
+                      <div class="col-12">
+                        Note : <span class="fs-11">(*90 degree rotation currently does not work for Calendar Month, Weekly & Schedule views)</span>                      
+                      </div>
+                    </div> -->
+            </div>
+          </div>
+
+          <div class="col-12 mt35">
+            <button class="btn btn-secondary" (click)="orientationModal.hide()">
+              Cancel
+            </button>
+            <button class="btn btn-primary ml15" (click)="updateOrientation()">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

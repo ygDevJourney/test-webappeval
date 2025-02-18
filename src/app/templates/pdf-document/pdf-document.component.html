@@ -1,0 +1,395 @@
+<div class="modal-dialog modal-lg modal-dialog-centered" id="modal1">
+  <div class="modal-content">
+    <div
+      class="modal-header custom-modal-header"
+      *ngIf="isMyFileSelected == false"
+    >
+      Add PDF Document Widget
+    </div>
+    <div class="modal-body">
+      <div role="tabpanel" *ngIf="isMyFileSelected == false">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a
+              href="#pdfSettingTab"
+              class="nav-link active"
+              aria-controls="trelloSettingTab"
+              role="tab"
+              data-toggle="tab"
+              >Settings</a
+            >
+          </li>
+          <li class="nav-item" style="margin-left: 10px">
+            <a
+              href="#pdfBgTab"
+              class="nav-link"
+              aria-controls="pdfBgTab"
+              role="tab"
+              data-toggle="tab"
+              (click)="setBackgroundWidgetDetail()"
+              >Format</a
+            >
+          </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div
+            role="tabpanel"
+            class="tab-pane bg-setting-box active"
+            id="pdfSettingTab"
+          >
+            <form [formGroup]="pdfFormGroup" class="mt10">
+              <div class="pdf-setting-box">
+                <div class="row mt20">
+                  <div class="col-12">
+                    <div class="float-left fit-content-width">My Files</div>
+                    <div class="float-right">
+                      <div class="switchToggle">
+                        <input
+                          type="checkbox"
+                          id="pdf_mediafile-switch"
+                          formControlName="isS3Enabled"
+                          aria-expanded="true"
+                          (click)="openMyMediaFile('toggle')"
+                        />
+                        <label for="pdf_mediafile-switch" class="mt10"
+                          >Toggle</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <span
+                    *ngIf="pdfFormGroup.value.isS3Enabled == true"
+                    class="col-12 fw-bold error-text"
+                    >{{ error }}</span
+                  >
+
+                  <div
+                    class="col-12 bl-link theme-font-color mt5 justify-end"
+                    *ngIf="
+                      selectedS3Files.length > 0 &&
+                      pdfFormGroup.value.isS3Enabled == true
+                    "
+                    (click)="openMyMediaFile('edit')"
+                  >
+                    edit
+                  </div>
+
+                  <div
+                    class="col-12 justify-start"
+                    *ngIf="pdfFormGroup.value.isS3Enabled == true"
+                  >
+                    <div *ngFor="let s3file of selectedS3Files">
+                      <div class="example-box">
+                        <img
+                          src="../../../assets/icons/widget_icon/pdf.svg"
+                          style="height: 100px; width: 100px"
+                        />
+                        <div class="fs-14">
+                          {{ s3file.key.match("[^/]+$") }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="full-width" />
+
+                <div class="row mt15 accordion" id="accordian-pdf">
+                  <div class="col-12">
+                    <div class="float-left fit-content-width">
+                      Add PDF Document URL
+                    </div>
+                    <div class="float-right">
+                      <div
+                        class="switchToggle"
+                        id="#manualpdf-section"
+                        data-target="#manualpdf-section"
+                        aria-controls="manualpdf-section"
+                      >
+                        <input
+                          type="checkbox"
+                          id="pdf_doc_url-switch"
+                          formControlName="isCustomUrlEnabled"
+                          (click)="updateFlag()"
+                        />
+                        <label for="pdf_doc_url-switch" class="mt10"
+                          >Toggle</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    id="manualpdf-section"
+                    [class.collapse]="!pdfFormGroup.value.isCustomUrlEnabled"
+                    aria-labelledby="manualpdf-section"
+                    data-parent="#accordian-pdf"
+                  >
+                    <div
+                      class="col-12 text-align-center custom-text-field mt10"
+                    >
+                      <input
+                        type="text"
+                        placeholder="Enter the publicly accessible PDF Document URL"
+                        id="pdf_url"
+                        (paste)="validateURL($event)"
+                        (input)="validateURL($event)"
+                        class="form-control text-line text-align-center"
+                        formControlName="baseurl"
+                        style="width: 95%; margin: auto"
+                      />
+                      <span class="error-text">{{ error }}</span>
+                      <div class="fs-11 mt10 col-12 text-align-left">
+                        Must be a valid and publicly shared PDF Document URL.
+                      </div>
+                      <div class="fs-11 mt5 mb10 col-12 text-align-left">
+                        The Refresh Time below indicates how often you want to
+                        re-download the document to capture and display any
+                        updates made directly to the document.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="row mt20"
+                  [class.collapse]="!pdfFormGroup.value.isCustomUrlEnabled"
+                >
+                  <div class="col-12">
+                    <div class="col-4 float-left text-align-left p-0">
+                      Refresh Time
+                    </div>
+                    <div class="btn-group btn-group-justified float-left block">
+                      <select
+                        name="autoRefreshTime"
+                        formControlName="autoRefreshTime"
+                        class="btn btn-secondary"
+                        style="width: 250px; height: 35px"
+                      >
+                        <option
+                          *ngFor="let obj of iframily_autorefresh_time_option"
+                          [value]="obj.value"
+                        >
+                          {{ obj.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <hr class="full-width" />
+
+                <div class="row">
+                  <div class="col-12 mt10">
+                    <div class="float-left fit-content-width fw-bold">
+                      PDF Display Options
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt15">
+                  <div class="col-12">
+                    <div class="float-left fit-content-width">
+                      Crop
+                      <span class="fs-9">(Crop to fill the entire widget)</span>
+                    </div>
+                    <div class="float-right">
+                      <div class="switchToggle">
+                        <input
+                          type="checkbox"
+                          id="pdf_crop-switch"
+                          formControlName="isCropToFill"
+                        />
+                        <label for="pdf_crop-switch">Toggle</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt15">
+                  <!-- <div class="col-12">
+                    <div class="float-left fit-content-width">
+                      Transition
+                      <span class="fs-9"
+                        >(Gradually fade pages in and out)</span
+                      >
+                    </div>
+                    <div class="float-right">
+                      <div class="switchToggle">
+                        <input
+                          type="checkbox"
+                          id="pdf_transition-switch"
+                          formControlName="isFadeInOut"
+                        />
+                        <label for="pdf_transition-switch">Toggle</label>
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <div class="col-12">
+                    <div class="float-left text-align-left">
+                      Transition effect
+                      <div class="fs12">(Dependent on device capability)</div>
+                    </div>
+                    <div class="float-right">
+                      <select
+                        id="page_transition"
+                        class="btn btn-secondary cursor-pointer"
+                        style="height: 35px; width: 155px"
+                        formControlName="transition"
+                      >
+                        <option
+                          class="cursor-pointer"
+                          [value]="transition.value"
+                          *ngFor="let transition of availableTransition"
+                        >
+                          {{ transition.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mt15">
+                  <div class="col-12">
+                    <div class="float-left fit-content-width">Brightness</div>
+                    <div class="float-right justify-center">
+                      <span>0%</span>
+                      <input
+                        type="range"
+                        formControlName="imageBrightness"
+                        min="0.1"
+                        max="2"
+                        step="0.1"
+                        class="slider mlr10"
+                        id="pdf_Range"
+                        style="float: left"
+                      />
+                      <span>100%</span>
+                    </div>
+                    <!-- <div class="float-left fit-content-width">Brightness</div>
+                    <div class="float-right">
+                      <img
+                        class="slider-icon-left mt5"
+                        style="float: left; margin-top: 10px"
+                        src="../../../assets/icons/adjust-brightness.png"
+                        height="15px"
+                        width="15px"
+                      />
+                      <input
+                        type="range"
+                        formControlName="imageBrightness"
+                        min="0.1"
+                        max="2"
+                        step="0.1"
+                        class="slider mt10"
+                        id="pdf_Range"
+                        style="float: left"
+                      />
+                      <img
+                        class="slider-icon-right mt5"
+                        style="float: left"
+                        src="../../../assets/icons/adjust-brightness.png"
+                        height="20px"
+                        width="20px"
+                      />
+                    </div> -->
+                  </div>
+                </div>
+
+                <div class="row mt15">
+                  <div class="col-12">
+                    <div class="float-left fit-content-width">
+                      Rotate Pages every
+                    </div>
+                    <div class="float-right ml5">
+                      <input
+                        type="text"
+                        class="w45"
+                        formControlName="minutes"
+                        (change)="validateTimerValue()"
+                      />
+                      min
+                      <input
+                        type="text"
+                        class="w45 ml5"
+                        formControlName="seconds"
+                        (change)="validateTimerValue()"
+                      />
+                      sec
+                    </div>
+                    <!-- <div class="float-right">
+                      <div class="headline-count">
+                        <div
+                          class="display-flex dropdown-toggle"
+                          data-toggle="dropdown"
+                        >
+                          {{ pageChangeDuration }}
+                          <div
+                            class="down-arrow ml5"
+                            style="margin-top: 2px; margin-right: 2px"
+                          ></div>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                          <div
+                            *ngFor="let count of countList"
+                            (click)="setPhotoDuration(count)"
+                            [class.selected-count]="
+                              count === pageChangeDuration
+                            "
+                          >
+                            {{ count }}
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+                <hr class="full-width" />
+              </div>
+            </form>
+
+            <div class="row" *ngIf="isMyFileSelected == false">
+              <div class="col-12 footer-btn-position">
+                <button
+                  type="button"
+                  class="btn btn-secondary mr-20"
+                  (click)="dismissModel()"
+                >
+                  CANCEL
+                </button>
+                <button
+                  class="btn btn-primary"
+                  (click)="saveIframilySettings()"
+                >
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane bg-setting-box mt15"
+            id="pdfBgTab"
+            *ngIf="settingDisplayflag"
+          >
+            <app-widget-bg-setting
+              [widgetbgsetting]="widgetBgSetting"
+              [widgetType]="widgetType"
+              (emitbgsettingPdfOption)="onbgsettingOptions($event)"
+              (closeModalEvent)="dismissModel()"
+            >
+            </app-widget-bg-setting>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isMyFileSelected == true">
+        <app-manage-s3-bucket
+          [requestType]="requestType"
+          [selectedS3Files]="selectedS3Files"
+          (updatePDFS3Details)="updatePDFS3Details($event)"
+          (close)="reverseSelection()"
+        ></app-manage-s3-bucket>
+      </div>
+    </div>
+  </div>
+</div>

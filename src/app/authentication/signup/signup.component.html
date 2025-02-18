@@ -1,0 +1,149 @@
+<div id="login-container" class="container">
+  <div class="logo-container">
+    <img
+      class="img-fluid h45"
+      alt=""
+      src="../../../assets/icons/logo/MangoDisplay_Logo.png"
+    />
+    <!-- <div class="beta-text">Beta</div> -->
+  </div>
+  <div class="field-container">
+    <div class="title">
+      <!-- {{ 'AUTHENTICATION.SIGNUP.TITLE' | translate }} -->
+      Sign up
+    </div>
+    <div class="mt60">
+      <div class="row">
+        <div class="col-12">
+          <div class="md-form text-align-left">
+            <input
+              mdbInput
+              type="text"
+              id="name"
+              class="form-control"
+              [(ngModel)]="signupData.displayName.value"
+              (keypress)="validateKeys($event)"
+            />
+            <label for="name" class="">
+              Name
+              <!-- {{ 'INPUTFIELDS.DISPLAYNAME' | translate }} -->
+            </label>
+            <span class="error-text">{{ signupData.displayName.error }}</span>
+          </div>
+        </div>
+        <div class="col-12 mt15">
+          <div class="md-form text-align-left">
+            <input
+              mdbInput
+              type="email"
+              id="email"
+              class="form-control"
+              [(ngModel)]="signupData.email.value"
+            />
+            <label for="email" class="">
+              Email
+              <!-- {{ 'INPUTFIELDS.EMAIL' | translate }} -->
+            </label>
+            <span class="error-text">{{ signupData.email.error }}</span>
+          </div>
+        </div>
+        <!-- <div class="col-12 mt15 text-align-left" style="height: 80px;">
+                    <select class="form-control select-bg-image" placeholder="Choose your option"
+                        [(ngModel)]="signupData.gender.value">
+                        <option selected value="Don't Show">{{ 'INPUTFIELDS.GENDERS.UNKNOWN' | translate }}</option>
+                        <option value="Male">{{ 'INPUTFIELDS.GENDERS.MALE' | translate }}</option>
+                        <option value="Female">{{ 'INPUTFIELDS.GENDERS.FEMALE' | translate }}</option>
+                        <option value="Other">{{ 'INPUTFIELDS.GENDERS.OTHER' | translate }}</option>
+                    </select>
+                    <span class="error-text">{{signupData.gender.error}}</span>
+                    <label class="active-label">{{ 'INPUTFIELDS.GENDER' | translate }}</label>
+                </div> -->
+
+        <div class="col-12 mt15">
+          <div class="md-form text-align-left">
+            <input
+              mdbInput
+              type="password"
+              id="password"
+              class="form-control"
+              [(ngModel)]="signupData.password.value"
+              maxlength="50"
+            />
+            <label for="password" class="">
+              Password
+              <!-- {{ 'INPUTFIELDS.PASSWORD' | translate }} -->
+            </label>
+            <span class="error-text">{{ signupData.password.error }}</span>
+          </div>
+          <img
+            class="password-eye"
+            (click)="changePasswordType('password')"
+            src="../../../assets/icons/password_eye.svg"
+            alt=""
+          />
+        </div>
+        <div class="col-12 mt15">
+          <div class="md-form text-align-left">
+            <input
+              mdbInput
+              type="password"
+              id="confirm-password"
+              class="form-control"
+              [(ngModel)]="signupData.confirmPassword.value"
+              maxlength="20"
+            />
+            <label for="confirm-password" class="">
+              <!-- {{ 'INPUTFIELDS.CONFIRMPASSWORD' | translate }} -->
+              Confirm Password
+            </label>
+            <span class="error-text">{{
+              signupData.confirmPassword.error
+            }}</span>
+          </div>
+          <img
+            class="password-eye"
+            (click)="changePasswordType('confirm-password')"
+            src="../../../assets/icons/password_eye.svg"
+            alt=""
+          />
+        </div>
+        <div class="col-12 mt20 text-align-left">
+          <select
+            class="form-control select-bg-image"
+            [(ngModel)]="signupData.userLocalLanguage.value"
+          >
+            <option
+              [ngValue]="language.value"
+              *ngFor="let language of supportedlanguages"
+            >
+              {{ language.name }}
+            </option>
+          </select>
+          <label
+            style="margin-left: -5px !important; margin-top: 18px"
+            class="active-label"
+          >
+            Language
+            <!-- {{ 'INPUTFIELDS.LANGUAGE' | translate }} -->
+          </label>
+        </div>
+      </div>
+      <div class="row mt10">
+        <div class="col-12 text-align-center">
+          <button class="btn btn-primary" (click)="signup()">
+            <!-- {{ 'AUTHENTICATION.SIGNUP.BUTTONTEXT' | translate }} -->
+            Create
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="signup-text mt35 mb40">
+    <!-- {{ 'AUTHENTICATION.SIGNUP.RETURNTEXT' | translate }}  -->
+    Already have an account?
+    <span class="link" [routerLink]="['/login']">
+      <!-- {{ 'AUTHENTICATION.LOGIN.TITLE' | translate }} -->
+      Login
+    </span>
+  </div>
+</div>

@@ -1,0 +1,248 @@
+<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+  <div class="modal-content" style="width: 95%">
+    <div class="modal-header custom-modal-header">
+      <div>Upgrade to Premium</div>
+      <img
+        class="custom-modal-close"
+        alt=""
+        src="../../../assets/icons/close-modal.svg"
+        (click)="dismissModal()"
+      />
+    </div>
+    <div class="modal-body">
+      <div class="img-section">
+        <div
+          id="carouselExampleIndicators"
+          class="carousel slide"
+          data-ride="carousel"
+        >
+          <ol class="carousel-indicators">
+            <li
+              data-target="#carouselExampleIndicators"
+              data-slide-to="0"
+              class="active"
+            ></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+          </ol>
+          <div class="carousel-inner">
+            <!-- <div class="carousel-item active">
+              <div class="tag-line">Stay Healthy & Crush Your Goals</div>
+              <div class="subscription-details mt10">
+                View steps, heart rate, blood glucose and more.
+                <br />
+                Display data from Apple Health and Fitbit.
+              </div>
+              <img
+                class="d-block w-100 mt10"
+                height="150px"
+                src="../../../assets/feature-carousel-images/img-1.svg"
+                alt=""
+              />
+            </div> -->
+
+            <div class="carousel-item active">
+              <div class="display-flex">
+                <img
+                  class="d-block w-50"
+                  height="150px"
+                  src="../../../assets/feature-carousel-images/img-1.svg"
+                  alt=""
+                />
+                <div class="sideview">
+                  <div class="tag-line">Stay Healthy & Crush Your Goals</div>
+                  <div class="subscription-details mt10">
+                    View steps, heart rate, blood glucose and more. Display data
+                    from Apple Health and Fitbit.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="carousel-item">
+              <div class="tag-line">Photo Display</div>
+              <div class="subscription-details mt10">
+                Display automatically updated, beautiful HD photos from Google
+                Photo or Apple iCloud shared albums.
+              </div>
+              <img
+                class="d-block w-100 mt10"
+                height="150px"
+                src="../../../assets/feature-carousel-images/img-2.svg"
+                alt=""
+              />
+            </div> -->
+
+            <div class="carousel-item">
+              <div class="display-flex">
+                <img
+                  class="d-block w-50"
+                  height="150px"
+                  src="../../../assets/feature-carousel-images/img-2.svg"
+                  alt=""
+                />
+                <div class="sideview">
+                  <div class="tag-line">Photo Display</div>
+                  <div class="subscription-details mt10">
+                    Display automatically updated, beautiful HD photos from
+                    Google Photo or Apple iCloud shared albums.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="display-flex">
+                <img
+                  class="d-block w-50"
+                  height="150px"
+                  src="../../../assets/feature-carousel-images/img-3.svg"
+                  alt=""
+                />
+                <div class="sideview">
+                  <div class="tag-line">Calendar & Reminders</div>
+                  <div class="subscription-details mt10">
+                    Stay updated, view your events and reminders. Perfect for
+                    family shared calendars too.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="display-flex">
+                <img
+                  class="d-block w-50"
+                  height="150px"
+                  width="150px"
+                  src="../../../assets/feature-carousel-images/img-4.svg"
+                  alt=""
+                />
+                <div class="sideview">
+                  <div class="tag-line">Notes</div>
+                  <div class="subscription-details mt10">
+                    Create a message board for your family. Update messages
+                    remotely via your iPhone.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="carousel-item">
+              <div class="tag-line">Notes</div>
+              <div class="subscription-details mt10">
+                Create a message board for your family.
+                <br />
+                Update messages remotely via your iPhone.
+              </div>
+              <img
+                class="d-block w-100 mt10"
+                height="150px"
+                src="../../../assets/feature-carousel-images/img-4.svg"
+                alt=""
+              />
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="mt20" *ngIf="isNewSubscription === true">
+        <strong>Start your 90 days free trial.</strong>
+      </div>
+
+      <div class="col-sm-12 paymentlabel mt30" *ngIf="isUpdate === false">
+        Choose A Plan
+        <div class="row">
+          <div class="col-sm-6" (click)="updateSelectedPlan('monthly_plan')">
+            <label
+              class="selected plan-label mt10"
+              [class.selected-plan-label]="selected_plan == 'monthly_plan'"
+            >
+              <input type="radio" name="plan" value="monthly_plan" checked />
+              <span style="font-size: 15px; font-weight: 800"> Monthly</span>
+              $1.99
+              <br />
+              <span style="padding-left: 17px; line-height: 30px">
+                <small>$1.99 billed each month</small></span
+              >
+            </label>
+          </div>
+          <div class="col-sm-6" (click)="updateSelectedPlan('yearly_plan')">
+            <label
+              class="plan-label mt10"
+              [class.selected-plan-label]="selected_plan == 'yearly_plan'"
+            >
+              <input type="radio" name="plan" value="yearly_plan" /><strong>
+                Yearly
+              </strong>
+              $19.99
+              <br />
+              <span style="padding-left: 17px; line-height: 30px">
+                <small> $19.99 billed each year (save 16%) </small></span
+              >
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 paymentlabel mt10">Payment Info</div>
+
+      <div class="mt10">
+        <form (submit)="createToken($event)" id="payment_form">
+          <div class="col-sm-12 mt10">
+            <div id="card" class="fields"></div>
+          </div>
+          <p style="color: red; font-size: 15px; font-weight: 700">
+            {{ cardErrors }}
+          </p>
+          <div class="col-sm-12 mt10" *ngIf="isUpdate === false">
+            <button class="paybutton" type="submit">
+              Start your free trial
+            </button>
+          </div>
+          <div class="col-sm-12 mt10" *ngIf="isUpdate === true">
+            <button class="paybutton" type="submit">Update Card Details</button>
+          </div>
+          <div
+            class="col-sm-12 mt10"
+            *ngIf="isFreeTrial === true && isUpdate === false"
+          >
+            <button class="paybutton" type="submit">Pay</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="isFreeTrial === true">
+        <div style="text-align: left">
+          You will not be charged until the end of your 30-Day Free Trial. By
+          starting your 30-Day Free Trial you are agreeing to the 30-Day Free
+          Trial Terms and Conditions.
+        </div>
+        <div style="text-align: left">
+          At the end of your trial, you'll be charged a recurring
+          <span class="page-links" *ngIf="selected_plan == 'monthly_plan'">
+            $1.99 / Month
+          </span>
+          <span class="page-links" *ngIf="selected_plan == 'yearly_plan'">
+            $19.99 / Year
+          </span>
+          Fee, unless you decide to cancel. All Premium features will be
+          available immediately in your account. All prices in US dollars.
+        </div>
+      </div>
+
+      <div *ngIf="isFreeTrial === false">
+        <div style="text-align: left">
+          You'll be charged a recurring
+          <span class="page-links" *ngIf="selected_plan == 'monthly_plan'">
+            $1.99 / Month
+          </span>
+          <span class="page-links" *ngIf="selected_plan == 'yearly_plan'">
+            $19.99 / Year
+          </span>
+          Fee, unless you decide to cancel. All Premium features will be
+          available immediately in your account. All prices in US dollars.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

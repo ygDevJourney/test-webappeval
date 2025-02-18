@@ -1,0 +1,34 @@
+<div id="nav-container" class="header">
+        <div>
+          <strong>
+              <!-- {{ "MIRROR.MIRRORSETTING.DISPLAYNAME" | translate }} -->
+              Display Name
+            </strong>
+        </div>
+</div>
+
+<div id="ms-mirrorrename-container">
+    <div class="row mt50">
+        <div class="col-12 setup-message">
+            <!-- {{ 'MIRROR.MIRRORSETTING.RENAME_MIRROR_LABEL' | translate }}    -->
+            Would you like to rename the display?      
+        </div>
+                
+        <div class="col-12 mt40">
+            <input type="text" id="mirror-name" class="form-control text-line" [(ngModel)]="mirrorName.value">
+            <span class="error-text">{{mirrorName.error}}</span>
+        </div>
+                
+        <div class="col-12 mt120">
+            <button class="btn btn-secondary" (click)="backToMirrorSettingPage()">
+                <!-- {{ 'MIRROR.MIRRORSETTING.BUTTON_CANCEL_TEXT' | translate }} -->
+                Cancel
+            </button>
+            <button class="btn btn-primary ml25" (click)="updateMirroName()">
+                <!-- {{ 'MIRROR.MIRRORSETTING.BUTTON_SAVE_TEXT' | translate }} -->
+                Save
+            </button>
+        </div>
+    </div>
+</div>
+

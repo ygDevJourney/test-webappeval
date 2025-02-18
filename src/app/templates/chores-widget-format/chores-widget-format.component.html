@@ -1,0 +1,234 @@
+<form [formGroup]="todoFormatFormGroup" class="mt10">
+  <div id="todoFormat">
+    <div class="row mt10">
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left mt65">
+          Select based on task due date
+        </div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <div class="col-12 flex float-left p-0">
+            <div class="mt10">
+              <input
+                type="radio"
+                id="ch_all"
+                name="task_duration"
+                value="all_task"
+                formControlName="task_duration"
+                (click)="updateTaskDuration('all_task')"
+              />
+              <label for="ch_all">All Tasks</label>
+            </div>
+            <hr />
+            <div class="mt10">
+              <input
+                type="radio"
+                id="ch_today"
+                name="task_duration"
+                value="Today"
+                formControlName="task_duration"
+                (click)="updateTaskDuration('Today')"
+              />
+              <label for="ch_today">Today's Tasks</label>
+            </div>
+            <div class="mt10">
+              <input
+                id="ch_tomorrow"
+                type="radio"
+                name="task_duration"
+                value="Tomorrow"
+                formControlName="task_duration"
+                (click)="updateTaskDuration('Tomorrow')"
+              />
+              <label for="ch_tomorrow">Tomorrow's Tasks</label>
+            </div>
+            <div class="mt10">
+              <input
+                id="ch_next_x_event"
+                type="radio"
+                name="task_duration"
+                value="next_x_event"
+                formControlName="task_duration"
+                (click)="updateTaskDuration('next_x_event')"
+              />
+              <label for="ch_next_x_event">Next </label>
+              <span class="mlr10">
+                <select
+                  name="numberOfEvent"
+                  formControlName="numberOfEvent"
+                  class="btn btn-secondary"
+                  style="width: 75px; height: 35px"
+                >
+                  <option *ngFor="let obj of eventRangeSelection" [value]="obj">
+                    {{ obj }}
+                  </option>
+                </select> </span
+              >Tasks
+            </div>
+            <div class="mt10">
+              <input
+                id="ch_next_x_days"
+                type="radio"
+                name="task_duration"
+                value="next_x_days"
+                formControlName="task_duration"
+                (click)="updateTaskDuration('next_x_days')"
+              />
+              <label for="ch_next_x_days">Next </label>
+              <span class="mlr10">
+                <select
+                  name="numberOfDays"
+                  formControlName="numberOfDays"
+                  class="btn btn-secondary"
+                  style="width: 75px; height: 35px"
+                >
+                  <option *ngFor="let obj of dayRangeSelection" [value]="obj">
+                    {{ obj }}
+                  </option>
+                </select> </span
+              >days Tasks
+            </div>
+
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt15">
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left lh30">Scrolling</div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': scrolling === 'Off' }"
+            (click)="scrolling = 'Off'"
+          >
+            <i
+              *ngIf="scrolling === 'Off'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            Off</a
+          >
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': scrolling === 'Slow' }"
+            (click)="scrolling = 'Slow'"
+          >
+            <i
+              *ngIf="scrolling === 'Slow'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            Slow</a
+          >
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': scrolling === 'Fast' }"
+            (click)="scrolling = 'Fast'"
+          >
+            <i
+              *ngIf="scrolling === 'Fast'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            Fast</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10">
+      <div class="col-12">
+        <div class="col-4 checkbox-title float-left text-align-left">
+          Show task due dates
+        </div>
+        <div class="col-3 float-left">
+          <label class="custom-checkbox display-flex">
+            <input
+              type="checkbox"
+              formControlName="showEndDate"
+              class="vertical-middle-align ml5"
+              data-md-icheck
+            />
+            <div class="checkbox checkbox-left"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10">
+      <div class="col-12">
+        <div class="col-4 checkbox-title float-left text-align-left">
+          Include completed tasks
+        </div>
+        <div class="col-3 float-left">
+          <label class="custom-checkbox display-flex">
+            <input
+              type="checkbox"
+              formControlName="showCompletedTask"
+              class="vertical-middle-align ml5"
+              data-md-icheck
+            />
+            <div class="checkbox checkbox-left"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10">
+      <div class="col-12">
+        <div class="col-4 checkbox-title float-left text-align-left">
+          Include all uncompleted overdue tasks
+        </div>
+        <div class="col-3 float-left">
+          <label class="custom-checkbox display-flex">
+            <input
+              type="checkbox"
+              formControlName="isOverDueTaskVisible"
+              class="vertical-middle-align ml5"
+              data-md-icheck
+            />
+            <div class="checkbox checkbox-left"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mt20 bg-box-border">
+      <div class="col-12 display-flex p0">
+        <div class="mt5">
+          <label class="custom-checkbox display-block">
+            <input
+              type="checkbox"
+              formControlName="isTaskAutoComplete"
+              class="vertical-middle-align ml5"
+              data-md-icheck
+            />
+            <div class="checkbox checkbox-left"></div>
+          </label>
+        </div>
+        <div class="ml15 checkbox-title text-align-left">
+          Automatically close any open recurring tasks at the end of the day
+          <div class="fs-9">
+            This ensures they are cleared and ready to show the next occurrence.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-12 footer-btn-position">
+    <button
+      type="button"
+      class="btn btn-secondary mr-20"
+      (click)="dismissModel()"
+    >
+      CANCEL
+    </button>
+    <button class="btn btn-primary" (click)="todoWidgetFormatUpdate()">
+      SAVE
+    </button>
+  </div>
+</div>

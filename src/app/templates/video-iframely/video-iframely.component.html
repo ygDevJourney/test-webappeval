@@ -1,0 +1,196 @@
+<div class="modal-dialog modal-lg modal-dialog-centered" id="modal1">
+  <div class="modal-content">
+    <div
+      class="modal-header custom-modal-header"
+      *ngIf="isMyFileSelected == false"
+    >
+      Add a Video widget
+    </div>
+    <div class="modal-body">
+      <div role="tabpanel" *ngIf="isMyFileSelected == false">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a
+              href="#videoSettingTab"
+              class="nav-link active"
+              aria-controls="videoSettingTab"
+              role="tab"
+              data-toggle="tab"
+              >Settings</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="#videoBgTab"
+              class="nav-link"
+              aria-controls="videoBgTab"
+              role="tab"
+              data-toggle="tab"
+              (click)="setBackgroundWidgetDetail()"
+              >Format</a
+            >
+          </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="videoSettingTab">
+            <form [formGroup]="vidoFormGroup" class="mt10">
+              <div
+                class="row mt20"
+                *ngIf="vidoFormGroup.value.isS3Enabled == true"
+              >
+                <div class="col-12">
+                  <div class="float-left fit-content-width">My Files</div>
+                  <div class="float-right">
+                    <div class="switchToggle">
+                      <input
+                        type="checkbox"
+                        id="video_mediafile-switch"
+                        formControlName="isS3Enabled"
+                        aria-expanded="true"
+                        (click)="openMyMediaFile('toggle')"
+                      />
+                      <label for="video_mediafile-switch" class="mt10"
+                        >Toggle</label
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <span
+                  *ngIf="vidoFormGroup.value.isS3Enabled == true"
+                  class="col-12 fw-bold error-text"
+                  >{{ error }}</span
+                >
+
+                <div
+                  class="col-12 bl-link theme-font-color mt5 justify-end"
+                  *ngIf="
+                    selectedS3Files.length > 0 &&
+                    vidoFormGroup.value.isS3Enabled == true
+                  "
+                  (click)="openMyMediaFile('edit')"
+                >
+                  edit
+                </div>
+
+                <div
+                  class="col-12 justify-start"
+                  *ngIf="vidoFormGroup.value.isS3Enabled == true"
+                >
+                  <div *ngFor="let s3file of selectedS3Files">
+                    <div class="example-box">
+                      <img
+                        src="../../../assets/icons/multimedia.png"
+                        style="height: 100px; width: 100px"
+                      />
+                      <div class="fs-14">{{ s3file.key.match("[^/]+$") }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr
+                class="full-width"
+                *ngIf="vidoFormGroup.value.isS3Enabled == true"
+              />
+
+              <div class="row mt15 accordion" id="accordian-video">
+                <div class="col-12">
+                  <div class="float-left fit-content-width">Add Video URL</div>
+                  <div
+                    class="float-right"
+                    *ngIf="vidoFormGroup.value.isS3Enabled == true"
+                  >
+                    <div
+                      class="switchToggle"
+                      id="#manualvideo-section"
+                      data-target="#manualvideo-section"
+                      aria-controls="manualvideo-section"
+                    >
+                      <input
+                        type="checkbox"
+                        id="video_url-switch"
+                        formControlName="isCustomUrlEnabled"
+                        (click)="updateFlag()"
+                      />
+                      <label for="video_url-switch" class="mt10">Toggle</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  id="manualvideo-section"
+                  [class.collapse]="!vidoFormGroup.value.isCustomUrlEnabled"
+                  aria-labelledby="manualvideo-section"
+                  data-parent="#accordian-video"
+                  class="col-12"
+                >
+                  <div class="col-12 text-align-center custom-text-field mt10">
+                    <input
+                      type="text"
+                      placeholder="Enter the publicly accessible video URL"
+                      id="video_url"
+                      (paste)="validateURL($event)"
+                      (input)="validateURL($event)"
+                      class="form-control text-line text-align-center"
+                      formControlName="baseurl"
+                      style="width: 100%; margin: auto"
+                    />
+                    <span class="error-text">{{ error }}</span>
+                    <div class="fs-11 mt5 mb10 col-12 text-align-left">
+                      Enter a YouTube or Vimeo link. You can also use a video
+                      file link from Dropbox, Google Drive, or any publicly
+                      accessible web-hosted video file.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="full-width" />
+            </form>
+            <div class="row" *ngIf="isMyFileSelected == false">
+              <div class="col-12 footer-btn-position">
+                <button
+                  type="button"
+                  class="btn btn-secondary mr-20"
+                  (click)="dismissModel()"
+                >
+                  CANCEL
+                </button>
+                <button
+                  class="btn btn-primary"
+                  (click)="saveIframilySettings()"
+                >
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane bg-setting-box mt15"
+            id="videoBgTab"
+            *ngIf="settingDisplayflag"
+          >
+            <app-widget-bg-setting
+              [widgetbgsetting]="widgetBgSetting"
+              [widgetType]="widgetType"
+              (emitbgsettingVideoOption)="onbgsettingOptions($event)"
+              (closeModalEvent)="dismissModel()"
+            >
+            </app-widget-bg-setting>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isMyFileSelected == true">
+        <app-manage-s3-bucket
+          [requestType]="requestType"
+          [selectedS3Files]="selectedS3Files"
+          (updateVideoS3Details)="updateVideoS3Details($event)"
+          (close)="reverseSelection()"
+        ></app-manage-s3-bucket>
+      </div>
+    </div>
+  </div>
+</div>

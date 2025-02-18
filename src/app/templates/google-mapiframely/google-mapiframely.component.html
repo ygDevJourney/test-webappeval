@@ -1,0 +1,134 @@
+<div class="modal-dialog modal-lg modal-dialog-centered" id="modal1">
+  <div class="modal-content">
+    <div class="modal-header custom-modal-header">Add Google Maps Details</div>
+    <div class="modal-body">
+      <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a
+              href="#googleMapSettingTab"
+              class="nav-link active"
+              aria-controls="googleMapSettingTab"
+              role="tab"
+              data-toggle="tab"
+              >Settings</a
+            >
+          </li>
+          <li class="nav-item" style="margin-left: 10px">
+            <a
+              href="#googleMapWidgetBgTab"
+              class="nav-link"
+              aria-controls="googleMapWidgetBgTab"
+              role="tab"
+              data-toggle="tab"
+              (click)="setBackgroundWidgetDetail()"
+              >Format</a
+            >
+          </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="googleMapSettingTab">
+            <form [formGroup]="googleMapFormGroup" class="mt10">
+              <div class="row mt15">
+                <div class="col-12 setup-message text-align-left">
+                  Add Google Maps URL
+                </div>
+                <div class="col-12 text-align-center custom-text-field mt10">
+                  <input
+                    type="text"
+                    placeholder="Enter the publicly accessible Google Maps"
+                    id="google_map_url"
+                    class="form-control text-line text-align-center"
+                    formControlName="baseurl"
+                    style="width: 95%; margin: auto"
+                  />
+                  <span class="error-text">{{ error }}</span>
+                  <div class="fs-11 mt5 mb10 col-12 text-align-left">
+                    Must be a valid and publicly shared Google Maps URL
+                  </div>
+                </div>
+              </div>
+              <div class="row mt20">
+                <div class="col-12">
+                  <div class="col-4 float-left text-align-left p-0">
+                    Refresh Time
+                  </div>
+                  <div class="btn-group btn-group-justified float-left block">
+                    <select
+                      name="autoRefreshTime"
+                      formControlName="autoRefreshTime"
+                      class="btn btn-secondary"
+                      style="width: 250px; height: 35px"
+                    >
+                      <option
+                        *ngFor="let obj of iframily_autorefresh_time_option"
+                        [value]="obj.value"
+                      >
+                        {{ obj.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="row mt15">
+                <div class="col-12">
+                  <div
+                    class="col-4 checkbox-title float-left text-align-left p-0"
+                  >
+                    Auto Scroll Content
+                  </div>
+                  <div class="col-8 float-left p-0">
+                    <label class="custom-checkbox display-flex">
+                      <input
+                        type="checkbox"
+                        formControlName="isAutoScroll"
+                        class="vertical-middle-align ml5"
+                        data-md-icheck
+                      />
+                      <div class="checkbox checkbox-left"></div>
+                    </label>
+                  </div>
+                </div>
+              </div> -->
+            </form>
+
+            <div class="row">
+              <div class="col-12 footer-btn-position">
+                <button
+                  type="button"
+                  class="btn btn-secondary mr-20"
+                  (click)="dismissModel()"
+                >
+                  CANCEL
+                </button>
+                <button
+                  class="btn btn-primary"
+                  (click)="saveIframilySettings()"
+                >
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane bg-setting-box"
+            id="googleMapWidgetBgTab"
+            *ngIf="settingDisplayflag"
+          >
+            <app-widget-bg-setting
+              [widgetbgsetting]="widgetBgSetting"
+              [widgetType]="widgetType"
+              (emitbgsettingGoogleMapOption)="onbgsettingOptions($event)"
+              (closeModalEvent)="dismissModel()"
+            >
+            </app-widget-bg-setting>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

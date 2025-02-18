@@ -1,0 +1,56 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-body modal-height">
+      <div class="custom-modal-header">Web Browser Display URL</div>
+      <div class="clock-setting-box">
+        <div class="row">
+          <div class="col-12">
+            <div class="content">
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control h40"
+                  placeholder=""
+                  [(ngModel)]="displayUrl"
+                  (click)="$event.target.select()"
+                />
+                <div class="input-group-append" id="button-addon3">
+                  <button
+                    class="btn viewdisplay-icon"
+                    (click)="viewdisplay()"
+                    data-toggle="tooltip"
+                    title="Open URL"
+                  >
+                    <img src="../../../assets/icons/password_eye.svg" />
+                  </button>
+                  <button
+                    class="btn viewdisplay-icon"
+                    (click)="copyToCloipBoard()"
+                    data-toggle="tooltip"
+                    title="Copy URL"
+                  >
+                    <img src="../../../assets/icons/copy.svg" height="18px" />
+                  </button>
+                </div>
+              </div>
+              <div class="message mt25">
+                <div>Use this URL to view this display on any web browser</div>
+                <div class="mt5 fs-10">
+                  * Do not open this URL on multiple devices at the same time.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mt25">
+            <button
+              class="btn btn-secondary"
+              (click)="confirmViewDisplayWidgetModal.hide()"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

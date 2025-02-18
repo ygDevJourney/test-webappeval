@@ -1,0 +1,134 @@
+<div id="nav-container">
+  <div class="mirror-nav">
+    <strong>Unit of Measure</strong>
+  </div>
+</div>
+<div id="unit-measure-container" class="container">
+  <div class="mt20">
+    <div class="row mt10">
+      <div class="col-12">
+        <strong>
+          {{ data.weightUnit.unit }}
+        </strong>
+      </div>
+      <div class="col-12" *ngFor="let measure of data.weightUnit.measure">
+        <div
+          class="full-width ml10 mt10"
+          (click)="changeUnitMeasure(data.weightUnit, measure)"
+        >
+          <div class="float-left fit-content-width">
+            {{ measure }}
+          </div>
+          <div class="float-right pr10">
+            <div
+              class="active-tick"
+              *ngIf="data.weightUnit.activeUnit == measure"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt10">
+      <div class="col-12">
+        <strong>
+          {{ data.distanceUnit.unit }}
+        </strong>
+      </div>
+      <div class="col-12" *ngFor="let measure of data.distanceUnit.measure">
+        <div
+          class="full-width ml10 mt10"
+          (click)="changeUnitMeasure(data.distanceUnit, measure)"
+        >
+          <div class="float-left fit-content-width">
+            {{ measure }}
+          </div>
+          <div class="float-right pr10">
+            <div
+              class="active-tick"
+              *ngIf="data.distanceUnit.activeUnit == measure"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt10">
+      <div class="col-12">
+        <strong>
+          {{ data.waterUnit.unit }}
+        </strong>
+      </div>
+      <div class="col-12" *ngFor="let measure of data.waterUnit.measure">
+        <div
+          class="full-width ml10 mt10"
+          (click)="changeUnitMeasure(data.waterUnit, measure)"
+        >
+          <div class="float-left fit-content-width">
+            {{ measure }}
+          </div>
+          <div class="float-right pr10">
+            <div
+              class="active-tick"
+              *ngIf="data.waterUnit.activeUnit == measure"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt10">
+      <div class="col-12">
+        <strong>
+          {{ data.bloodGlucoseUnit.unit }}
+        </strong>
+      </div>
+      <div class="col-12" *ngFor="let measure of data.bloodGlucoseUnit.measure">
+        <div
+          class="full-width ml10 mt10"
+          (click)="changeUnitMeasure(data.bloodGlucoseUnit, measure)"
+        >
+          <div class="float-left fit-content-width">
+            {{ measure }}
+          </div>
+          <div class="float-right pr10">
+            <div
+              class="active-tick"
+              *ngIf="data.bloodGlucoseUnit.activeUnit == measure"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt10">
+      <div class="col-12">
+        <strong>
+          {{ data.temperatureUnit.unit }}
+        </strong>
+      </div>
+      <div class="col-12" *ngFor="let measure of data.temperatureUnit.measure">
+        <div
+          class="full-width ml10 mt10"
+          (click)="changeUnitMeasure(data.temperatureUnit, measure)"
+        >
+          <div class="float-left fit-content-width">
+            {{ measure }}
+          </div>
+          <div class="float-right pr10">
+            <div
+              class="active-tick"
+              *ngIf="data.temperatureUnit.activeUnit == measure"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt30">
+      <div class="col-12 text-align-center">
+        <button class="btn btn-secondary" (click)="discardChanges()">
+          CANCEL
+        </button>
+        <button class="btn btn-primary ml25" (click)="saveUnitMeasureChanges()">
+          SAVE
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

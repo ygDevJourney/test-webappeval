@@ -1,0 +1,89 @@
+.ical-content {
+  .ical-header {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 21px;
+    text-decoration: underline;
+  }
+
+  .mt-10 {
+    margin-top: 10px;
+  }
+  .mr-15 {
+    margin-right: 15px;
+  }
+}
+
+a {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+ul {
+  list-style: none;
+}
+
+.device-box {
+  background: #ffffff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12),
+    0px 1px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  display: flex;
+  padding: 15px;
+  align-items: center;
+  height: auto;
+  justify-content: center;
+}
+
+.device-box:hover,
+.device-box-active {
+  border: 2px solid #14b268;
+  box-sizing: border-box;
+}
+
+.modal-body {
+  height: 400px;
+  .ics-setting-box {
+    height: 380px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    padding: 0 10px;
+  }
+}
+
+@media (min-height: 700px) {
+  .modal-body {
+    height: 500px;
+    .ics-setting-box {
+      height: 480px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (min-height: 800px) {
+  .modal-body {
+    height: 600px;
+    .ics-setting-box {
+      height: 580px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (min-height: 900px) {
+  .modal-body {
+    height: 700px;
+    .ics-setting-box {
+      height: 680 !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}

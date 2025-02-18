@@ -1,0 +1,400 @@
+<div id="nav-container">
+  <div class="mirror-nav">
+    <div class="left-menu-button display-flex" (click)="gotoHomeScreen()">
+      <div class="left-arrow"></div>
+      <div id="my-display" class="display-button">
+        <!-- {{ "WIDGETS.LAYOUT.NAV_BUTTON_TEXT" | translate }} -->
+        My Displays
+      </div>
+    </div>
+    <div class="nav-title">
+      <strong>Add New Display</strong>
+    </div>
+  </div>
+</div>
+
+<div id="breadcrumbs-container" class="mt10">
+  <div class="breadcrumb col-12">
+    <span
+      (click)="changeState('state1')"
+      class="p0"
+      [ngClass]="{
+        active: true,
+        'col-3': deviceType !== 'Linked Browser',
+        'col-4': deviceType === 'Linked Browser'
+      }"
+    >
+      Select Device<br />
+      Type</span
+    >
+    <span
+      (click)="changeState('state2')"
+      class="p0"
+      [ngClass]="{
+        active:
+          setupState === 'state2' ||
+          setupState === 'state3' ||
+          setupState === 'state4',
+        'col-3': deviceType !== 'Linked Browser',
+        'col-4': deviceType === 'Linked Browser'
+      }"
+      >Name Your <br />
+      Display
+    </span>
+    <span
+      *ngIf="deviceType !== 'Linked Browser'"
+      (click)="changeState('state3')"
+      class="col-3 p0"
+      [ngClass]="
+        setupState === 'state3' || setupState === 'state4' ? 'active' : ''
+      "
+      >Display Device <br />
+      Code
+    </span>
+    <span
+      (click)="changeState('state4')"
+      class="p0"
+      [ngClass]="{
+        active: setupState === 'state4',
+        'col-3': deviceType !== 'Linked Browser',
+        'col-4': deviceType === 'Linked Browser'
+      }"
+      >Choose <br />
+      Layout
+    </span>
+  </div>
+</div>
+
+<div class="ptb10">
+  <div
+    id="mc-devicetype-container"
+    class="container"
+    *ngIf="setupState == 'state1'"
+  >
+    <div class="setup-category-container">
+      <div class="col-12 setup-message">Choose your Mango Display Device</div>
+
+      <div class="col-sm-12 col-md-6 float-left">
+        <div
+          class="mt20 device-box full-width"
+          (click)="
+            deviceType = 'Linked Browser';
+            subDeviceType = '';
+            changeState('state2')
+          "
+          [ngClass]="deviceType === 'Linked Browser' ? 'device-box-active' : ''"
+        >
+          <img
+            alt=""
+            src="../../assets/icons/world-wide-web.png"
+            height="26px"
+          />
+          <div
+            class="ml20 lh26"
+            style="vertical-align: middle; text-align: left"
+          >
+            Mango Display on your web browser
+            <div>
+              <small>
+                (PC, Mac, Raspberry Pi, Other Smart TVs, other browsers)
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 float-left">
+        <div
+          class="mt20 device-box full-width"
+          (click)="
+            deviceType = 'Android tablet';
+            subDeviceType = '';
+            changeState('state2')
+          "
+          [ngClass]="deviceType === 'Android tablet' ? 'device-box-active' : ''"
+        >
+          <img alt="" src="../../assets/icons/fire_tablet.png" height="26px" />
+          <div
+            class="ml20 lh26"
+            style="vertical-align: middle; text-align: left"
+          >
+            Mango Display Amazon Fire App
+            <div>
+              <small>
+                (Amazon Fire TV stick, Amazon Fire TV, Amazon Fire tablet)
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 float-left">
+        <div
+          class="mt20 device-box full-width"
+          (click)="
+            deviceType = 'Android tablet';
+            subDeviceType = '';
+            changeState('state2')
+          "
+          [ngClass]="deviceType === 'Android tablet' ? 'device-box-active' : ''"
+        >
+          <img alt="" src="../../assets/icons/android.png" height="26px" />
+          <div
+            class="ml20 lh26"
+            style="vertical-align: middle; text-align: left"
+          >
+            Mango Display Android App
+            <div>
+              <small> (Google TV, Android TV, Android tablet) </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 float-left">
+        <div
+          class="mt20 device-box full-width"
+          (click)="
+            deviceType = 'Android tablet';
+            subDeviceType = '';
+            changeState('state2')
+          "
+          [ngClass]="deviceType === 'Android tablet' ? 'device-box-active' : ''"
+        >
+          <img alt="" src="../../assets/icons/tizen_latest.png" height="26px" />
+          <div
+            class="ml20 lh26"
+            style="vertical-align: middle; text-align: left"
+          >
+            Mango Display Tizen App
+            <div>
+              <small> (Samsung Smart TV - 2019 models and newer) </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 float-left">
+        <div
+          class="mt20 device-box full-width"
+          (click)="
+            deviceType = 'Android tablet';
+            subDeviceType = '';
+            changeState('state2')
+          "
+          [ngClass]="deviceType === 'Android tablet' ? 'device-box-active' : ''"
+        >
+          <img alt="" src="../../assets/icons/apple.png" height="26px" />
+          <div
+            class="ml20 lh26"
+            style="vertical-align: middle; text-align: left"
+          >
+            Mango Display iOS & macOS App
+            <div>
+              <small>
+                (iPad on iOS 15 or later, or Mac with Apple M1 chip or newer)
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 float-left">
+        <div
+          class="mt20 device-box full-width"
+          (click)="
+            deviceType = 'Android tablet';
+            subDeviceType = '';
+            changeState('state2')
+          "
+          [ngClass]="deviceType === 'Android tablet' ? 'device-box-active' : ''"
+        >
+          <img alt="" src="../../assets/icons/lg_icon_new.png" height="26px" />
+          <div
+            class="ml20 lh26"
+            style="vertical-align: middle; text-align: left"
+          >
+            Mango Display WebOS TV App
+            <div>
+              <small> (LG Smart TV - 2018 models and newer) </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 float-left">
+        <div
+          class="mt20 device-box full-width"
+          (click)="deviceType = 'Android tablet'; changeState('state2')"
+          [ngClass]="deviceType === 'Android tablet' ? 'device-box-active' : ''"
+        >
+          <img
+            alt=""
+            src="../../assets/icons/microsoft_logo.png"
+            height="26px"
+          />
+          <div
+            class="ml20 lh26"
+            style="vertical-align: middle; text-align: left"
+          >
+            Mango Display Microsoft Windows App
+            <div>
+              <small> (Windows 10 and above) </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 float-left">
+        <div
+          class="mt20 device-box full-width"
+          (click)="
+            deviceType = 'Android tablet';
+            subDeviceType = 'echo';
+            changeState('state2')
+          "
+          [ngClass]="deviceType === 'Android tablet' ? 'device-box-active' : ''"
+        >
+          <img alt="" src="../../assets/icons/echo_show.png" height="26px" />
+          <div
+            class="ml20 lh26"
+            style="vertical-align: middle; text-align: left"
+          >
+            Amazon Echo Show
+            <div>
+              <small> (Amazon Echo Show 21, Amazon Echo Show 15) </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="mc-device-rename-container"
+    class="container plr30"
+    *ngIf="setupState == 'state2'"
+  >
+    <div class="row">
+      <div class="col-12 setup-message">
+        Would you like to rename the display?
+      </div>
+
+      <div class="col-12 text-align-center">
+        <input
+          type="text"
+          id="mirror-name"
+          class="form-control text-line"
+          [(ngModel)]="mirrorName.value"
+          (ngModelChange)="updateMirroName($event)"
+          style="width: 250px; margin: auto"
+        />
+        <span class="error-text">{{ mirrorName.error }}</span>
+      </div>
+
+      <div class="col-12 mt40">
+        <button
+          class="btn btn-primary"
+          id="mc_name_next"
+          (click)="changeState('state3')"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="mc-device-code-container"
+    class="container plr30"
+    *ngIf="setupState == 'state3'"
+  >
+    <div class="row">
+      <div class="col-12 setup-message p0">
+        <div *ngIf="subDeviceType == ''">
+          Download and open ‘Mango Display’ app on your display.
+        </div>
+        <div *ngIf="subDeviceType == 'echo'" class="md-box">
+          <div class="fw-bold">On your Echo Show</div>
+          <div>Open the Internet Browser app.</div>
+          <div>
+            Visit <span class="fw-bold"> echo.mangodisplay.com</span>
+            to get your Display Device Code.
+          </div>
+          <div class="display-flex justify-content-center fs-10 mt15">
+            <div class="lh20">
+              <div>
+                Bookmark the site to easily open your Mango Display later.
+              </div>
+              <div>
+                Press the menu button on the Echo Show remote to hide the
+                browser toolbar.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <span (click)="test()"> </span>
+        <br />
+        Enter the Display Device Code below.
+        <span (click)="test()"> </span>
+      </div>
+
+      <div
+        class="col-12"
+        [ngClass]="{
+          mt80: subDeviceType == 'echo',
+          mt150: subDeviceType == ''
+        }"
+      >
+        <input
+          type="text"
+          id="device-macaddress"
+          class="form-control text-line upperclass"
+          placeholder="Display Device Code"
+          [(ngModel)]="deviceMacAddress.value"
+        />
+        <span class="error-text">{{ deviceMacAddress.error }}</span>
+      </div>
+      <div class="col-12 mt40">
+        <button
+          class="btn btn-primary"
+          id="mc_address_next"
+          (click)="changeState('state4')"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="mc-device-code-container"
+    class="container1 plr30"
+    *ngIf="setupState == 'state4'"
+  >
+    <div class="row">
+      <div class="col-12 mt10">
+        <app-template
+          [mirrorName]="mirrorName"
+          [themeName]="themeName"
+          [requestType]="requestType"
+          [deviceType]="deviceType"
+          [deviceMacAddress]="deviceMacAddress"
+        ></app-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #devicehelp="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-device-help [deviceHelpModal]="deviceHelpModal"> </app-device-help>
+</div>

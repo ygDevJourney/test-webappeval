@@ -1,0 +1,318 @@
+<div class="vh99" style="height: 100%; overflow: hidden">
+  <div class="header justify-space-between">
+    <div
+      class="theme-font-color tm-back cursor-pointer text-align-left col-4 p0"
+      (click)="goBackToOptionPage()"
+    >
+      < Back
+    </div>
+    <div class="col-4 p0">
+      <strong> My Files </strong>
+    </div>
+
+    <div class="box col-4 p2">
+      <div class="usage-text" id="usageText">
+        {{ usedSize }}
+      </div>
+      <div class="progress-container">
+        <div
+          id="progressBar"
+          class="progress-bar"
+          [style.width.%]="percentage"
+        ></div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="col-12 flex-wrap"
+    style="
+      display: flex;
+      justify-content: space-between;
+      padding: 10;
+      background-color: lightgray;
+    "
+  >
+    <div class="justify-center mtb2">
+      <Span>Current Folder : </Span>
+      <span
+        *ngFor="let path of currentPath; let last = last; let index = index"
+        class="ml5"
+      >
+        <span
+          style="color: blue; cursor: pointer"
+          *ngIf="index == 1"
+          (click)="openFolderByIndex(index)"
+        >
+          Home
+        </span>
+        <span *ngIf="index > 1">
+          <span style="color: blue"> > </span>
+          <span
+            style="color: blue; cursor: pointer"
+            (click)="openFolderByIndex(index)"
+            >{{ path }}</span
+          >
+        </span>
+      </span>
+    </div>
+    <div class="flex-wrap">
+      <form style="display: none" [formGroup]="file_selection_form">
+        <input
+          type="file"
+          #fileSelector
+          formControlName="file_selection"
+          multiple="true"
+          [accept]="acceptedFormat"
+        />
+      </form>
+      <button class="btn btn-secondary mr-20 mtb2" (click)="openFileSelector()">
+        Upload File
+      </button>
+      <button
+        class="btn btn-secondary mr-20 mtb2"
+        (click)="deleteFiles()"
+        *ngIf="!supportedRequestType.includes(requestType)"
+        [disabled]="selectedFile.length == 0"
+      >
+        Delete
+      </button>
+      <button
+        class="btn btn-secondary mr-20 mtb2"
+        (click)="applyFiles()"
+        *ngIf="supportedRequestType.includes(requestType)"
+        [disabled]="selectedFile.length == 0"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+
+  <div class="justify-space-between flex-wrap">
+    <div
+      class="p10 text-align-left accordion"
+      id="accordian-txt"
+      [class.visibility-hidden]="currentPath.length > 2"
+    >
+      <div
+        class="p0 theme-font-color cursor-pointer"
+        data-toggle="collapse"
+        id="#create-s3-folder"
+        data-target="#create-s3-folder"
+        aria-expanded="false"
+        aria-controls="create-s3-folder"
+        (click)="isCollapsed = !isCollapsed"
+      >
+        Create Folder
+      </div>
+      <div
+        id="create-s3-folder"
+        class="collapse mt10"
+        aria-labelledby="create-s3-folder"
+        data-parent="#accordian-txt"
+      >
+        <div class="input-group">
+          <input
+            type="text"
+            [(ngModel)]="newFolderName"
+            placeholder="Please enter folder name"
+            aria-describedby="btnGroupAddon"
+          />
+          <div class="input-group-prepend">
+            <div
+              class="input-group-text"
+              id="btnGroupAddon"
+              (click)="addFolderName()"
+            >
+              <img src="../../../assets/icons/righttick.png" height="30px" />
+            </div>
+          </div>
+          <div
+            class="input-group-text"
+            data-toggle="collapse"
+            data-target="#create-s3-folder"
+            aria-controls="create-s3-folder"
+            aria-describedby="btnGroupAddon"
+            (click)="clearFolderDetails()"
+          >
+            <img src="../../../assets/icons/wrongtick.png" height="23px" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p10 display-flex mr-20 cursor-pointer">
+      <div
+        (click)="updateView('list')"
+        class="mr10 p2"
+        [class.active-view]="selectedView == 'list'"
+      >
+        <img src="../../../assets/icons/list_view.png" alt="" height="28px" />
+      </div>
+      <div
+        (click)="updateView('grid')"
+        class="p2"
+        [class.active-view]="selectedView == 'grid'"
+      >
+        <img src="../../../assets/icons/grid_view.png" alt="" height="30px" />
+      </div>
+    </div>
+  </div>
+
+  <div id="manage-s3-bucket" class="col-12 p0">
+    <div *ngIf="selectedView == 'list'" style="height: 100%">
+      <div class="row-height text-align-left cursor-pointer">
+        <div class="col-12 p0 justify-space-around">
+          <div
+            *ngFor="let header of headers; let i = index"
+            class="col-3 word-wrap text-align-left"
+          >
+            <span [ngClass]="{ ml10: i == 0 }">{{ header }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="s3-image_box">
+        <div
+          class="col-12 row-height text-align-left cursor-pointer"
+          *ngFor="let s3file of s3files"
+          (click)="openFolder(s3file)"
+        >
+          <div class="justify-space-around">
+            <div
+              class="col-3 word-wrap p0"
+              style="text-align: left"
+              *ngIf="s3file.type != 'folder'"
+            >
+              <input
+                type="checkbox"
+                (click)="$event.stopPropagation()"
+                (change)="selectItem($event, s3file)"
+                [(ngModel)]="s3file.isSelected"
+                [class.visibility-hidden]="
+                  supportedRequestType.includes(requestType) &&
+                  s3file.type == 'folder'
+                "
+                class="mr10"
+              />
+              <a [href]="s3file.s3_img_url" target="_blank">{{
+                s3file.displayName
+              }}</a>
+            </div>
+            <div
+              class="col-3 word-wrap p0"
+              style="text-align: left"
+              *ngIf="s3file.type == 'folder'"
+            >
+              <input
+                type="checkbox"
+                (click)="$event.stopPropagation()"
+                (change)="selectItem($event, s3file)"
+                [(ngModel)]="s3file.isSelected"
+                [class.visibility-hidden]="
+                  supportedRequestType.includes(requestType) &&
+                  s3file.type == 'folder'
+                "
+                class="mr5"
+              />
+              {{ s3file.displayName }}
+            </div>
+            <div class="col-3 word-wrap" style="text-align: left">
+              {{ s3file.mimeType }}
+            </div>
+            <div class="col-3 word-wrap" style="text-align: left">
+              {{ s3file.size }}
+            </div>
+            <div class="col-3 word-wrap" style="text-align: left">
+              {{ s3file.modifiedTime }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row s3-image_box plr15" *ngIf="selectedView == 'grid'">
+      <div *ngFor="let s3file of s3files" (click)="openFolder(s3file)">
+        <div
+          class="temp-image_box"
+          [ngClass]="{
+            'selected-box-shadow':
+              s3file.isSelected == true && !s3file.mimeType.includes('folder')
+          }"
+        >
+          <input
+            type="checkbox"
+            [id]="s3file.s3_img_url"
+            name="s3files"
+            (click)="$event.stopPropagation()"
+            (change)="selectItem($event, s3file)"
+            [(ngModel)]="s3file.isSelected"
+          />
+          <label [for]="s3file.s3_img_url">
+            <img
+              [src]="s3file.s3_img_url"
+              height="130px"
+              width="140px"
+              *ngIf="s3file.mimeType.includes('image')"
+            />
+            <img
+              src="../../../assets/icons/folder.svg"
+              height="130px"
+              width="140px"
+              *ngIf="s3file.mimeType.includes('folder')"
+            />
+            <img
+              src="../../../assets/icons/unknown.png"
+              height="130px"
+              width="140px"
+              *ngIf="s3file.mimeType.includes('unknown')"
+            />
+            <img
+              src="../../../assets/icons/multimedia.png"
+              height="130px"
+              width="140px"
+              *ngIf="s3file.mimeType.includes('video')"
+            />
+            <img
+              src="../../../assets/icons/docs.png"
+              height="130px"
+              width="140px"
+              *ngIf="
+                !s3file.mimeType.includes('pdf') &&
+                !s3file.mimeType.includes('video') &&
+                !s3file.mimeType.includes('folder') &&
+                !s3file.mimeType.includes('image') &&
+                !s3file.mimeType.includes('unknown')
+              "
+            />
+            <img
+              src="../../../assets/icons/widget_icon/pdf.svg"
+              height="130px"
+              width="140px"
+              *ngIf="s3file.mimeType.includes('pdf')"
+            />
+          </label>
+          <div class="col-12 ellipses fs-14 mt5">
+            {{ s3file.displayName }}
+            <span *ngIf="s3file.type != 'folder'">({{ s3file.size }})</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #fileExistAlert="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-common-alert
+    [commonAlertModal]="commonAlertModal"
+    [type]="alertType"
+    [header]="alertHeaderMessage"
+    [data]=""
+  ></app-common-alert>
+</div>

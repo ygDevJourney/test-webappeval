@@ -1,0 +1,158 @@
+.m-0 {
+  margin: 0px;
+}
+
+// .modal-body {
+//   padding: 0px 15px !important;
+//   min-height: 480px;
+//   overflow-y: auto !important;
+//   overflow-x: hidden;
+// }
+
+.weather-setting-box {
+  line-height: 20px;
+  letter-spacing: -0.3px;
+  color: #333333;
+  mix-blend-mode: normal;
+  cursor: pointer;
+}
+// .active-news-option {
+//   height: 16px;
+//   width: 8px;
+//   background: transparent;
+//   border-right: 3px solid #14b268;
+//   border-bottom: 3px solid #14b268;
+//   transform: rotate(45deg);
+// }
+// .calendar-view {
+//   font-size: 14px;
+//   line-height: 21px;
+//   letter-spacing: 0.1px;
+//   color: rgba(75, 81, 85, 0.5);
+// }
+// .news-source {
+//   font-weight: 600;
+// }
+// .calendar-view .dropdown-toggle::after {
+//   display: none !important;
+// }
+// .calendar-view .dropdown-menu {
+//   padding: 10px;
+//   text-align: left !important;
+//   width: max-content !important;
+// }
+
+// .calendar-view .dropdown-menu div {
+//   margin-bottom: 10px;
+// }
+// .selected-option {
+//   font-weight: 600 !important;
+// }
+// .headline-count {
+//   font-size: 14px;
+//   line-height: 21px;
+//   letter-spacing: 0.1px;
+//   color: rgba(75, 81, 85, 0.5);
+// }
+// .headline-count .dropdown-toggle::after {
+//   display: none !important;
+// }
+// .headline-count .dropdown-menu {
+//   text-align: center !important;
+//   min-width: 60px !important;
+//   max-width: 60px !important;
+// }
+// .selected-count {
+//   font-weight: 600 !important;
+// }
+.active-page {
+  color: white;
+  line-height: 18px;
+  border: 2px solid #14b268;
+  background: #14b268;
+  font-size: 13px;
+  height: 21px;
+  width: 21px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  margin: 0 5px;
+}
+.location-block {
+  display: none;
+}
+.show-location-block {
+  display: block;
+}
+.unit-temp-1,
+.unit-temp-2 {
+  display: inline-block;
+  padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .modal-body {
+    min-height: 530px !important;
+  }
+}
+
+.nav-tabs > li > a.active,
+.nav-tabs > .active > a:hover,
+.nav-tabs > li > a:hover {
+  text-decoration: none;
+  font-weight: bold !important;
+  border-radius: 0px;
+  border-bottom-width: 4px !important;
+  border-bottom-style: solid !important;
+  border-bottom-color: #14b268 !important;
+  color: #000 !important;
+  background-color: transparent !important;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #ddd;
+  .nav-link {
+    &.active {
+      border-color: transparent !important;
+    }
+  }
+  li {
+    a {
+      color: gray !important;
+      font-weight: bold !important;
+      border-radius: 0px;
+      border-bottom-width: 4px;
+      border-color: transparent !important;
+    }
+  }
+}
+
+.cal-btn-primary {
+  padding: 10px 16px;
+  background: #ffffff !important;
+  border-radius: 4px;
+  border: 2px solid #14b268 !important;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 1.25px;
+  color: black !important;
+  outline: none !important;
+}
+
+.block {
+  text-align: left;
+  display: inline-block;
+}
+
+.cal-primary-active {
+  background: #14b268 !important;
+  color: #ffffff !important;
+}
+
+.cal-btn-primary:hover,
+.cal-btn-primary:not(:disabled):not(.disabled).active,
+.cal-btn-primary:not(:disabled):not(.disabled):active,
+.show > .cal-btn-primary.dropdown-toggle {
+  border-color: #14b268 !important;
+  background: #14b268 !important;
+  color: #ffffff !important;
+}

@@ -1,0 +1,199 @@
+<!-- Tenore api -->
+<!-- <div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header custom-modal-header">Add Gifs, Stickers</div>
+    <div class="modal-body" id="gif_sticker">
+      <div role="tabpanel">
+        <div class="tab-content">
+          <div
+            role="tabpanel"
+            class="tab-pane gif-setting-box active"
+            id="setting"
+          >
+            <form [formGroup]="gifsFormGroup">
+              <div class="row gif-setting-box">
+                <div class="col-12">
+                  <div class="col-12 btn-section justify-center flex-wrap">
+                    <button
+                      class="gifs-btn col-12 col-sm-6 col-md-3"
+                      [ngClass]="{ 'selected-btn': isGif === true }"
+                      (click)="loadTrending('gif')"
+                    >
+                      Gifs
+                    </button>
+                    <button
+                      class="stickers-btn col-12 col-sm-6 col-md-3"
+                      [ngClass]="{ 'selected-btn': isSticker === true }"
+                      (click)="loadTrending('sticker')"
+                    >
+                      Stickers
+                    </button>
+                    <div
+                      class="preview col-12 col-md-6 col-sm-12"
+                      *ngIf="previewImage != ''"
+                      [ngClass]="{ preview: previewImage != undefined }"
+                    >
+                      <img
+                        [src]="previewImage"
+                        id="preview-image"
+                        alt=""
+                        style="margin-top: 5px"
+                      />
+                    </div>
+                  </div>
+                  <div class="search mt5">
+                    <input
+                      type="text"
+                      class="search-input"
+                      id="searchbar"
+                      [(ngModel)]="search"
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Search GIFs &Memes"
+                    />
+                    <button
+                      type="button"
+                      class="search-btn"
+                      (click)="searchBasedGifs()"
+                    >
+                      Search
+                    </button>
+                  </div>
+                  <div class="left-watermark">Powered by Tenor</div>
+                  <div
+                    class="gifs-stickers-section grid-container"
+                    (scroll)="onScroll($event)"
+                    id="gif-parent"
+                    style="overflow-x: hidden"
+                  >
+                    <div
+                      class="grid-item justify-center"
+                      *ngFor="let item of gifData"
+                      (click)="selectImage(item)"
+                    >
+                      <img
+                        [src]="item.gridUrl"
+                        (load)="resizeGridItem($event)"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-12 footer-btn-position">
+                <button
+                  type="button"
+                  class="btn btn-secondary mr-20"
+                  (click)="dismissModel()"
+                >
+                  CANCEL
+                </button>
+                <button class="btn btn-primary" (click)="saveGIFSetting()">
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- Gify api -->
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header custom-modal-header">Add Gifs, Stickers</div>
+    <div class="modal-body" id="gif_sticker">
+      <div role="tabpanel">
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div
+            role="tabpanel"
+            class="tab-pane gif-setting-box active"
+            id="setting"
+          >
+            <form [formGroup]="gifsFormGroup">
+              <div class="row gif-setting-box">
+                <div class="col-12">
+                  <div class="col-12 btn-section justify-center flex-wrap">
+                    <button
+                      class="gifs-btn col-12 col-sm-6 col-md-3 mt5"
+                      [ngClass]="{ 'selected-btn': isGif === true }"
+                      (click)="loadGifs()"
+                      type="button"
+                    >
+                      Gifs
+                    </button>
+                    <button
+                      class="stickers-btn col-12 col-sm-6 col-md-3 mt5"
+                      [ngClass]="{ 'selected-btn': isSticker === true }"
+                      (click)="loadStickers()"
+                      type="button"
+                    >
+                      Stickers
+                    </button>
+                    <div
+                      class="preview col-12 col-md-6 col-sm-12"
+                      *ngIf="previewImage != ''"
+                      [ngClass]="{ preview: previewImage != undefined }"
+                    >
+                      <img
+                        [src]="previewImage"
+                        id="preview-image"
+                        alt=""
+                        style="margin-top: 5px"
+                      />
+                    </div>
+                  </div>
+                  <div class="search mt5">
+                    <input
+                      type="text"
+                      class="search-input"
+                      id="searchbar"
+                      [(ngModel)]="search"
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Search GIFs &Memes"
+                      (keyup.enter)="searchBasedGifs()"
+                    />
+                    <button
+                      type="button"
+                      class="search-btn"
+                      (click)="searchBasedGifs()"
+                    >
+                      Search
+                    </button>
+                  </div>
+                  <div class="upper-gif-section" id="upper-gif-section">
+                    <div
+                      class="gifs-stickers-section"
+                      id="gif-parent"
+                      style="overflow-x: hidden"
+                    >
+                      <div id="gif"></div>
+                    </div>
+                  </div>
+                  <h6 class="watermark">Powered By GIPHY</h6>
+                </div>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-12 footer-btn-position">
+                <button
+                  type="button"
+                  class="btn btn-secondary mr-20"
+                  (click)="dismissModel()"
+                >
+                  CANCEL
+                </button>
+                <button class="btn btn-primary" (click)="saveGIFSetting()">
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

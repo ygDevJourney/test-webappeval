@@ -1,0 +1,75 @@
+<div *ngIf="deviceType !== 'Linked Browser'" style="padding: 0 10px;">
+    <div class="container-fluid">
+        <div class="landingpage-header">
+            <div class="left-arrow">
+            </div>
+            <div class="header-button homepage-button">
+                My Display
+            </div>
+
+            <div class="header-button header-label">
+                Add New Display
+            </div>
+        </div>
+    </div>
+    <div id="ms-landingpage-container" class="container">
+        <div class="row mt55">
+            <div class="col-12">
+                <img src="../../../../assets/illustriations/setup_success.svg">
+            </div>
+            <div class="col-12 mt50">
+
+                <div>
+                    <!-- {{ 'MIRROR.MIRRORSETUP.SUCCESS_MESSAGE_P1' | translate }} -->
+                    Congratulations!!! <br><br> 
+                    Your new Mango Display
+                    <!-- {{ 'MIRROR.MIRRORSETUP.SUCCESS_MESSAGE_P2' | translate }} -->
+                    <br>
+                    <b class="color: #14B268;">{{mirrorName}}</b> <br> 
+                    is successfully added and is ready to use.
+                    <!-- {{ 'MIRROR.MIRRORSETUP.SUCCESS_MESSAGE_P3' | translate }} -->
+                </div>
+            </div>
+            <div class="col-12 mt55 mb30">
+                <button class="btn btn-primary" (click)="redirect()">
+                    <!-- {{ 'MIRROR.MIRRORSETUP.SUCCESS_BUTTON_TEXT' | translate }} -->
+                    GO TO DISPLAY SETTINGS
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="deviceType === 'Linked Browser'" style="padding: 0 10px;">
+    <div class="mt15">
+        <!-- {{ 'MIRROR.MIRRORSETUP.LINKED_BROWSER_SETUP_SUCCESS_MESSAGE_P1' | translate }} -->
+        Congratulations!!! 
+        <div class="mt30">
+            <div class="col-12">
+                <img src="../../../../assets/illustriations/setup_success.svg">
+            </div>
+        </div>
+        Your Mango Display URL for
+        <!-- {{ 'MIRROR.MIRRORSETUP.LINKED_BROWSER_SETUP_SUCCESS_MESSAGE_P2' | translate }} -->
+        <span class="mirror-name">{{mirrorName}}</span> 
+        <!-- {{ 'MIRROR.MIRRORSETUP.LINKED_BROWSER_SETUP_SUCCESS_MESSAGE_P3' | translate }} -->
+        is now setup.
+        <br> 
+        Use this link to view your display on any browser.
+        <!-- {{ 'MIRROR.MIRRORSETUP.LINKED_BROWSER_SETUP_SUCCESS_MESSAGE_P4' | translate }} -->
+        <br>
+        <a class="wb-break-word" [href]="getDynamicPortalURL()" target="_blank">{{getDynamicPortalURL()}}</a><br>
+
+        <div class="col-12 mt30">
+            <div>
+                Continue to configure your display with the widgets and layout you want.
+                <!-- {{ 'MIRROR.MIRRORSETUP.LINKED_BROWSER_SETUP_SUCCESS_MESSAGE_P5' | translate }} -->
+            </div>
+        </div>
+        <div class="col-12 mt30 mb30">
+            <button class="btn btn-primary" (click)="redirect()">
+                <!-- {{ 'MIRROR.MIRRORSETUP.SUCCESS_BUTTON_TEXT' | translate }} -->
+                GO TO DISPLAY SETTINGS
+            </button>
+        </div>
+    </div>
+</div>

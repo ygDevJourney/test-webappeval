@@ -1,0 +1,58 @@
+.custom-modal-header {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    letter-spacing: 0.1px;
+    text-decoration-line: underline;
+    color: #333333;
+}
+
+.modal-body {
+    min-height: 538.49px;
+    padding: 20px 15px !important;
+}
+
+.clock-setting-box {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.3px;
+    color: #333333;
+    mix-blend-mode: normal;
+    cursor: pointer;
+}
+
+.nav-tabs > li > a.active,
+.nav-tabs > .active > a:hover,.nav-tabs > li > a:hover {
+    text-decoration: none;
+    font-weight: bold !important;
+    border-radius: 0px;
+    border-bottom-width: 4px !important;
+    border-bottom-style: solid !important;
+    border-bottom-color: #14b268 !important;
+    color: #000 !important;
+    background-color: transparent !important;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #ddd;
+    .nav-link {
+        &.active {
+            border-color: transparent !important;
+        }
+    }
+    li {
+        a {
+            color: gray !important;
+            font-weight: bold !important;
+            border-radius: 0px;
+            border-bottom-width: 4px;
+            border-color: transparent !important;
+        }
+    }
+}
+
+

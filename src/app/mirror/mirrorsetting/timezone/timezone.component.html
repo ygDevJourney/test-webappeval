@@ -1,0 +1,62 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="custom-modal-header fw-bold">Update Display Time zone</div>
+      <div class="timezone-setting-box mt25">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12">
+                <div
+                  class="col-xs-12 col-sm-6 float-left text-align-center mt10"
+                >
+                  Select Time zone
+                </div>
+                <div
+                  class="col-xs-12 col-sm-6 float-left text-align-center mt10"
+                >
+                  <select
+                    name="timeZone"
+                    [(ngModel)]="currentTimezone"
+                    #timezone
+                    class="btn btn-secondary text-align-left"
+                    style="height: 35px; width: 210px"
+                    (change)="selectTimezone()"
+                  >
+                    <option
+                      *ngFor="let timezone of availableTimeZoneList"
+                      [ngValue]="timezone"
+                    >
+                      {{ timezone }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 mt10">
+                <div
+                  class="col-xs-12 col-sm-6 float-left text-align-center mt10"
+                >
+                  Current Time
+                </div>
+                <div
+                  class="col-xs-12 col-sm-6 float-left text-align-center mt10"
+                >
+                  {{ current_time }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 mt35">
+            <button class="btn btn-secondary" (click)="timeZoneModal.hide()">
+              Cancel
+            </button>
+            <button class="btn btn-primary ml15" (click)="updateTimeZone()">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div *ngIf="isTemplateUpdated == false">
+  <div id="nav-container" class="header">
+    <div>
+      <strong> Save current display as template </strong>
+    </div>
+  </div>
+
+  <div id="temp-add-conf-container">
+    <div class="row mt20">
+      <div class="col-12 setup-message mt20">
+        Save your current display layout as a custom template for future use.
+      </div>
+
+      <div class="col-12 mt40">
+        <div class="col-12 text-center">
+          <input
+            type="text"
+            id="display_name"
+            class="form-control mx-auto text-line col-12 col-lg-4 col-md-6 col-sm-12"
+            [(ngModel)]="displayName.value"
+            placeholder="Please enter template name"
+          />
+        </div>
+        <div class="fs-9 col-12 mt10">Rename template name as needed</div>
+        <span class="error-text mt10">{{ displayName.error }}</span>
+      </div>
+      <div class="col-12 mt120">
+        <button class="btn btn-secondary" (click)="backScreen()">Back</button>
+        <button class="btn btn-primary ml25" (click)="saveTemplate()">
+          Save as template
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  id="template-list-container"
+  class="container1 plr30"
+  *ngIf="isTemplateUpdated == true"
+>
+  <div class="row">
+    <div class="col-12 mt10">
+      <app-template
+        [mirrorName]="mirrorName"
+        [themeName]="themeName"
+        [requestType]="requestType"
+        [deviceType]="deviceType"
+        [deviceMacAddress]="deviceMacAddress"
+      ></app-template>
+    </div>
+  </div>
+</div>

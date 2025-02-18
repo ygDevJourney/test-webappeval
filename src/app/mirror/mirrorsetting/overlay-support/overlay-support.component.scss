@@ -1,0 +1,55 @@
+.bg-box {
+  padding: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+}
+
+.custom-modal-header {
+  text-align: center;
+  width: 100%;
+  padding: 20px 15px;
+  font-weight: 600;
+  text-decoration: underline;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px;
+  letter-spacing: 0.1px;
+  color: #333333;
+}
+
+.bg-setting-box {
+  height: 290px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+}
+
+@media (min-height: 700px) {
+  .modal-body {
+    height: 580px;
+  }
+
+  .bg-setting-box {
+    height: 390px !important;
+  }
+}
+
+@media (min-height: 800px) {
+  .modal-body {
+    height: 680px;
+  }
+
+  .bg-setting-box {
+    height: 490px !important;
+  }
+}
+
+@media (min-height: 900px) {
+  .modal-body {
+    height: 780px;
+  }
+
+  .bg-setting-box {
+    height: 590px !important;
+  }
+}

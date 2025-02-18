@@ -1,0 +1,283 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content ical-content">
+    <div class="modal-header custom-modal-header ical-header">
+      Connect Apple iCloud Calendar
+    </div>
+
+    <div class="modal-body p0">
+      <div class="icloud-setting-box">
+        <div class="row col-12 mt15 justify-center">
+          <!-- <div
+            class="col-6 mt20 device-box cursor-pointer"
+            (click)="
+              resetForm();
+              isUserCredentialOptionEnabled = true;
+              icalAccountSuccess = true
+            "
+            [ngClass]="{
+              'icloud-primary-active': isUserCredentialOptionEnabled === true
+            }"
+          >
+            <div class="ml20" style="vertical-align: middle; text-align: left">
+              iCloud Account Authentication
+            </div>
+          </div>
+
+          <div
+            class="col-6 mt20 device-box cursor-pointer"
+            (click)="
+              resetForm();
+              isUserCredentialOptionEnabled = false;
+              icalAccountSuccess = true
+            "
+            [ngClass]="{
+              'icloud-primary-active': isUserCredentialOptionEnabled === false
+            }"
+          >
+            <div class="ml20" style="vertical-align: middle; text-align: left">
+              iCloud Calendar Public URL
+            </div>
+          </div> -->
+
+          <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-align-left">
+            Connection Method
+          </div>
+          <div
+            class="col-12 col-sm-12 col-md-6 col-lg-6 justify-start block p0"
+          >
+            <select
+              name="iucloud_selectedMethos"
+              class="btn btn-secondary"
+              style="width: 300px; height: 35px"
+              [(ngModel)]="icloudDefaultMethod"
+              (change)="updateIcloudAuthMethod(icloudDefaultMethod)"
+            >
+              <option
+                *ngFor="let icloudMethod of icloudAuthMethods"
+                [value]="icloudMethod"
+              >
+                {{ icloudMethod }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <hr />
+        <form [formGroup]="icloudCalendarFormGroup">
+          <div>
+            <div class="col-12" *ngIf="isUserCredentialOptionEnabled">
+              <div class="mt20 text-align-left">
+                <strong>Connect Your Apple iCloud Calendar Securely</strong>
+              </div>
+
+              <div class="row col-12 mt20 p0">
+                <div class="col-12 text-align-left p0">
+                  <label class="col-12 col-sm-12 col-md-6 col-lg-6"
+                    >Enter Your Apple Account email Address</label
+                  >
+                  <input
+                    class="col-12 col-sm-12 col-md-6 col-lg-6"
+                    type="text"
+                    style="border: none; border-bottom: 1px solid gray"
+                    formControlName="userName"
+                    placeholder="Apple Account email address"
+                  />
+                </div>
+              </div>
+              <div class="row col-12 mt10 p0">
+                <div class="col-12 text-align-left p0">
+                  <label class="col-12 col-sm-12 col-md-6 col-lg-6"
+                    >Enter App-specific password created for Mango
+                    Display:</label
+                  >
+                  <input
+                    class="col-12 col-sm-12 col-md-6 col-lg-6"
+                    type="password"
+                    style="border: none; border-bottom: 1px solid gray"
+                    formControlName="password"
+                    placeholder="app-specific password"
+                  />
+                </div>
+              </div>
+
+              <div
+                class="col-12 mt10 pl30 text-align-left"
+                style="color: orangered"
+                *ngIf="icalAccountSuccess == false"
+              >
+                Unable to connect to iCloud account. Please review the steps and
+                your details and try again. If you continue to have issues,
+                please use the
+                <span class="bl-link" (click)="updateCalendarOption()"
+                  >iCloud URL direct</span
+                >
+                option.
+              </div>
+              <div class="col-12 mt20 p0 text-align-left">
+                <hr />
+                <div class="mt10">
+                  Apple requires an <strong>app‑specific password</strong> to
+                  allow secure access to your calendar. Here’s how to create
+                  yours.
+                </div>
+                <ul class="text-align-left col-12 ls-auto ml15">
+                  <li class="col-12 mt10 p0">
+                    <strong> Go to </strong>
+                    <a
+                      href="https://account.apple.com/account/manage"
+                      class="bl-link"
+                      target="_blank"
+                    >
+                      account.apple.com
+                    </a>
+                    and <strong>sign in</strong> with your Apple Account.
+                  </li>
+                  <li class="col-12 mt10 p0">
+                    In the <strong>Sign-In and Security</strong> section,
+                    <strong> select App-Specific</strong>
+                    Passwords.
+                  </li>
+                  <li class="col-12 mt10 p0">
+                    <Strong>Generate</Strong> a new app-specific password (or
+                    click the + icon). Name it “Mango Display.”
+                  </li>
+                  <li class="col-12 mt10 p0">
+                    <strong>Copy</strong> the password Apple provides, and paste
+                    it above.
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 mt20 p0 text-align-left panel-title">
+                <a
+                  class="col-12 text-align-left fit-content-width fw-bold p0 collapsed"
+                  data-toggle="collapse"
+                  href="#icalaccount"
+                >
+                  Why App‑Specific Passwords?
+                </a>
+                <ul
+                  class="text-align-left panel-collapse collapse col-12"
+                  id="icalaccount"
+                >
+                  <li class="col-12 mt10 p0">
+                    Your main Apple ID password is never shared, for your
+                    security.
+                  </li>
+                  <li class="col-12 mt10 p0">
+                    You have <strong>full control </strong> over which apps have
+                    access. You can <strong> revoke </strong> this permission
+                    <strong>anytime</strong>
+                    by deleting the app-specific password in your Apple ID
+                    settings.
+                  </li>
+                  <li class="col-12 mt10 p0">
+                    For more details, visit Apple’s help article:
+                    <a
+                      href="https://support.apple.com/en-us/102654"
+                      class="bl-link"
+                      target="_blank"
+                    >
+                      Apple Support: Using app-specific passwords.</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-12" *ngIf="!isUserCredentialOptionEnabled">
+              <div class="col-12 mt10 p0">
+                <label class="col-12 text-align-left p0"
+                  >Enter your Apple iCloud Calendar URL</label
+                >
+                <div class="col-12 text-align-left">
+                  <input
+                    class="col-12 p0"
+                    type="text"
+                    formControlName="icalUrl"
+                    style="
+                      border: none;
+                      border-bottom: 1px solid gray;
+                      text-align: center;
+                    "
+                    placeholder="iCloud calendar URL"
+                  />
+                </div>
+              </div>
+
+              <div
+                class="col-12 mt10 pl30 text-align-left"
+                style="color: orangered"
+                *ngIf="icalAccountSuccess == false"
+              >
+                Unable to connect to iCloud Calendar URL. Please review the
+                steps and URL entered and try again.
+              </div>
+
+              <div class="col-12 mt20 p0 text-align-left panel-title">
+                <a
+                  class="col-12 text-align-left fit-content-width fw-bold p0 collapsed"
+                  data-toggle="collapse"
+                  href="#icalurl"
+                >
+                  How to get your Apple iCloud Calendar URL
+                </a>
+                <div id="icalurl" class="panel-collapse collapse">
+                  <ul class="text-align-left p0">
+                    <li class="col-12 mt10 fw-bold p0">On your web browser</li>
+                    <li class="col-12 mt10 p0">
+                      Log into your
+                      <a href="https://iCloud.com" target="_blank"
+                        >iCloud.com</a
+                      >
+                      in your web browser
+                    </li>
+                    <li class="col-12 mt10 p0">Click on the Calendar icon</li>
+                    <li class="col-12 mt10 p0">
+                      Click Share Calendar to the right of the calendar name in
+                      the sidebar
+                    </li>
+                    <li class="col-12 mt10 p0">
+                      Enable 'Public Calendar', then click 'Copy Link' and paste
+                      the URL here
+                    </li>
+                  </ul>
+                  <div class="col-12 mt10 fw-bold">OR</div>
+                  <ul class="text-align-left p0 mt10">
+                    <li class="col-12 mt10 fw-bold p0">
+                      On your iPhone or iPad
+                    </li>
+                    <li class="col-12 mt10 p0">Tap the Calendar App</li>
+                    <li class="col-12 mt10 p0">Tap Calendars at the bottom</li>
+                    <li class="col-12 mt10 p0">View the 'ICLOUD' section</li>
+                    <li class="col-12 mt10 p0">
+                      Tap the Info (i) button next to the iCloud calendar you
+                      want to share.
+                    </li>
+                    <li class="col-12 mt10 p0">
+                      Turn on Public Calendar, then tap Share Link and choose
+                      copy and paste the URL here
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- for icloud calendar URL -->
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary mr-20"
+        (click)="dismissModel()"
+      >
+        CANCEL
+      </button>
+      <button class="btn btn-primary" (click)="saveIcloudCredentials()">
+        CONNECT
+      </button>
+    </div>
+  </div>
+</div>

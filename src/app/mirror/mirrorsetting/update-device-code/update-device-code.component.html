@@ -1,0 +1,40 @@
+<div id="nav-container" class="header">
+  <div>
+    <strong> Display Device Code </strong>
+  </div>
+</div>
+
+<div id="ms-mirrorrename-container">
+  <div class="row mt20">
+    <div class="col-12 setup-message mt20">
+      Current Display Device code :
+      <span class="fw-bold">{{ displayDeviceCode.value }}</span>
+    </div>
+
+    <div class="col-12 setup-message mt40">
+      To update and assign
+      <span class="fw-bold"> "{{ mirrorName.value }}"</span> to a different
+      Display Device Code instead, please enter the new valid Display Device
+      Code below
+    </div>
+
+    <div class="col-12 mt40">
+      <input
+        type="text"
+        id="display_code"
+        class="form-control text-line upperclass"
+        [(ngModel)]="updatedDeviceCode.value"
+      />
+      <span class="error-text">{{ updatedDeviceCode.error }}</span>
+    </div>
+
+    <div class="col-12 mt120">
+      <button class="btn btn-secondary" (click)="backToMirrorSettingPage()">
+        Cancel
+      </button>
+      <button class="btn btn-primary ml25" (click)="updateDisplayDeviceCode()">
+        Update
+      </button>
+    </div>
+  </div>
+</div>

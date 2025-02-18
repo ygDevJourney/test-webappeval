@@ -1,0 +1,62 @@
+<div id="nav-container">
+  <div class="mirror-nav">
+    <div class="left-menu-button">
+      <img
+        src="../../assets/icons/hamburger-menu.svg"
+        alt=""
+        class="img-fluid"
+        (click)="openUserProfile()"
+      />
+    </div>
+    <strong>
+      <!-- {{ "MIRROR.TITLE" | translate }} -->
+      My Displays
+    </strong>
+  </div>
+</div>
+<div id="mirror-container" class="container">
+  <div class="row">
+    <div id="addNewDisplay" class="col-md-3 col-6">
+      <div class="mirror-box" (click)="onSetupRoute()">
+        <img alt="" class="img-fluid" src="../../assets/icons/add-mirror.svg" />
+        <div class="mt20">
+          <!-- {{ "MIRROR.ADD_DISPLAY_TEXT" | translate }} -->
+          Add New Display
+        </div>
+      </div>
+    </div>
+    <div
+      id="mirror{{ index }}"
+      *ngFor="let mirror of mirrorList; let index = index"
+      class="col-md-3 col-6"
+    >
+      <div class="mirror-box" (click)="loadLayoutScreen(mirror, index)">
+        <img
+          alt=""
+          class="img-fluid"
+          src="../../assets/icons/display_logo.png"
+          height="40px"
+          width="40px"
+        />
+        <div class="mt20 word-wrap">{{ mirror.mirrorName }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #mirrorQuantityAlert="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-common-alert
+    [commonAlertModal]="commonAlertModal"
+    [type]="'addmirrorLimitAlert'"
+    [header]="'Display Limit Reached'"
+    [data]=""
+  ></app-common-alert>
+</div>

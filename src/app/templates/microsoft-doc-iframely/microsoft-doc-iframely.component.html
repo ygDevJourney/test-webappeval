@@ -1,0 +1,337 @@
+<div class="modal-dialog modal-lg modal-dialog-centered" id="modal1">
+  <div class="modal-content">
+    <div
+      class="modal-header custom-modal-header"
+      *ngIf="isMyFileSelected == false"
+    >
+      Add Microsoft Doc widget
+    </div>
+    <div class="modal-body">
+      <div role="tabpanel" *ngIf="isMyFileSelected == false">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a
+              href="#mic_doc_SettingTab"
+              class="nav-link active"
+              aria-controls="mic_doc_SettingTab"
+              role="tab"
+              data-toggle="tab"
+              >Settings</a
+            >
+          </li>
+          <li class="nav-item" style="margin-left: 10px">
+            <a
+              href="#micDocWidgetBgTab"
+              class="nav-link"
+              aria-controls="micDocWidgetBgTab"
+              role="tab"
+              data-toggle="tab"
+              (click)="setBackgroundWidgetDetail()"
+              >Format</a
+            >
+          </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div
+            role="tabpanel"
+            class="tab-pane active mc-setting-box"
+            id="mic_doc_SettingTab"
+          >
+            <form [formGroup]="micDocFormGroup" class="mt10">
+              <div class="row mt20">
+                <div class="col-12">
+                  <div class="float-left fit-content-width">My Files</div>
+                  <div class="float-right">
+                    <div class="switchToggle">
+                      <input
+                        type="checkbox"
+                        id="mic_mediafile-switch"
+                        formControlName="isS3Enabled"
+                        aria-expanded="true"
+                        (click)="openMyMediaFile('toggle')"
+                      />
+                      <label for="mic_mediafile-switch" class="mt10"
+                        >Toggle</label
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <span
+                  *ngIf="micDocFormGroup.value.isS3Enabled == true"
+                  class="col-12 fw-bold error-text"
+                  >{{ error }}</span
+                >
+
+                <div
+                  class="col-12 bl-link theme-font-color mt5 justify-end"
+                  *ngIf="
+                    selectedS3Files.length > 0 &&
+                    micDocFormGroup.value.isS3Enabled == true
+                  "
+                  (click)="openMyMediaFile('edit')"
+                >
+                  edit
+                </div>
+
+                <div
+                  class="col-12 justify-start"
+                  *ngIf="micDocFormGroup.value.isS3Enabled == true"
+                >
+                  <div *ngFor="let s3file of selectedS3Files">
+                    <div class="example-box">
+                      <img
+                        src="../../../assets/icons/docs.png"
+                        style="height: 100px; width: 100px"
+                      />
+                      <div class="fs-14">{{ s3file.key.match("[^/]+$") }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="full-width" />
+
+              <div class="row mt15 accordion" id="accordian-mic">
+                <div class="col-12">
+                  <div class="float-left fit-content-width">
+                    Add Microsoft Doc URL
+                  </div>
+                  <div class="float-right">
+                    <div
+                      class="switchToggle"
+                      id="#manualmic-section"
+                      data-target="#manualmic-section"
+                      aria-controls="manualmic-section"
+                    >
+                      <input
+                        type="checkbox"
+                        id="mic_url-switch"
+                        formControlName="isCustomUrlEnabled"
+                        (click)="updateFlag()"
+                      />
+                      <label for="mic_url-switch" class="mt10">Toggle</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  id="manualmic-section"
+                  [class.collapse]="!micDocFormGroup.value.isCustomUrlEnabled"
+                  aria-labelledby="manualmic-section"
+                  data-parent="#accordian-mic"
+                  class="col-12 text-align-center custom-text-field mt10"
+                >
+                  <input
+                    type="text"
+                    placeholder="Enter the publicly accessible Microsoft Doc URL"
+                    id="mic_doc_url"
+                    (paste)="validateURL($event)"
+                    (input)="validateURL($event)"
+                    class="form-control text-line text-align-center"
+                    formControlName="baseurl"
+                    style="width: 95%; margin: auto"
+                  />
+                  <span class="error-text">{{ error }}</span>
+                  <div class="fs-11 mt10 col-12 text-align-left">
+                    Must be a valid and publicly shared Microsot Office Word,
+                    Excel or Power Point URL.
+                  </div>
+                  <div class="fs-11 mt5 mb10 col-12 text-align-left">
+                    The Refresh Time below indicates how often you want to
+                    re-download the document to capture and display any updates
+                    made directly to the document.
+                  </div>
+                </div>
+              </div>
+
+              <div [class.collapse]="!micDocFormGroup.value.isCustomUrlEnabled">
+                <div class="row mt20">
+                  <div class="col-12">
+                    <div class="col-4 float-left text-align-left p-0">
+                      Refresh Time
+                    </div>
+                    <div class="btn-group btn-group-justified float-left block">
+                      <select
+                        name="autoRefreshTime"
+                        formControlName="autoRefreshTime"
+                        class="btn btn-secondary"
+                        style="width: 250px; height: 35px"
+                      >
+                        <option
+                          *ngFor="let obj of iframily_autorefresh_time_option"
+                          [value]="obj.value"
+                        >
+                          {{ obj.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <hr />
+                <div class="text-align-left p-0 word-wrap">
+                  How to get Microsoft Doc URL based on the MS Service you use:
+                </div>
+                <div class="col-12 mt10 word-wrap">
+                  <div class="panel-title text-align-left cursor-pointer">
+                    <a
+                      href="#collapse_p1"
+                      class="fit-content-width collapsed"
+                      data-toggle="collapse"
+                      >If you use Regular MS Office Application files</a
+                    >
+                  </div>
+                  <div
+                    id="collapse_p1"
+                    class="col-12 panel-collapse collapse text-align-left ptb5"
+                  >
+                    <div class="ml15">
+                      Paste the full link to a publicly shared hosted MS Office
+                      file.
+                      <div>
+                        Example:
+                        <span class="theme-font-color"
+                          >https://www.dropbox.com/mycomp/sales.xls</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 mt5 word-wrap">
+                  <div class="panel-title text-align-left cursor-pointer">
+                    <a
+                      href="#collapse_p2"
+                      class="fit-content-width collapsed"
+                      data-toggle="collapse"
+                      >If you use SharePoint, OneDrive for Business, Office for
+                      the web, SharePoint in Microsoft 365, Office for
+                      business</a
+                    >
+                  </div>
+                  <div
+                    id="collapse_p2"
+                    class="col-12 panel-collapse collapse text-align-left ptb5"
+                  >
+                    <div class="ml15">
+                      Follow the steps
+                      <a
+                        href="https://support.microsoft.com/en-us/office/embed-your-excel-workbook-on-your-web-page-or-blog-from-sharepoint-or-onedrive-for-business-7af74ce6-e8a0-48ac-ba3b-a1dd627b7773"
+                        target="_blank"
+                        >here</a
+                      >
+                      <div>
+                        Get the URL to the public workbook. Add the
+                        '&action=embedview' to the end of the URL and paste the
+                        link above.
+                      </div>
+                      <div>
+                        Example:
+                        <span class="theme-font-color"
+                          >https://mangodisplay.sharepoint.com/sites/Doc.aspx?sourcedoc="{{
+                            "{"
+                          }}"8234"{{ "}" }}"&action=embedview</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 mt5 word-wrap">
+                  <div class="panel-title text-align-left cursor-pointer">
+                    <a
+                      href="#collapse_p3"
+                      class="fit-content-width collapsed"
+                      data-toggle="collapse"
+                      >If you use Office.com, OneDrive (home or personal)</a
+                    >
+                  </div>
+                  <div
+                    id="collapse_p3"
+                    class="col-12 panel-collapse collapse text-align-left ptb5"
+                  >
+                    <div class="ml15">
+                      Follow the steps
+                      <a
+                        href="https://support.microsoft.com/en-us/office/embed-files-directly-into-your-website-or-blog-ed07dd52-8bdb-431d-96a5-cbe8a80b7418"
+                        target="_blank"
+                        >here</a
+                      >
+                      <div class="mt5">
+                        Please only paste the {{ "<" }}iframe src="#"{{ ">" }}
+                        value here.
+                      </div>
+                      <div class="mt5">
+                        For Example if you get the code that looks like this:
+                      </div>
+                      <div class="mt5">
+                        {{ "<" }}iframe
+                        src="https://onedrive.live.com/embed?cid=5CE4A6246D4E294C&resid=5CE4A6246D4E294C%21128&authkey=AOmMKnOLLUhz4wo&em=2"
+                        width="402" height="346" frameborder="0"
+                        scrolling="no"{{ ">" }}
+                      </div>
+                      <div>
+                        You only copy and paste this part in above field:
+                        <div class="theme-font-color">
+                          https://onedrive.live.com/embed?cid=5CE4A6246D4E294C&resid=5CE4A6246D4E294C%21128&authkey=AOmMKnOLLUhz4wo&em=2
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 mt20 fs-11 word-wrap">
+                  If you're document sharing is set correctly but you still
+                  don't see it, please chat with us from the home page and share
+                  the URL being used, and we can troubleshoot further.
+                </div>
+              </div>
+              <hr class="full-width" />
+            </form>
+
+            <div class="row">
+              <div class="col-12 footer-btn-position">
+                <button
+                  type="button"
+                  class="btn btn-secondary mr-20"
+                  (click)="dismissModel()"
+                >
+                  CANCEL
+                </button>
+                <button
+                  class="btn btn-primary"
+                  (click)="updateIframilySettings()"
+                >
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane bg-setting-box"
+            id="micDocWidgetBgTab"
+            *ngIf="settingDisplayflag"
+          >
+            <app-widget-bg-setting
+              [widgetbgsetting]="widgetBgSetting"
+              [widgetType]="widgetType"
+              (emitbgsettingMicrosoftDocOption)="onbgsettingOptions($event)"
+              (closeModalEvent)="dismissModel()"
+            >
+            </app-widget-bg-setting>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isMyFileSelected == true">
+        <app-manage-s3-bucket
+          [requestType]="requestType"
+          [selectedS3Files]="selectedS3Files"
+          (updateMicrosoftS3Details)="updateMicrosoftS3Details($event)"
+          (close)="reverseSelection()"
+        ></app-manage-s3-bucket>
+      </div>
+    </div>
+  </div>
+</div>

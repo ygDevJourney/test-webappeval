@@ -1,0 +1,457 @@
+<div
+  class="bg-box"
+  *ngIf="supportedCustomTitleModification.includes(widgetType)"
+>
+  <div class="row">
+    <div class="col-12">
+      <div class="float-left fit-content-width fw-bold">Title Format</div>
+    </div>
+  </div>
+
+  <div class="row mt15" *ngIf="widgetType != 'news'">
+    <div class="col-sm-12" style="text-align: left">
+      <label class="mr-20">Widget title</label>
+      <input
+        type="text"
+        style="
+          float: right;
+          border: none;
+          border-bottom: 1px solid gray;
+          outline: none;
+        "
+        [(ngModel)]="bgSettingOptions.widgetname"
+        placeholder="Enter widget name"
+      />
+    </div>
+  </div>
+
+  <div
+    class="row mt10"
+    *ngIf="supportedCustomTitleNameModification.includes(widgetType)"
+  >
+    <div
+      class="col-12"
+      [ngClass]="{ disabled: bgSettingOptions.widgetname.trim() == '' }"
+    >
+      <div class="float-left">
+        <div class="fit-content-width">Show title on display</div>
+      </div>
+      <div class="float-right">
+        <label class="custom-checkbox display-block">
+          <input
+            type="checkbox"
+            [(ngModel)]="bgSettingOptions.isNameVisible"
+            class="vertical-middle-align ml5"
+            data-md-icheck
+          />
+          <div class="checkbox checkbox-left"></div>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div
+    class="row mt10"
+    *ngIf="bgSettingOptions.isNameVisible || widgetType === 'news'"
+  >
+    <div class="col-12 mt10">
+      <div class="float-left">
+        <div class="fit-content-width">Title alignment</div>
+      </div>
+      <div class="float-right">
+        <div class="btn-group btn-group-justified float-left block">
+          <a
+            *ngFor="let obj of titleAlignment"
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{
+              'cal-primary-active':
+                bgSettingOptions.titleAlignment === obj.value
+            }"
+            (click)="bgSettingOptions.titleAlignment = obj.value"
+          >
+            <i
+              *ngIf="bgSettingOptions.titleAlignment === obj.value"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i
+            >{{ obj.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mt20">
+      <div class="float-left">Title Font Style</div>
+      <div class="float-right">
+        <div class="widget-bg-custom-select-container">
+          <div class="disp-dropdown">
+            <div (click)="toggleOptions($event, 'title')" class="btn-secondary">
+              <div
+                type="button"
+                class="col-12 custom-select"
+                [style.font-family]="bgSettingOptions.titleFontFamily"
+              >
+                {{ bgSettingOptions.titleFontFamily }}
+              </div>
+              <span class="p2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="12"
+                  fill="currentColor"
+                  class="bi bi-chevron-down"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+                  />
+                </svg>
+              </span>
+            </div>
+
+            <div *ngIf="titleFontFamilyOptions" class="options-list">
+              <div
+                *ngFor="let font of availableFontFamilies"
+                class="text-align-left custom-option cursor-pointer"
+                (click)="selectOption(font.googleFontName, 'title')"
+                [style.font-family]="font.googleFontName"
+              >
+                <div>
+                  {{ font.googleFontName }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mt20">
+      <div class="float-left">Title Font Color</div>
+      <div class="float-right">
+        <input
+          type="color"
+          id="wid_bg_font_color"
+          class="btn btn-secondary mr5"
+          style="width: 55px; height: 35px"
+          [hidden]="selectedTitleFontColor == 'default'"
+          [(ngModel)]="bgSettingOptions.titleFontColor"
+        />
+
+        <select
+          id="wid_bg_title_font_color"
+          class="btn btn-secondary cursor-pointer"
+          style="height: 35px; width: 155px"
+          [style.backgroundColor]="bgSettingOptions.titleFontColor"
+          [(ngModel)]="selectedTitleFontColor"
+        >
+          <option
+            class="cursor-pointer"
+            [value]="fontColor"
+            *ngFor="let fontColor of availableColorSelection"
+          >
+            {{ fontColor }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-12 mt20">
+      <div class="float-left">Title background color</div>
+      <div class="float-right">
+        <input
+          type="color"
+          id="wid_bg_color"
+          class="btn btn-secondary mr5"
+          style="width: 55px; height: 35px"
+          [hidden]="selectedTitleBGColor == 'default'"
+          [(ngModel)]="bgSettingOptions.titleBackgroundColor"
+        />
+
+        <select
+          id="wid_bg_title_font_color"
+          class="btn btn-secondary cursor-pointer"
+          style="height: 35px; width: 155px; color: black !important"
+          [(ngModel)]="selectedTitleBGColor"
+        >
+          <option
+            class="cursor-pointer"
+            [value]="fontColor"
+            *ngFor="let fontColor of availableColorSelection"
+          >
+            {{ fontColor }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="bg-box mt10"
+  *ngIf="supportedCustomTitleModification.includes(widgetType)"
+>
+  <div class="row">
+    <div class="col-12">
+      <div class="float-left fit-content-width fw-bold">Body Format</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt15">
+      <div class="float-left">Font Style</div>
+      <div class="float-right">
+        <div class="widget-bg-custom-select-container">
+          <div class="disp-dropdown">
+            <div (click)="toggleOptions($event, 'body')" class="btn-secondary">
+              <div
+                type="button"
+                class="col-12 custom-select"
+                [style.font-family]="bgSettingOptions.fontFamily"
+              >
+                {{ bgSettingOptions.fontFamily }}
+              </div>
+              <span class="p2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="12"
+                  fill="currentColor"
+                  class="bi bi-chevron-down"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+                  />
+                </svg>
+              </span>
+            </div>
+
+            <div *ngIf="fontFamilyOptions" class="options-list">
+              <div
+                *ngFor="let font of availableFontFamilies"
+                class="text-align-left custom-option"
+                (click)="selectOption(font.googleFontName, 'body')"
+                [style.font-family]="font.googleFontName"
+              >
+                <div>
+                  {{ font.googleFontName }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mt20">
+      <div class="float-left">Font Color</div>
+      <div class="float-right">
+        <input
+          type="color"
+          id="wid_bg_font_color"
+          class="btn btn-secondary mr5"
+          style="width: 55px; height: 35px"
+          [hidden]="selectedFontColor == 'default'"
+          [(ngModel)]="bgSettingOptions.fontColor"
+        />
+
+        <select
+          name="font_color"
+          id="font_color"
+          class="btn btn-secondary"
+          style="height: 35px; width: 155px; color: black !important"
+          [(ngModel)]="selectedFontColor"
+          [style.backgroundColor]="bgSettingOptions.fontColor"
+        >
+          <option
+            [value]="fontColor"
+            *ngFor="let fontColor of availableColorSelection"
+          >
+            {{ fontColor }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-12 mt20 justify-space-between">
+      <div class="float-left">Font Size</div>
+      <div class="float-right">
+        <select
+          name="wid_bg_fontsize"
+          [(ngModel)]="bgSettingOptions.fontSize"
+          id="wid_bg_fontsize"
+          class="btn btn-secondary"
+          style="width: 155px; height: 35px; color: black"
+        >
+          <ng-container *ngIf="customFontSizeWidget.includes(widgetType)">
+            <option
+              [ngValue]="font.value"
+              *ngFor="let font of availableFontSize"
+            >
+              {{ font.name }}
+            </option>
+          </ng-container>
+          <ng-container *ngIf="!customFontSizeWidget.includes(widgetType)">
+            <option
+              [ngValue]="defaultFont.value"
+              *ngFor="let defaultFont of defaultFontSize"
+            >
+              {{ defaultFont.name }}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bg-box mt10">
+  <div class="row mt10">
+    <div class="col-12 justify-space-between">
+      <div class="float-left fw-bold">Background Format</div>
+      <div class="float-right">
+        <select
+          name="bg-format"
+          id="bg-format"
+          class="btn btn-secondary"
+          style="height: 35px; width: 155px; color: black !important"
+          [(ngModel)]="selectedBGFormat"
+        >
+          <option
+            [value]="bgformat"
+            *ngFor="let bgformat of availableBGFormatSelection"
+          >
+            {{ bgformat }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedBGFormat == 'custom format'">
+    <div class="row mt10">
+      <div class="col-12 justify-space-between">
+        <div class="float-left">Background color</div>
+        <div class="float-right">
+          <input
+            type="color"
+            class="btn btn-secondary"
+            style="width: 155px; height: 35px"
+            [(ngModel)]="bgSettingOptions.backgroundColor"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt20">
+      <div class="col-12 justify-space-between">
+        <div class="float-left">Widget background effect</div>
+        <div class="float-right">
+          <select
+            name="bg_shapes"
+            id="bg_shapes"
+            class="btn btn-secondary"
+            style="height: 35px; width: 155px; color: black !important"
+            [(ngModel)]="backgroundEffect"
+          >
+            <option value="Blur">Blur</option>
+            <option value="Transparency">Transparency</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt20" *ngIf="backgroundEffect == 'Transparency'">
+      <div class="col-12">
+        <div class="float-left fit-content-width">
+          Background transparency %
+        </div>
+        <div class="float-right justify-center">
+          <span>0%</span>
+          <input
+            type="range"
+            [(ngModel)]="bgSettingOptions.transparency"
+            min="0"
+            max="10"
+            class="slider mlr10"
+            id="bg_myRange"
+            style="width: 90%"
+          />
+          <span>100%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt20" *ngIf="backgroundEffect == 'Blur'">
+      <div class="col-12">
+        <div class="float-left fit-content-width">Background blur %</div>
+        <div class="float-right justify-center">
+          <span>0%</span>
+          <input
+            type="range"
+            [(ngModel)]="bgSettingOptions.blur"
+            min="0"
+            max="100"
+            class="slider mlr10"
+            id="bg_blur_range"
+            style="width: 90%"
+          />
+          <span>100%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt20">
+      <div class="col-12 justify-space-between">
+        <div class="float-left">Corners</div>
+        <div class="float-right">
+          <select
+            name="wid_bg_shapes"
+            [(ngModel)]="bgSettingOptions.corner"
+            id="wid_bg_shapes"
+            class="btn btn-secondary"
+            style="width: 155px; height: 35px"
+          >
+            <option selected value="rounded">ROUNDED</option>
+            <option value="square">SQUARE</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt20">
+      <div class="col-12">
+        <div class="float-left">
+          <div class="fit-content-width">Shadow</div>
+        </div>
+        <div class="float-right">
+          <label class="custom-checkbox display-block">
+            <input
+              type="checkbox"
+              [(ngModel)]="bgSettingOptions.shadow"
+              class="vertical-middle-align ml5"
+              data-md-icheck
+            />
+            <div class="checkbox checkbox-left"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 footer-btn-position">
+    <button
+      type="button"
+      class="btn btn-secondary mr-20"
+      (click)="dismissModel()"
+    >
+      CANCEL
+    </button>
+    <button class="btn btn-primary" (click)="onBackgroundOptionEmit()">
+      SAVE
+    </button>
+  </div>
+</div>

@@ -1,0 +1,164 @@
+<script src="https://js.stripe.com/v3/"></script>
+<div id="nav-container">
+  <div class="mirror-nav">
+    <strong>Profile</strong>
+    <div class="right-menu-button cursor-pointer" (click)="gotoMirrorList()">
+      <img class="mt5" alt="" src="../../assets/icons/cross.svg" />
+    </div>
+  </div>
+</div>
+<div id="profile-container">
+  <div class="user-profile-card">
+    <div class="row">
+      <div class="col-12" routerLink="edit-profile">
+        <div class="user-details">
+          <div class="float-left">
+            <strong>{{ userName }}</strong>
+            <div>{{ userEmail }}</div>
+          </div>
+          <div class="float-right mtb10">
+            <div class="right-triangular"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mt15">
+        <div class="profile-seperator"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12" routerLink="change-password">
+        <div class="float-left profile-setting-options">
+          <div>Change Password</div>
+        </div>
+        <div class="float-right profile-setting-options">
+          <div class="right-triangular"></div>
+        </div>
+      </div>
+      <div class="col-12" routerLink="unit-of-measure">
+        <div class="float-left profile-setting-options">
+          <div>Unit of Measure</div>
+        </div>
+        <div class="float-right profile-setting-options">
+          <div class="right-triangular"></div>
+        </div>
+      </div>
+      <div class="col-12" (click)="openLanguageModal()">
+        <div class="float-left profile-setting-options">
+          <div>Update Language</div>
+        </div>
+        <div class="float-right profile-setting-options">
+          <div class="float-right ml-2 right-triangular"></div>
+          <div class="float-right">{{ profileLanguage.name }}</div>
+        </div>
+      </div>
+      <div
+        class="col-12"
+        (click)="redirctStripePortal()"
+        *ngIf="isLifeTimeSubscription == false"
+      >
+        <div class="float-left profile-setting-options">
+          <div>Payments & Plans</div>
+        </div>
+        <div class="float-right profile-setting-options">
+          <div class="right-triangular"></div>
+        </div>
+      </div>
+      <div
+        class="col-12"
+        routerLink="manage-template"
+        *ngIf="customTemplateList.length > 0"
+      >
+        <div class="float-left profile-setting-options">
+          <div>My Templates</div>
+        </div>
+        <div class="float-right profile-setting-options">
+          <div class="right-triangular"></div>
+        </div>
+      </div>
+      <div class="col-12" (click)="routeManageBucket()">
+        <div class="float-left profile-setting-options">
+          <div>My Files</div>
+        </div>
+        <div
+          class="float-right profile-setting-options"
+          *ngIf="this.currentSubscriptionHirarchy > 1"
+        >
+          <div class="right-triangular"></div>
+        </div>
+        <div
+          class="float-right profile-setting-options"
+          *ngIf="this.currentSubscriptionHirarchy < 2"
+        >
+          <img
+            class="upgrade-plan"
+            src="../../assets/icons/upgrade_pro.svg"
+            alt=""
+          />
+        </div>
+      </div>
+      <div
+        class="col-12"
+        *ngIf="isLifeTimeSubscription == true"
+        style="pointer-events: none"
+      >
+        <div class="float-left profile-setting-options">
+          <div>Free Premium subscription included</div>
+        </div>
+        <div class="float-right profile-setting-options">
+          <div class="right-triangular"></div>
+        </div>
+      </div>
+      <!-- <div class="col-12" routerLink="about-us">
+        <div class="float-left profile-setting-options">
+          <div>About</div>
+        </div>
+        <div class="float-right profile-setting-options">
+          <div class="right-triangular"></div>
+        </div>
+      </div> -->
+      <div class="col-12" routerLink="privacy-policy">
+        <div class="float-left profile-setting-options">
+          <div>Privacy Policy</div>
+        </div>
+        <div class="float-right profile-setting-options">
+          <div class="right-triangular"></div>
+        </div>
+      </div>
+      <div class="col-12" routerLink="terms-and-conditions">
+        <div class="float-left profile-setting-options">
+          <div>Terms & Conditions</div>
+        </div>
+        <div class="float-right profile-setting-options">
+          <div class="right-triangular"></div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="profile-setting-options" (click)="logout()">Logout</div>
+      </div>
+    </div>
+  </div>
+  <div class="app-logo mt30">
+    <img
+      alt=""
+      src="../../assets/icons/logo/MangoDisplay_Logo.png"
+      height="25px"
+    />
+  </div>
+
+  <div class="fs-10 label-color">Version {{ appVersion }}</div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #language="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-update-language
+    [languageModal]="languageModal"
+    [currentLanguage]="profileLanguage"
+  ></app-update-language>
+</div>

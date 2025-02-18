@@ -1,0 +1,174 @@
+.md-form input[type="text"]:focus:not([readonly]) + label,
+.md-form input[type="password"]:focus:not([readonly]) + label,
+.md-form input[type="email"]:focus:not([readonly]) + label,
+.md-form input[type="url"]:focus:not([readonly]) + label,
+.md-form input[type="time"]:focus:not([readonly]) + label,
+.md-form input[type="date"]:focus:not([readonly]) + label,
+.md-form input[type="datetime-local"]:focus:not([readonly]) + label,
+.md-form input[type="tel"]:focus:not([readonly]) + label,
+.md-form input[type="number"]:focus:not([readonly]) + label,
+.md-form input[type="search-md"]:focus:not([readonly]) + label,
+.md-form input[type="search"]:focus:not([readonly]) + label,
+.md-form textarea.md-textarea:focus:not([readonly]) + label {
+  color: #14b268 !important;
+}
+
+.md-form input[type="text"]:focus:not([readonly]),
+.md-form input[type="password"]:focus:not([readonly]),
+.md-form input[type="email"]:focus:not([readonly]),
+.md-form input[type="url"]:focus:not([readonly]),
+.md-form input[type="time"]:focus:not([readonly]),
+.md-form input[type="date"]:focus:not([readonly]),
+.md-form input[type="datetime-local"]:focus:not([readonly]),
+.md-form input[type="tel"]:focus:not([readonly]),
+.md-form input[type="number"]:focus:not([readonly]),
+.md-form input[type="search-md"]:focus:not([readonly]),
+.md-form input[type="search"]:focus:not([readonly]),
+.md-form textarea.md-textarea:focus:not([readonly]) {
+  box-shadow: none !important;
+  border: 1px solid #14b268 !important;
+  color: #14b268 !important;
+}
+
+.md-form input[type="text"],
+.md-form input[type="password"],
+.md-form input[type="email"],
+.md-form input[type="url"],
+.md-form input[type="time"],
+.md-form input[type="date"],
+.md-form input[type="datetime-local"],
+.md-form input[type="tel"],
+.md-form input[type="number"],
+.md-form input[type="search-md"],
+.md-form input[type="search"],
+.md-form textarea.md-textarea {
+  display: block;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  outline: none;
+  box-shadow: none;
+  border: 0.5px solid #a6aab4;
+  border-radius: 6px;
+  box-sizing: content-box;
+  background-color: transparent;
+  height: 40px;
+  margin: 0;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+}
+
+.md-form label {
+  position: absolute;
+  top: 0;
+  left: 15px;
+  font-size: 16px;
+  transition: transform 0.2s ease-out, color 0.2s ease-out;
+  transform-origin: 0% 100%;
+  transform: translateY(15px);
+  cursor: text;
+  color: #757575;
+}
+
+.md-form label.active {
+  transform: translateY(-12px) scale(0.8) !important;
+  background: #ffffff !important;
+  padding: 0 10px !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  margin-left: -5px !important;
+}
+
+.md-form .form-control {
+  width: -webkit-fill-available !important;
+  width: -moz-available !important;
+  padding: 10px 15px 5px !important;
+}
+
+.md-form {
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+.toast-container .ngx-toastr {
+  text-align: left;
+  line-height: 30px;
+  background-size: 25px;
+}
+
+.toast-error {
+  background-color: #d40000;
+}
+
+.toast-title {
+  font-weight: 600;
+}
+
+.form-control {
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-shadow: none;
+  border: 0.5px solid #a6aab4;
+  border-radius: 6px;
+  height: 55px;
+  background: #ffffff !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+}
+
+.form-control:focus {
+  background-color: #fff;
+  border-color: #14b268;
+  box-shadow: none;
+  color: #14b268;
+}
+
+#addToHomeScreenModal .modal-header {
+  padding: 1rem 1rem 0;
+  border-bottom: none;
+}
+.ngb-tp-spacer,
+.ngb-tp-hour {
+  display: none !important;
+}
+.ngb-tp-minute {
+  margin-right: 25px !important;
+}
+fieldset {
+  margin: 0 25% !important;
+}
+.panel-group {
+  text-align: left !important;
+}
+.panel-title a {
+  color: inherit !important;
+}
+.collapse.show {
+  display: grid !important;
+}
+.lds-roller {
+  left: auto !important;
+  right: auto !important;
+}
+.loading-text {
+  top: 41% !important;
+  padding-top: 0 !important;
+}
+.select-location .form-control {
+  border: none !important;
+  border-radius: unset !important;
+  border-bottom: 0.5px solid #a6aab4 !important;
+  padding: 10px 0 !important;
+  height: 30px !important;
+  font-size: 14px !important;
+}
+
+.custom-text-field .form-control {
+  border: none !important;
+  border-radius: unset !important;
+  border-bottom: 0.5px solid #a6aab4 !important;
+  padding: 10px 0 !important;
+  height: 30px !important;
+  font-size: 14px !important;
+}

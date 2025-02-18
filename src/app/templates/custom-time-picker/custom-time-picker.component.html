@@ -1,0 +1,96 @@
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header custom-modal-header">Page Timer</div>
+    <div
+      class="modal-body setting-scrolling-div"
+      style="overflow-y: hidden !important"
+    >
+      <div class="time-picker-box">
+        <div class="row">
+          <div class="col-12">
+            <div class="float-left">Automatic page rotation</div>
+            <div class="float-right">
+              <div class="switchToggle">
+                <input
+                  type="checkbox"
+                  id="autoPageRotation"
+                  [(ngModel)]="isAutoPageRotation"
+                />
+                <label for="autoPageRotation">Toggle</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt20" *ngIf="isAutoPageRotation == true">
+          <div class="col-12">
+            <div class="float-left">Rotate page every</div>
+            <div class="float-right">
+              <input
+                type="text"
+                class="w50 timer-box"
+                [(ngModel)]="minutes"
+                (change)="validateTimerValue()"
+              />
+              min
+              <input
+                type="text"
+                class="w50 ml20 timer-box"
+                [(ngModel)]="seconds"
+                (change)="validateTimerValue()"
+              />
+              sec
+            </div>
+          </div>
+        </div>
+        <div class="row mt20" *ngIf="isAutoPageRotation == true">
+          <div class="col-12">
+            <div class="float-left text-align-left">
+              Transition effect
+              <div class="fs12">(Dependent on device capability)</div>
+            </div>
+            <div class="float-right">
+              <select
+                id="page_transition"
+                class="btn btn-secondary cursor-pointer"
+                style="height: 35px; width: 155px"
+                [(ngModel)]="selectedTransition"
+              >
+                <option
+                  class="cursor-pointer"
+                  [value]="transition.value"
+                  *ngFor="let transition of availableTransition"
+                >
+                  {{ transition.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row mt20">
+          <div class="col-12">
+            <div class="float-left">
+              <div>Apply to all pages</div>
+            </div>
+            <div class="float-right">
+              <label class="custom-checkbox display-flex">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="applyToAllScreen"
+                  class="vertical-middle-align ml5"
+                  data-md-icheck
+                />
+                <div class="checkbox checkbox-left"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="dismissModal()">CANCEL</button>
+      <button class="btn btn-primary ml25" (click)="saveDelayTimerChanges()">
+        SAVE
+      </button>
+    </div>
+  </div>
+</div>

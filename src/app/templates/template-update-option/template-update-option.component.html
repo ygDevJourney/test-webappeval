@@ -1,0 +1,80 @@
+<div *ngIf="isTemplateUpdateSelected == false">
+  <div id="nav-container" class="header">
+    <div>
+      <strong> Templates </strong>
+    </div>
+  </div>
+
+  <div class="col-12 pd20 container">
+    <div class="col-12">
+      <div
+        class="col-12 mt25 justify-center"
+        (click)="goToTemplateUpdatePage()"
+      >
+        <div class="box-template">
+          Choose a different layout template for this display
+        </div>
+      </div>
+      <div
+        class="col-12 mt35 justify-center"
+        (click)="goToTemplateCreatePage()"
+      >
+        <div class="box-template">Save this display layout as a template</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pd20">
+    <div class="col-12">
+      <button
+        type="button"
+        class="btn btn-secondary mr-20"
+        (click)="backToMirrorSettingPage()"
+      >
+        Back
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  id="mc-template-container"
+  class="container1 plr30"
+  *ngIf="isTemplateUpdateSelected == true"
+>
+  <div class="col-12 ptb10">
+    <div class="container ptb5">
+      <div
+        class="theme-font-color tm-back cursor-pointer"
+        (click)="goBackToOptionPage()"
+      >
+        < Back
+      </div>
+    </div>
+
+    <app-template
+      [mirrorName]="mirrorName"
+      [themeName]="themeName"
+      [requestType]="requestType"
+      [deviceType]="deviceType"
+      [deviceMacAddress]="deviceMacAddress"
+    ></app-template>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #mirrorQuantityAlert="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-common-alert
+    [commonAlertModal]="commonAlertModal"
+    [type]="'templateLimit'"
+    [header]="'Template Limit Reached'"
+    [data]=""
+  ></app-common-alert>
+</div>

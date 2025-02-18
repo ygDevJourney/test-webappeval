@@ -1,0 +1,214 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="custom-modal-header">Visual Overlays</div>
+
+      <div class="tab-pane mt25 bg-setting-box mlr15 pr10">
+        <div class="pb10">
+          Visual elements that appear over your content for a fun effect.
+        </div>
+        <div class="pb10">
+          Perfect for holidays, birthdays, or other special events.
+        </div>
+        <div class="col-12 text-align-left bg-box">
+          <div class="fw-bold">Birthdays & other celebrations</div>
+          <div class="row mt15">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">
+                Floating Balloons
+                <div class="fs-9">
+                  (Balloons floating up gently over your display)
+                </div>
+              </div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="overlay.flBalloon"
+                    class="vertical-middle-align ml5"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt20">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">
+                Fireworks & Confetti
+                <div class="fs-9">
+                  (Fireworks light up the top of your display)
+                </div>
+              </div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="overlay.firework"
+                    class="vertical-middle-align ml5"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt20">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">
+                Colorful string lights
+                <div class="fs-9">
+                  (Blinking lights at the top and bottom of your display)
+                </div>
+              </div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="overlay.stringLight"
+                    class="vertical-middle-align ml5"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 text-align-left bg-box">
+          <div class="fw-bold">Valentines Day & Wedding Anniversaries</div>
+          <div class="row mt15">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">
+                Flowing Hearts
+                <div class="fs-9">
+                  (Hearts flowing down gently over your display)
+                </div>
+              </div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="overlay.flHeart"
+                    class="vertical-middle-align ml5"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt20">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">
+                Bursting Hearts
+                <div class="fs-9">
+                  (Hearts pop up and gently burst into smaller hearts)
+                </div>
+              </div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="overlay.bsHeart"
+                    class="vertical-middle-align ml5"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 text-align-left bg-box">
+          <div class="fw-bold">Christmas & Winter</div>
+          <div class="row mt15">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">
+                Disappearing Elf
+                <div class="fs-9">(A digital version of Elf on the shelf)</div>
+              </div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="overlay.elf"
+                    class="vertical-middle-align ml5"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt20">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">
+                Flying Santa
+                <div class="fs-9">(Santa flying all over your display)</div>
+              </div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="overlay.santa"
+                    class="vertical-middle-align ml5"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt20">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">
+                Falling snowflakes
+                <div class="fs-9">
+                  (snowflakes falling down gently over your display)
+                </div>
+              </div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="overlay.snow"
+                    class="vertical-middle-align ml5"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-align-left fs-9 mt20">
+          All GIFs displayed are served directly from Giphy.com via public
+          links. All rights to the content belong to their respective copyright
+          holders.
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 footer-btn-position">
+        <button
+          type="button"
+          class="btn btn-secondary mr-20"
+          (click)="dismissModel()"
+        >
+          CANCEL
+        </button>
+        <button class="btn btn-primary" (click)="updateOverlay()">SAVE</button>
+      </div>
+    </div>
+  </div>
+</div>

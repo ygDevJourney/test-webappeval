@@ -1,0 +1,617 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content bg-image-content">
+    <div
+      class="modal-header custom-modal-header bg-image-header"
+      *ngIf="isMyFileSelected == false"
+    >
+      Background Image Settings
+    </div>
+
+    <div class="modal-body">
+      <div *ngIf="isMyFileSelected == false">
+        <form [formGroup]="backgroundImageFormGroup">
+          <div class="news-setting-box">
+            <div class="row">
+              <div class="col-12">
+                <div class="float-left fit-content-width fw-bold">
+                  Select images from:
+                </div>
+              </div>
+            </div>
+            <hr style="width: 95%" />
+            <div class="row mt-10">
+              <div class="col-12">
+                <div class="float-left fit-content-width">Sample Images</div>
+                <div class="float-right">
+                  <div class="switchToggle">
+                    <input
+                      type="checkbox"
+                      id="mangoBg-switch"
+                      formControlName="mangoBackground"
+                    />
+                    <label for="mangoBg-switch">Toggle</label>
+                  </div>
+                </div>
+              </div>
+              <hr class="full-width" />
+            </div>
+            <div class="row mt-10">
+              <div class="col-12">
+                <div class="float-left fit-content-width">Unsplash</div>
+                <div class="float-right">
+                  <div class="switchToggle">
+                    <input
+                      type="checkbox"
+                      id="unsplash-switch"
+                      formControlName="unSplash"
+                      (click)="getUnsplashCategory()"
+                    />
+                    <label for="unsplash-switch">Toggle</label>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="col-12 mt5 fs-9"
+                *ngIf="backgroundImageFormGroup.get('unSplash').value"
+              >
+                <div style="text-align: left">
+                  Unsplash is a third party image delivery service, for more
+                  info visit
+                  <a href="https://unsplash.com/terms" target="_blank">
+                    unsplash.com</a
+                  >
+                </div>
+              </div>
+
+              <div
+                class="col-12 sub-list-container"
+                *ngIf="backgroundImageFormGroup.get('unSplash').value"
+              >
+                <div class="row">
+                  <div class="col-12 mt15 text-align-left">
+                    Select Unsplash Category:
+                  </div>
+                </div>
+                <div class="row">
+                  <div
+                    class="col-12 mt10"
+                    *ngFor="
+                      let unsplash of availableUnsplashList
+                        | CustomSort : 'asc' : 'categoryType'
+                    "
+                    (click)="updateUnsplashCategory(unsplash)"
+                  >
+                    <div class="float-left fit-content-width">
+                      {{ unsplash.displayName }}
+                    </div>
+                    <div
+                      class="float-right"
+                      *ngIf="checkCategoryExist(unsplash)"
+                    >
+                      <div class="active-unsplash-option"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="full-width" />
+            </div>
+
+            <div class="row mt-10">
+              <div class="col-12">
+                <div class="float-left fit-content-width">Google Photos</div>
+
+                <div class="float-right">
+                  <div
+                    *ngIf="subscriptionAvailable == false"
+                    (click)="checkSubscription()"
+                  >
+                    <img
+                      class="premium"
+                      src="../../../assets/icons/Upgrade.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="switchToggle" *ngIf="subscriptionAvailable">
+                    <input
+                      type="checkbox"
+                      id="gPhotos-switch"
+                      formControlName="googlePhotos"
+                      [(ngModel)]="isGoogleAlbumAdded"
+                    />
+                    <label for="gPhotos-switch">Toggle</label>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-12 mt5"
+                style="display: grid; justify-content: center"
+                *ngIf="
+                  isGoogleAlbumAdded == true &&
+                  (backgroundImageData == undefined ||
+                    backgroundImageData.googleAlbum == null)
+                "
+              >
+                <div
+                  class="col-12 google-photos-box"
+                  (click)="addGooglePhotosAccount()"
+                >
+                  <img
+                    src="../../../assets/icons/google_photos.png"
+                    class="google-photos-icon"
+                  />
+                  <span>Connect to Google Photos</span>
+                </div>
+              </div>
+              <div class="col-12 plr0 mt10" *ngIf="subscriptionAvailable">
+                <div
+                  class="col-12 sub-list-container"
+                  *ngIf="
+                    backgroundImageFormGroup.get('googlePhotos').value &&
+                    backgroundImageData.googleAlbum != undefined
+                  "
+                >
+                  <div class="row">
+                    <div class="col-12 panel-title">
+                      <a
+                        class="float-left fit-content-width collapsed"
+                        data-toggle="collapse"
+                        href="#collapse"
+                        (click)="
+                          toggleGoogleAlbum(backgroundImageData.googleAlbum)
+                        "
+                      >
+                        <span class="ml5">{{
+                          backgroundImageData.googleAlbum.googleAccountDetail
+                        }}</span>
+                      </a>
+                      <div class="float-right mr20 cursor-pointer">
+                        <button
+                          class="btn btn-secondary google-photos-disconnect-box"
+                          (click)="removeAccount(backgroundImageData)"
+                        >
+                          Disconnect from Google Photos
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="collapse" class="col-12 panel-collapse collapse">
+                    <div class="row" *ngIf="googleAlbumList.length > 0">
+                      <div class="col-12 mt15 text-align-left">
+                        Select Google Album:
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div
+                        class="col-12 mt10"
+                        *ngFor="
+                          let album of googleAlbumList
+                            | CustomSort : 'asc' : 'title'
+                        "
+                        (click)="updateGoogleAlbum(album)"
+                      >
+                        <div class="float-left fit-content-width">
+                          {{ album.googleAlbumName }}
+                        </div>
+                        <div
+                          class="float-right"
+                          *ngIf="
+                            album.googleAlbumName ===
+                            selectedAlbum.googleAlbumName
+                          "
+                        >
+                          <div class="active-unsplash-option"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="full-width" />
+            </div>
+
+            <div class="row mt-10">
+              <div class="col-12">
+                <div class="float-left fit-content-width">Apple Photos</div>
+                <div class="float-right">
+                  <div
+                    *ngIf="subscriptionAvailable == false"
+                    (click)="checkSubscription()"
+                  >
+                    <img
+                      class="premium"
+                      src="../../../assets/icons/Upgrade.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="switchToggle" *ngIf="subscriptionAvailable">
+                    <input
+                      type="checkbox"
+                      id="applePhotos-switch"
+                      formControlName="applePhotos"
+                      (click)="onApplePhotosSelect()"
+                    />
+                    <label for="applePhotos-switch">Toggle</label>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-12 location-block mt15"
+                [class.show-location-block]="isApplePhotoSelected"
+                *ngIf="subscriptionAvailable"
+              >
+                <div class="select-location">
+                  <div class="text-color-orange" *ngIf="isAppleUrlInvalid">
+                    Invalid or not-public Apple Photos URL entered.
+                  </div>
+                  <input
+                    #search
+                    type="text"
+                    class="form-control"
+                    formControlName="appleAccessToken"
+                    placeholder="https://www.icloud/sharedalbum/#abc123"
+                    (paste)="validateAppleImage()"
+                    (keydown.enter)="$event.preventDefault()"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="off"
+                    required
+                  />
+                </div>
+                <div class="fs12 apple-link-note">
+                  Enter your Apple iCloud Shared Photo Album URL. Instructions
+                  <a
+                    class="text-color-orange fs12"
+                    href="https://help.mangodisplay.com/en/articles/7061867-how-to-get-the-apple-icloud-shared-photo-album-url"
+                    target="_blank"
+                    >here.</a
+                  >
+                </div>
+              </div>
+              <hr class="full-width" />
+            </div>
+
+            <div class="row mt-10">
+              <div class="col-12">
+                <div class="float-left fit-content-width">My Files</div>
+                <div class="float-right">
+                  <div *ngIf="2 > currentSubscriptionHirarchy">
+                    <img
+                      (click)="upgradeSubscription()"
+                      class="premium"
+                      src="../../../assets/icons/upgrade_pro.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    class="switchToggle"
+                    *ngIf="currentSubscriptionHirarchy > 1"
+                  >
+                    <input
+                      type="checkbox"
+                      id="bg_mediafile-switch"
+                      formControlName="isS3Enabled"
+                      (click)="openMyMediaFile('toggle')"
+                    />
+                    <label for="bg_mediafile-switch">Toggle</label>
+                    <a
+                      class="bl-link theme-font-color"
+                      *ngIf="
+                        selectedS3Files.length > 0 &&
+                        backgroundImageFormGroup.value.isS3Enabled == true
+                      "
+                      (click)="openMyMediaFile('edit')"
+                      >edit</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div
+                #dropListContainer
+                class="example-container"
+                cdkDropListGroup
+                *ngIf="
+                  backgroundImageFormGroup.value.isS3Enabled == true &&
+                  currentSubscriptionHirarchy > 1
+                "
+              >
+                <div
+                  *ngFor="
+                    let s3file of selectedS3Files
+                      | CustomSort : 'asc' : 'zindex';
+                    let i = index
+                  "
+                  cdkDropList
+                  [cdkDropListData]="i"
+                >
+                  <div
+                    cdkDrag
+                    [cdkDragData]="i"
+                    (cdkDragEntered)="dragEntered($event)"
+                    (cdkDragMoved)="dragMoved($event)"
+                    (cdkDragDropped)="dragDropped($event)"
+                    class="example-box"
+                  >
+                    <img
+                      [src]="s3file.s3_img_url"
+                      style="height: 50px; width: 100px"
+                      (error)="invalidImage()"
+                    />
+                  </div>
+                </div>
+              </div>
+              <hr class="full-width" />
+            </div>
+
+            <div class="row mt-10">
+              <div class="col-12">
+                <div class="float-left fit-content-width">Single image URL</div>
+                <div class="float-right">
+                  <div
+                    *ngIf="subscriptionAvailable == false"
+                    (click)="checkSubscription()"
+                  >
+                    <img
+                      class="premium"
+                      src="../../../assets/icons/Upgrade.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="switchToggle" *ngIf="subscriptionAvailable">
+                    <input
+                      type="checkbox"
+                      id="bg_singleimage-switch"
+                      formControlName="isImageUrlEnable"
+                      (click)="onSinglePhotoSelect()"
+                    />
+                    <label for="bg_singleimage-switch">Toggle</label>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-12 location-block mt15"
+                [class.show-location-block]="isSinglePhotoSelected"
+                *ngIf="subscriptionAvailable"
+              >
+                <div class="select-location">
+                  <input
+                    #bg_imageUrlLink
+                    type="text"
+                    (paste)="validateImageExistance()"
+                    (input)="validateImageExistance()"
+                    class="form-control"
+                    formControlName="imageUrlLink"
+                    placeholder="Add image URL here"
+                    (keydown.enter)="$event.preventDefault()"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="off"
+                    required
+                  />
+                </div>
+                <div
+                  *ngIf="ispublicUrlImageExist == false && imageUrlLink != null"
+                  class="fw-bold error-text"
+                >
+                  Provided image URL is not valid
+                </div>
+                <div class="apple-link-note fs12">
+                  <div>
+                    (ex. a link from Dropbox, Google Drive, or a website image.)
+                  </div>
+                  <div>
+                    The image must be 'public', shared with anyone with the link
+                  </div>
+                </div>
+                <div
+                  class="fw-bold apple-link-note mt5"
+                  style="
+                    padding: 5px;
+                    border: 1px solid gray;
+                    box-shadow: 5px 5px 18px gray;
+                    margin: auto;
+                    width: 115px;
+                  "
+                >
+                  <img
+                    id="bg_imageUrlLink"
+                    [src]="imageUrlLink"
+                    (error)="invalidImage()"
+                    style="height: 50px; width: 100px"
+                  />
+                </div>
+              </div>
+              <hr class="full-width" />
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="float-left fit-content-width fw-bold">
+                  Image display options
+                </div>
+              </div>
+            </div>
+            <div class="row mt15">
+              <div class="col-12">
+                <div class="float-left fit-content-width">
+                  Crop
+                  <span class="fs-9">(Crop to fill the entire screen)</span>
+                </div>
+                <div class="float-right">
+                  <div class="switchToggle">
+                    <input
+                      type="checkbox"
+                      id="crop-switch"
+                      formControlName="crop"
+                    />
+                    <label for="crop-switch">Toggle</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt15">
+              <!-- <div class="col-12">
+                <div class="float-left fit-content-width">
+                  Transition
+                  <span class="fs-9">(Gradually fade photo in and out)</span>
+                </div>
+                <div class="float-right">
+                  <div class="switchToggle">
+                    <input
+                      type="checkbox"
+                      id="transition-switch"
+                      formControlName="fadeInOut"
+                    />
+                    <label for="transition-switch">Toggle</label>
+                  </div>
+                </div>
+              </div> -->
+
+              <div class="col-12">
+                <div class="float-left text-align-left">
+                  Transition effect
+                  <div class="fs12">(Dependent on device capability)</div>
+                </div>
+                <div class="float-right">
+                  <select
+                    id="page_transition"
+                    class="btn btn-secondary cursor-pointer"
+                    style="height: 35px; width: 155px"
+                    formControlName="transition"
+                  >
+                    <option
+                      class="cursor-pointer"
+                      [value]="transition.value"
+                      *ngFor="let transition of availableTransition"
+                    >
+                      {{ transition.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt15">
+              <div class="col-12">
+                <div class="float-left fit-content-width">Brightness</div>
+                <div class="float-right justify-center">
+                  <span>0%</span>
+                  <input
+                    type="range"
+                    formControlName="brightness"
+                    min="0.1"
+                    max="2"
+                    step="0.1"
+                    class="slider mlr10"
+                    id="myRange"
+                    style="width: 90%"
+                  />
+                  <span>100%</span>
+                </div>
+              </div>
+              <!-- <div class="col-12">
+                <div class="float-left fit-content-width">Brightness</div>
+              </div>
+              <div class="col-12 mt-10">
+                <img
+                  class="slider-icon-left mt5"
+                  style="float: left; margin-top: 10px"
+                  src="../../../assets/icons/adjust-brightness.png"
+                  height="15px"
+                  width="15px"
+                />
+                <input
+                  type="range"
+                  formControlName="brightness"
+                  min="0.1"
+                  max="2"
+                  step="0.1"
+                  class="slider mt10"
+                  id="myRange"
+                  style="float: left"
+                />
+                <img
+                  class="slider-icon-right mt5"
+                  style="float: left"
+                  src="../../../assets/icons/adjust-brightness.png"
+                  height="20px"
+                  width="20px"
+                />
+              </div> -->
+            </div>
+
+            <div class="row mt15">
+              <div class="col-12">
+                <div class="float-left fit-content-width">
+                  Change photo every
+                </div>
+                <div class="float-right ml5">
+                  <input
+                    type="text"
+                    class="w45"
+                    formControlName="minutes"
+                    (change)="validateTimerValue()"
+                  />
+                  min
+                  <input
+                    type="text"
+                    class="w45 ml5"
+                    formControlName="seconds"
+                    (change)="validateTimerValue()"
+                  />
+                  sec
+                </div>
+
+                <!-- <div class="float-right ml5">min</div>
+                <div class="float-right">
+                  <div class="headline-count">
+                    <div
+                      class="display-flex dropdown-toggle"
+                      data-toggle="dropdown"
+                    >
+                      {{ photoChangeDuration }}
+                      <div
+                        class="down-arrow ml5"
+                        style="margin-top: 2px; margin-right: 2px"
+                      ></div>
+                    </div>
+                    <div class="dropdown-menu" role="menu">
+                      <div
+                        *ngFor="let count of countList"
+                        (click)="setPhotoDuration(count)"
+                        [class.selected-count]="count === photoChangeDuration"
+                      >
+                        {{ count }}
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="isMyFileSelected == true">
+        <app-manage-s3-bucket
+          [requestType]="requestType"
+          [selectedS3Files]="selectedS3Files"
+          (updateBgS3Details)="updateS3Details($event)"
+          (close)="reverseSelection()"
+        ></app-manage-s3-bucket>
+      </div>
+    </div>
+    <div class="modal-footer" *ngIf="isMyFileSelected == false">
+      <button
+        type="button"
+        class="btn btn-secondary mr-20"
+        (click)="dismissModel()"
+      >
+        CANCEL
+      </button>
+      <button class="btn btn-primary" (click)="saveBackgroundImage()">
+        SAVE
+      </button>
+    </div>
+  </div>
+</div>

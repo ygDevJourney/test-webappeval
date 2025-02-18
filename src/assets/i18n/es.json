@@ -1,0 +1,89 @@
+{
+  "AUTHENTICATION": {
+    "LOGIN": {
+      "BUTTONTEXT": "Continuar",
+      "FORGOTPASSWORD": "¿Se te olvidó tu contraseña?",
+      "RETURNTEXT": "¿No tienes una cuenta?",
+      "TITLE": "Iniciar sesión"
+    },
+    "RESETPASSWORD": {
+      "BUTTONTEXT": "Continuar",
+      "RETURNTEXT": "Contraseña recordada? volver a",
+      "TITLE": "Restablecer la contraseña"
+    },
+    "SIGNUP": {
+      "BUTTONTEXT": "Crear",
+      "RETURNTEXT": "¿Ya tienes una cuenta?",
+      "TITLE": "Regístrate"
+    }
+  },
+  "DATA": {
+    "DYNAMIC_VALUE": "Mi nombre es {{name}}",
+    "TITLE": "Hola Mundo"
+  },
+  "ERROR": {
+    "EMPTYFIELDS": "Este campo es obligatorio para completar",
+    "INVALIDCONFIRMPASSWORD": "La contraseña que ingresaste es demasiado corta",
+    "INVALIDEMAIL": "Por favor ingrese una dirección de correo electrónico válida",
+    "INVALIDENAME": "Por favor ingrese un nombre válido",
+    "INVALIDPASSWORD": "La longitud de la contraseña debe ser mayor que 6 y menor que 20",
+    "SHORTPASSWORD": "La contraseña que ingresaste es demasiado corta"
+  },
+  "INPUTFIELDS": {
+    "CONFIRMPASSWORD": "Confirmar contraseña",
+    "DISPLAYNAME": "Nombre para mostrar",
+    "EMAIL": "Correo electrónico",
+    "GENDER": "Género",
+    "GENDERS": {
+      "FEMALE": "Hembra",
+      "MALE": "Masculino",
+      "OTHER": "Otro",
+      "UNKNOWN": "No mostrar"
+    },
+    "LANGUAGE": "Idioma",
+    "LANGUAGES": {
+      "ENGLISH": "Inglés",
+      "SPANISH": "Español"
+    },
+    "NAME": "Nombre",
+    "PASSWORD": "Contraseña"
+  },
+  "MIRROR": {
+    "ADD_DISPLAY_TEXT": "Agregar nueva pantalla",
+    "MIRRORSETUP": {
+      "BUTTON_FINISH_TEXT": "",
+      "BUTTON_NEXT_TEXT": "",
+      "CATEGORY": {
+        "ANDROID": "",
+        "RASP-BLE": "",
+        "RASP-BLE-BEACON": "",
+        "RASPBERRYPI": "",
+        "AMAZON": "Mango Display Amazon Fire App",
+        "AMAZON_DEVICES_TYPE": "(Android tablets, Amazon Fire tablets, Fire TV)"
+      },
+      "DEVICECODE_MESSAGE_P1": "Por favor ingrese un nombre válido",
+      "DEVICECODE_MESSAGE_P2": "",
+      "RENAME_MESSAGE_P1": "",
+      "SUCCESS_BUTTON_TEXT": "",
+      "SUCCESS_MESSAGE_P1": "",
+      "SUCCESS_MESSAGE_P2": "",
+      "SUCCESS_MESSAGE_P3": "",
+      "SUCCESS_MESSAGE_P4": "",
+      "WELCOME_BUTTON_TEXT": "¡IR!",
+      "WELCOME_P1": "¡Comencemos!",
+      "WELCOME_P2": "Asegúrese de que su pantalla Mango esté encendida y cerca de usted."
+    },
+    "TITLE": "Mis pantallas"
+  },
+  "PWAPOPUP": {
+    "TEXT1": "Instale esta aplicación en su pantalla de inicio para un acceso rápido y fácil cuando esté en movimiento.",
+    "TEXT2": "Solo toca",
+    "TEXT3": "luego agregar a la pantalla de inicio",
+    "TITLE": "Instalar MangoMirror"
+  },
+  "WIDGETS": {
+    "LAYOUT": {
+      "NAV_BUTTON_TEXT": "Mis pantallas"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+<!-- appOutsideClick (clickOutside)="ClickedOut()" -->
+
+<div id="widget-Layer-container">
+  <div class="header">Drag to re-stack widgets over each other as needed.</div>
+  <div
+    cdkDropList
+    cdkDropListOrientation="verticle"
+    class="example-list overflow-y-auto"
+    (cdkDropListDropped)="drop($event)"
+    (cdkDragStarted)="dragStart($event)"
+  >
+    <div
+      class="example-box"
+      *ngFor="
+        let widget of widgetList | CustomSort : 'asc' : 'zindex';
+        let widgetIndex = index
+      "
+      cdkDrag
+    >
+      {{
+        widget.displayName.includes("Systolic")
+          ? "Blood Pressure"
+          : widget.displayName
+      }}
+      <div class="ml-1">
+        <img
+          src="../../../assets/icons/draggable-icon.png"
+          height="20px"
+          width="20px"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="saving-text"
+  [class.saved-text]="changeLayoutStatus === 'Saved to Display'"
+  *ngIf="changeLayoutStatus !== null"
+>
+  {{ changeLayoutStatus }}
+</div>

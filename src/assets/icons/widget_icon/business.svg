@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="54" height="24" viewBox="0 0 54 24" xml:space="preserve">
+  <g id="e1b57e6e-3d16-42cd-8bbb-2083a077a8fb">
+    <rect style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; visibility: hidden;" vector-effect="non-scaling-stroke" x="0" y="0" width="60" height="30" />
+  </g>
+  <g id="b4b25ac4-b96d-48c6-9891-eb2433d93c1c">
+  </g>
+  <g>
+    <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(22,178,105); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" d="M 54 24 L 8.29 24 C 3.71 24 0 20.29 0 15.71 L 0 8.29 C 0 3.71 3.71 0 8.29 0 L 54 0 L 54 24 Z" stroke-linecap="round" />
+  </g>
+  <g id="f3b640f4-7ba1-44a9-827e-d74d428e8c5c">
+    <text xml:space="preserve" font-size="11.5" font-style="normal" font-weight="400" style="font-family: 'Montserrat', sans-serif;stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; white-space: pre; text-anchor: middle; dominant-baseline: middle;" x="20" y="-3">
+      Business
+    </text>
+  </g>
+</svg>

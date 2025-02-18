@@ -1,0 +1,119 @@
+<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header custom-modal-header">Add a Quotes widget</div>
+    <div class="modal-body">
+      <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a
+              href="#QuotesWidgetTab1"
+              class="nav-link active"
+              aria-controls="QuotesWidgetTab1"
+              role="tab"
+              data-toggle="tab"
+              >Settings</a
+            >
+          </li>
+          <li class="nav-item" style="margin-left: 10px">
+            <a
+              href="#QuotesWidgetTab2"
+              class="nav-link"
+              aria-controls="QuotesWidgetTab2"
+              role="tab"
+              data-toggle="tab"
+              (click)="setBackgroundWidgetDetail()"
+              >Format</a
+            >
+          </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="QuotesWidgetTab1">
+            <div class="quotes-setting-box mt10 mobile-mb50">
+              <!-- <div class="row mt20">
+                <div class="col-12 text-align-left">
+                  <strong>Select Quotes Length</strong>
+                </div>
+              </div>
+              <div class="sub-list-container">
+                <div class="row">
+                  <div
+                    *ngFor="let quotesLengthData of quotesLengthList"
+                    class="col-12 mt20"
+                    (click)="updateQuotesLength(quotesLengthData)"
+                  >
+                    <div class="float-left fit-content-width">
+                      {{ quotesLengthData.quoteslength }}
+                    </div>
+                    <div
+                      class="float-right"
+                      *ngIf="quotesLengthData.id === selectedQuotesLength"
+                    >
+                      <div class="active-quotes-option"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+               -->
+              <div class="row mt30">
+                <div class="col-12 text-align-left">
+                  <strong>Select Quotes Category</strong>
+                </div>
+              </div>
+              <div class="sub-list-container">
+                <div class="row">
+                  <div
+                    *ngFor="
+                      let quotesCategory of quotesCategoryList
+                        | CustomSort : 'asc' : 'categoryType'
+                    "
+                    (click)="updateCategory(quotesCategory.categoryType)"
+                    class="col-12 mt20"
+                  >
+                    <div class="float-left fit-content-width">
+                      {{ quotesCategory.categoryType }}
+                    </div>
+                    <div
+                      class="float-right"
+                      *ngIf="checkCategoryExist(quotesCategory.categoryType)"
+                    >
+                      <div class="active-quotes-option"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 footer-btn-position">
+                <button
+                  type="button"
+                  class="btn btn-secondary mr-20"
+                  (click)="dismissModel()"
+                >
+                  CANCEL
+                </button>
+                <button class="btn btn-primary" (click)="saveQuotesSetting()">
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane mt15 bg-setting-box"
+            id="QuotesWidgetTab2"
+          >
+            <app-widget-bg-setting
+              [widgetbgsetting]="widgetBgSetting"
+              [widgetType]="widgetType"
+              (emitbgsettingQuotesOptions)="onbgsettingQuotesOptions($event)"
+              (closeModalEvent)="dismissModel()"
+            >
+            </app-widget-bg-setting>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

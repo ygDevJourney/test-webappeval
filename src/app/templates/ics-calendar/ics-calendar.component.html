@@ -1,0 +1,89 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content ical-content">
+    <div
+      class="modal-header custom-modal-header ical-header"
+      *ngIf="category == 'calendar'"
+    >
+      Connect iCal or ICS
+    </div>
+
+    <div
+      class="modal-header custom-modal-header ical-header"
+      *ngIf="category == 'mealplan'"
+    >
+      Connect Spoonacular URL
+    </div>
+
+    <div class="modal-body p0">
+      <div class="ics-setting-box">
+        <form [formGroup]="icsCalendarFormGroup">
+          <div class="col-12 mt25">
+            <div class="col-12 mt-10 p0">
+              <label
+                class="col-12 text-align-left p0"
+                *ngIf="category == 'calendar'"
+                >Enter Calendar URL</label
+              >
+              <label
+                class="col-12 text-align-left p0"
+                *ngIf="category == 'mealplan'"
+                >Enter Spoonacular URL</label
+              >
+              <div class="col-12 text-align-left p0">
+                <input
+                  class="col-12 p0"
+                  type="text"
+                  formControlName="icalUrl"
+                  style="
+                    border: none;
+                    border-bottom: 1px solid gray;
+                    text-align: center;
+                  "
+                  [placeholder]="placeholdermessage"
+                />
+              </div>
+            </div>
+
+            <div
+              class="col-12 mt-10 pl30 text-align-left"
+              style="color: orangered"
+              *ngIf="icalAccountSuccess == false"
+            >
+              {{ errormessage }}
+            </div>
+
+            <div class="text-align-left mt25" *ngIf="category == 'calendar'">
+              Many services like cozi, family wall, public holidays, sports
+              teams and other services provide you with a shared internet
+              calendar link in iCal or ICS format that can be used here.
+            </div>
+
+            <div class="text-align-left mt25" *ngIf="category == 'mealplan'">
+              Need help getting your Spoonacular URL. click
+              <a
+                target="_blank"
+                href=" http://help.mangodisplay.com/en/articles/8017991-how-to-use-the-meal-plan"
+                >here</a
+              >
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- for icloud calendar URL -->
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary mr-20"
+        (click)="dismissModal()"
+      >
+        CANCEL
+      </button>
+      <button class="btn btn-primary" (click)="saveIcsCredentials()">
+        CONNECT
+      </button>
+    </div>
+  </div>
+</div>

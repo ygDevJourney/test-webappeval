@@ -1,0 +1,330 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header custom-modal-header">Add a Meal Plan widget</div>
+
+    <div class="modal-body">
+      <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a
+              href="#mealplan"
+              class="nav-link active"
+              aria-controls="mealplan"
+              role="tab"
+              data-toggle="tab"
+              >Calendars
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              href="#mealWidgetSetting"
+              class="nav-link"
+              aria-controls="mealWidgetSetting"
+              role="tab"
+              data-toggle="tab"
+              >Settings</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="#mealWidgetFormat"
+              class="nav-link"
+              aria-controls="mealWidgetFormat"
+              role="tab"
+              data-toggle="tab"
+              (click)="setBackgroundWidgetDetail()"
+              >Format</a
+            >
+          </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div
+            role="tabpanel"
+            class="tab-pane active mt10 sub-list-container p0 calendar-setting-box"
+            id="mealplan"
+          >
+            <div class="calendar-setting-box">
+              <div
+                class="row col-12 text-align-left"
+                *ngIf="isAnySourceAdded == false"
+              >
+                <p class="full-width fw-bold">How to get started:</p>
+                <p>Spoonacular is the best free meal planning app.</p>
+                <p>
+                  1. Go to
+                  <a href="https://spoonacular.com" target="_blank"
+                    >https://spoonacular.com</a
+                  >
+                  to create a free account and log in
+                </p>
+                <p>
+                  2. Click the 'Meal Planer' icon.
+                  <img
+                    height="25px"
+                    src="../../../assets/icons/widget_icon/mealplan_instr.png"
+                  />
+                </p>
+                <p>
+                  3. From the left side choose Recipes, Products or Menu Items
+                  and search for a meal and choose and drag it to your calendar
+                  as a start.
+                </p>
+                <p>
+                  4. On the left bottom click the 'Sync with calendar' link and
+                  then copy the personal iCal URL.
+                </p>
+                <p>
+                  5. Click on "+ Spoonacular personal iCal URL" below, and paste
+                  the copied iCal URL.
+                </p>
+                <div class="col-12 mt10">
+                  <div
+                    class="text-align-center cursor-pointer justify-center"
+                    (click)="
+                      upgradeNeeded == true
+                        ? redirectToPaymentPage()
+                        : openIcsDataModal()
+                    "
+                  >
+                    <img src="../../../assets/icons/add-screen.svg" alt="" />
+                    <img
+                      alt=""
+                      class="ml10"
+                      height="17px"
+                      width="18px"
+                      src="../../../assets/icons/logo/ics-calendar.png"
+                    />
+                    <span class="ml5"> Spoonacular personal iCal URL</span>
+                    <img
+                      *ngIf="upgradeNeeded == true"
+                      (click)="redirectToPaymentPage()"
+                      alt=""
+                      class="ml10"
+                      height="16px"
+                      width="110px"
+                      src="../../../assets/icons/upgrade_pro.svg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <p class="mt15">
+                  As you continue to make changes to your meal planner via the
+                  Spoonacular website or the app, and it will automatically show
+                  on Mango along with images.
+                </p>
+                <p class="fs-14">
+                  Need detail step by step instructions?
+                  <a
+                    target="_blank"
+                    href="http://help.mangodisplay.com/en/articles/8017991-how-to-use-the-meal-plan"
+                    >click here</a
+                  >
+                </p>
+              </div>
+
+              <div class="row">
+                <div
+                  class="col-12 mt15 text-align-left mb5"
+                  *ngIf="isAnySourceAdded == true"
+                >
+                  <strong>Expand account to select specific Calendars</strong>
+                </div>
+
+                <div
+                  class="col-12 display-grid mt10"
+                  *ngFor="let account of accountList; let indexNumber = index"
+                >
+                  <div class="panel-group">
+                    <div class="panel panel-default display-grid">
+                      <div class="panel-heading">
+                        <div
+                          class="panel-title"
+                          (click)="getCalendarList(indexNumber)"
+                        >
+                          <a
+                            class="float-left fit-content-width collapsed"
+                            data-toggle="collapse"
+                            href="#mealcollapse{{ indexNumber }}"
+                          >
+                            <span *ngIf="account.calendarType == 'mealplan'"
+                              ><img
+                                alt=""
+                                class="mb5"
+                                height="16px"
+                                width="18px"
+                                src="../../../assets/icons/logo/ics-calendar.png"
+                            /></span>
+                            <span class="ml5">{{ account.sourceAccount }}</span>
+                          </a>
+                          <div class="float-right pr10">
+                            <img
+                              alt=""
+                              height="16px"
+                              width="18px"
+                              src="../../../assets/icons/delete.svg"
+                              (click)="
+                                $event.stopPropagation();
+                                removeAccount(account.id, account.calendarType)
+                              "
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        id="mealcollapse{{ indexNumber }}"
+                        class="full-width panel-collapse collapse"
+                      >
+                        <div>
+                          <div
+                            class="display-grid ml10 fs12"
+                            *ngIf="account.calendarList !== undefined"
+                          >
+                            <div
+                              class="full-width mt5"
+                              *ngFor="
+                                let calendar of account.calendarList;
+                                let calendarIndex = index
+                              "
+                              (click)="
+                                changeCalendarStatus(
+                                  indexNumber,
+                                  calendarIndex,
+                                  calendar.calendarId,
+                                  account.id
+                                )
+                              "
+                            >
+                              <div
+                                class="float-left fit-content-width justify-center"
+                              >
+                                <span class="ml5"
+                                  >{{ calendar.calendarName }}
+                                </span>
+                              </div>
+
+                              <div class="float-right pr10 mb10">
+                                <div style="display: inline-block; width: 20px">
+                                  <div
+                                    class="active-tick ml15"
+                                    *ngIf="calendar.active"
+                                  ></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngIf="account.calendarList === undefined">
+                            <div class="loader"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mt10" *ngIf="isAnySourceAdded == true">
+                  <div
+                    class="text-align-center cursor-pointer justify-center"
+                    (click)="
+                      upgradeNeeded == true
+                        ? redirectToPaymentPage()
+                        : openIcsDataModal()
+                    "
+                  >
+                    <img src="../../../assets/icons/add-screen.svg" alt="" />
+                    <img
+                      alt=""
+                      class="ml10"
+                      height="17px"
+                      width="18px"
+                      src="../../../assets/icons/logo/ics-calendar.png"
+                    />
+                    <span class="ml5"> Spoonacular personal iCal URL</span>
+                    <img
+                      *ngIf="upgradeNeeded == true"
+                      (click)="redirectToPaymentPage()"
+                      alt=""
+                      class="ml10"
+                      height="16px"
+                      width="110px"
+                      src="../../../assets/icons/upgrade_pro.svg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 footer-btn-position">
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-secondary mr-20"
+                    (click)="dismissModel()"
+                  >
+                    CANCEL
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    (click)="saveCalendarSettings()"
+                  >
+                    SAVE
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane mt15 calendar-setting-box"
+            id="mealWidgetFormat"
+          >
+            <app-widget-bg-setting
+              [widgetbgsetting]="widgetBgSetting"
+              [widgetType]="widgetType"
+              (emitbgsettingMealPlanOptions)="onbgsettingOptions($event)"
+              (closeModalEvent)="dismissModel()"
+            >
+            </app-widget-bg-setting>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane mt15 calendar-setting-box"
+            id="mealWidgetSetting"
+          >
+            <app-mealplan-widget-format
+              [category]="category"
+              (closeModalEvent)="dismissModel()"
+              (updateWidgetStatusEventEmiter)="
+                updatecalendarWidgetStatus($event)
+              "
+              [activeLayout]="activeLayout"
+              [calendarWidgetObject]="mealWidgetObject"
+            >
+            </app-mealplan-widget-format>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div></div>
+
+<div
+  class="modal fade"
+  bsModal
+  #icsCalendarAlert="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-ics-calendar
+    [icsCalendarAlertModal]="icsCalendarAlertModal"
+    [widgetSettingId]="widgetSettingId"
+    (icsMealPlanEventEmiter)="updatedIcloudData($event)"
+    [category]="category"
+  ></app-ics-calendar>
+</div>

@@ -1,0 +1,149 @@
+<div class="container ptb10">
+  <div class="commoncss">
+    <div class="col-12">
+      <div class="header" *ngIf="requestType == 'deviceSetup'">
+        Choose Your Display Layout
+      </div>
+      <div class="header display-flex" *ngIf="requestType == 'templateUpdate'">
+        <div class="col-12">Choose Your Template</div>
+      </div>
+      <div class="mt10" *ngIf="requestType == 'deviceSetup'">
+        Start with a pre-designed template, the easiest way to start and
+        customize your display
+      </div>
+      <div class="mt10">
+        Click for full view. Templates may contain widgets requiring a
+        <a
+          href="https://mangodisplay.com/pricing/"
+          target="_blank"
+          class="theme-font-color"
+          >subscription</a
+        >.
+      </div>
+      <div class="mt10" *ngIf="userLanguage != 'en'">
+        Template images below shown in English but will be displayed in your
+        language once selected.
+      </div>
+
+      <div class="body mt25">
+        <div class="bodyContent">
+          <div role="tabpanel" *ngIf="categoryList.length > 0">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li
+                *ngFor="let category of categoryList; let i = index"
+                class="nav-item"
+                (click)="selectedCategory = category; getTemplateToShow()"
+              >
+                <a
+                  *ngIf="
+                    category != 'My Templates' ||
+                    (category == 'My Templates' &&
+                      customTemplateList.length > 0)
+                  "
+                  href="#{{ category }}"
+                  class="nav-link"
+                  [class.active]="category === selectedCategory"
+                  aria-controls="category"
+                  role="tab"
+                  data-toggle="tab"
+                  >{{ category }}
+                </a>
+              </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div
+                role="tabpanel"
+                class="tab-pane active mt10 sub-list-container p0"
+                id="{{ category }}"
+                *ngFor="let category of categoryList"
+              >
+                <div
+                  class="col-12 p-0 row"
+                  *ngIf="category === selectedCategory"
+                >
+                  <div
+                    class="col-12 col-lg-3 col-md-4 col-sm-5"
+                    *ngIf="requestType == 'deviceSetup'"
+                  >
+                    <div class="img_box" (click)="completeRegistration()">
+                      <div
+                        class="col-12 p-0"
+                        style="border: 1px solid #14b268; height: 130px"
+                      >
+                        <img
+                          alt=""
+                          class="img-fluid mt20"
+                          src="../../../../assets/icons/add-mirror.svg"
+                        />
+                        <div class="mt20">Start with blank Layout</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="col-12 col-lg-3 col-md-4 col-sm-5"
+                    *ngFor="let template of showTemplateList"
+                  >
+                    <div
+                      class="img_box"
+                      (click)="updateTemplate(template)"
+                      *ngIf="template.category == category"
+                    >
+                      <img
+                        [src]="template.template_img_url"
+                        height="130px"
+                        width="100%"
+                      />
+                      <div
+                        class="col-12 ellipses fs-14"
+                        *ngIf="template.category == 'My Templates'"
+                      >
+                        {{ template.name }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="categoryList.length == 0">
+            <div class="col-12 col-lg-3 col-md-4 col-sm-5">
+              <div class="img_box" (click)="completeRegistration()">
+                <div
+                  class="col-12 p-0"
+                  style="border: 1px solid #14b268; height: 130px"
+                >
+                  <img
+                    alt=""
+                    class="img-fluid mt20"
+                    src="../../../../assets/icons/add-mirror.svg"
+                  />
+                  <div class="mt20">Start with blank Layout</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #templatePreviewAlert="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-template-select
+    [templateSelectModal]="templateSelectModal"
+    [data]="selectedTemplate"
+    [requestType]="requestType"
+    (emittemplate)="templateSelected($event)"
+    (emitApplyTemplate)="updateExistingTemplate($event)"
+  ></app-template-select>
+</div>

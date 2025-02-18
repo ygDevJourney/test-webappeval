@@ -1,0 +1,288 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header custom-modal-header">Add a Chores widget</div>
+
+    <div class="modal-body">
+      <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a
+              href="#choreTab"
+              class="nav-link active"
+              aria-controls="choreTab"
+              role="tab"
+              data-toggle="tab"
+              >Chores via Todoist
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              href="#choresSetting"
+              class="nav-link"
+              aria-controls="choresSetting"
+              role="tab"
+              data-toggle="tab"
+              >Settings</a
+            >
+          </li>
+
+          <li class="nav-item">
+            <a
+              href="#choresformatTab"
+              class="nav-link"
+              aria-controls="choresformatTab"
+              role="tab"
+              data-toggle="tab"
+              (click)="setBackgroundWidgetDetail()"
+              >Format</a
+            >
+          </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div
+            role="tabpanel"
+            class="tab-pane active mt10 sub-list-container todo-setting-box"
+            id="choreTab"
+          >
+            <div class="todo-setting-box">
+              <div class="row">
+                <div
+                  class="col-12 text-align-left"
+                  *ngIf="isAnySourceAdded == false"
+                >
+                  <div>How to get started:</div>
+                  <p class="mtb10">
+                    1. Create a free account at www.todoist.com ( if you don't
+                    have one already.)
+                  </p>
+                  <p class="mt20 mb5">In your Todoist account:</p>
+                  <p class="mtb2">
+                    2. Create labels for your family members using their names
+                  </p>
+                  <p class="mtb2">
+                    3. Create a new project named 'Mango Chores'
+                  </p>
+                  <p class="mt2">
+                    4. Add a few tasks under the 'Mango Chores' project to get
+                    started, and assign the appropriate labels (family members)
+                    to the tasks
+                  </p>
+                  <p>
+                    Come back to Mango once steps above are done and click on
+                    ‘Add Todoist account’ to connect your account. Once
+                    connected you will see the chores listed by family member.
+                  </p>
+                  <p class="mt10">
+                    You can continue to add and change tasks using the Todoist
+                    app or on their website, and it will automatically display
+                    on Mango.
+                  </p>
+                </div>
+
+                <div
+                  class="col-12 mt15 text-align-left mb5"
+                  *ngIf="isAnySourceAdded == true"
+                >
+                  <strong>Expand account to select specific labels</strong>
+                </div>
+
+                <div
+                  class="col-12 display-grid mt10"
+                  *ngFor="let account of accountList; let indexNumber = index"
+                >
+                  <div class="panel-group">
+                    <div class="panel panel-default display-grid">
+                      <div class="panel-heading">
+                        <div
+                          class="panel-title"
+                          (click)="getTodoLabels(indexNumber)"
+                        >
+                          <a
+                            class="float-left fit-content-width collapsed"
+                            data-toggle="collapse"
+                            href="#collapse{{ indexNumber }}"
+                          >
+                            <span *ngIf="account.accountType == 'todoist'"
+                              ><img
+                                alt=""
+                                class="mb5"
+                                height="16px"
+                                width="18px"
+                                src="../../../assets/icons/logo/todoist.png"
+                            /></span>
+                            <span class="ml5"
+                              >{{ account.sourceAccount }}
+                              <span
+                                *ngIf="
+                                  account.projectList != undefined &&
+                                  account.projectList.length > 0
+                                "
+                              >
+                                (Mango Chores)</span
+                              ></span
+                            >
+                          </a>
+                          <div class="float-right pr10">
+                            <img
+                              alt=""
+                              height="16px"
+                              width="18px"
+                              src="../../../assets/icons/delete.svg"
+                              (click)="
+                                $event.stopPropagation();
+                                removeAccount(account.id)
+                              "
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        id="collapse{{ indexNumber }}"
+                        class="full-width panel-collapse collapse"
+                      >
+                        <div>
+                          <div
+                            class="display-grid ml10 fs12"
+                            *ngIf="account.labelList !== undefined"
+                          >
+                            <div
+                              class="full-width mt5 mb5"
+                              *ngFor="
+                                let project of account.labelList;
+                                let projectIndex = index
+                              "
+                              (click)="
+                                changeSelectedProjectStatus(
+                                  indexNumber,
+                                  projectIndex,
+                                  project.labelId,
+                                  account.id
+                                )
+                              "
+                            >
+                              <div
+                                class="float-left fit-content-width justify-center"
+                              >
+                                <span
+                                  class="color-box"
+                                  [style.background-color]="project.color"
+                                ></span>
+                                <span class="ml5"
+                                  >{{ project.labelName }}
+                                </span>
+                              </div>
+
+                              <div class="float-right pr10">
+                                <div style="display: inline-block; width: 20px">
+                                  <div
+                                    class="active-tick ml15"
+                                    *ngIf="project.active"
+                                  ></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="col-12 text-align-left mt10"
+                            *ngIf="
+                              account.projectList == undefined ||
+                              account.projectList.length == 0
+                            "
+                          >
+                            'Account connected, but 'Mango Chores' project does
+                            not exist. Please set it up in Todoist and check
+                            again.'
+                          </div>
+                          <div
+                            class="col-12 text-align-left mt10"
+                            *ngIf="
+                              account.projectList != undefined &&
+                              account.projectList.length > 0 &&
+                              account.labelList.length == 0
+                            "
+                          >
+                            No Labels are available for "Mango Chores" Project.
+                          </div>
+                          <!-- <div *ngIf="account.labelList === undefined">
+                            <div class="loader"></div>
+                          </div> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 mt10">
+                  <div
+                    class="text-align-center cursor-pointer justify-center"
+                    (click)="addTodoistAccount()"
+                  >
+                    <img src="../../../assets/icons/add-screen.svg" alt="" />
+                    <img
+                      alt=""
+                      class="ml10"
+                      height="17px"
+                      width="18px"
+                      src="../../../assets/icons/logo/todoist.png"
+                    />
+                    <span class="ml5"> Add Todoist account </span>
+                    <span class="ml10 fs-10 theme-font-color"> </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 footer-btn-position">
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-secondary mr-20"
+                    (click)="dismissModel()"
+                  >
+                    CANCEL
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    (click)="saveChoresSettings()"
+                  >
+                    SAVE
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane mt15 todo-setting-box"
+            id="choresSetting"
+          >
+            <app-chores-widget-format
+              (closeChoresModalEvent)="dismissModel()"
+              [category]="category"
+              [activeLayout]="activeLayout"
+              [todoWidgetObject]="choresWidgetObject"
+            >
+            </app-chores-widget-format>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane mt15 todo-setting-box"
+            id="choresformatTab"
+          >
+            <app-widget-bg-setting
+              [widgetbgsetting]="widgetBgSetting"
+              [widgetType]="widgetType"
+              (emitbgsettingChores)="onbgsettingOptions($event)"
+              (closeModalEvent)="dismissModel()"
+            >
+            </app-widget-bg-setting>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

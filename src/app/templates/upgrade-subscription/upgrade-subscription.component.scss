@@ -1,0 +1,114 @@
+.modal-body {
+  padding: 15px !important;
+  max-height: calc(100vh - 150px) !important;
+  overflow-y: auto !important;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  align-items: center;
+  letter-spacing: -0.3px;
+  color: #333333;
+}
+
+.custom-modal-close {
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  margin-top: 2px;
+}
+.privacy-link {
+  font-size: 10px;
+  text-decoration-line: underline;
+  color: #0198c8;
+}
+.tag-line {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #14b268;
+}
+.subscription-details {
+  color: #979998;
+}
+.btn-custom-size {
+  min-width: 200px;
+}
+.plan-desc {
+  font-size: 12px;
+}
+.carousel-indicators {
+  bottom: -35px !important;
+}
+.carousel-indicators li {
+  background-color: #c4c4c4 !important;
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+}
+.carousel-indicators .active {
+  background-color: #14b268 !important;
+}
+.btn-primary.disabled,
+.btn-primary:disabled {
+  background-color: #14b268;
+  border-color: #14b268;
+}
+.img-section {
+  padding: 0 15px;
+}
+.sideview {
+  padding: 0 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.active-plan {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 20px;
+}
+
+.fields {
+  font-size: 15px;
+  padding: 8px;
+  border: 2px solid #cecaca;
+  border-radius: 5px;
+  align-items: center;
+  color: #14b268;
+}
+
+.paybutton {
+  font-size: 15px;
+  padding: 8px;
+  border: 2px solid #cecaca;
+  border-radius: 5px;
+  background-color: #14b268;
+  align-items: center;
+}
+
+.paymentlabel {
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.plan-label {
+  height: 80px;
+  width: 250px;
+  background-color: #eee;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  border: 2px solid #ddd;
+}
+
+.selected-plan-label {
+  background-color: #14b268;
+  border: 2px solid #14b268;
+}
+
+.page-links {
+  font-size: 14px;
+  font-weight: 600;
+  color: #14b268;
+}

@@ -1,0 +1,135 @@
+<div class="modal-dialog modal-lg modal-dialog-centered" id="modal1">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="custom-modal-header">Add a Embed HTML widget</div>
+      <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a
+              href="#htmlSettingTab"
+              class="nav-link active"
+              aria-controls="uploadTab"
+              role="tab"
+              data-toggle="tab"
+              >Settings</a
+            >
+          </li>
+          <!-- <li class="nav-item">
+            <a
+              href="#widgetBgTab"
+              class="nav-link"
+              aria-controls="widgetBgTab"
+              role="tab"
+              data-toggle="tab"
+              (click)="setBackgroundWidgetDetail()"
+              >Format</a
+            >
+          </li> -->
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div
+            role="tabpanel"
+            class="tab-pane active mt10 sub-list-container pl10 video-setting-box"
+            id="htmlSettingTab"
+          >
+            <form [formGroup]="htmlFormGroup" class="mt10">
+              <div class="row mt15">
+                <div class="col-12 setup-message text-align-left">
+                  Add HTML/Javascript Code
+                </div>
+                <div class="col-12 text-align-center custom-text-field mt10 p0">
+                  <textarea
+                    type="text"
+                    placeholder="Enter Embed html code"
+                    id="embed_html_url"
+                    class="embed-html text-line text-align-left"
+                    formControlName="baseurl"
+                    style="width: 95%; margin: auto"
+                  >
+                  </textarea>
+                  <span class="error-text">{{ error }}</span>
+                </div>
+              </div>
+              <!-- <div class="row mt10">
+                <div class="col-12">
+                  <div class="col-4 float-left text-align-left p-0">
+                    Refresh Time
+                  </div>
+                  <div class="btn-group btn-group-justified float-left block">
+                    <select
+                      name="autoRefreshTime"
+                      formControlName="autoRefreshTime"
+                      class="btn btn-secondary"
+                      style="width: 250px; height: 35px"
+                    >
+                      <option
+                        *ngFor="let obj of iframily_autorefresh_time_option"
+                        [value]="obj.value"
+                      >
+                        {{ obj.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt15">
+                <div class="col-12">
+                  <div
+                    class="col-4 checkbox-title float-left text-align-left p-0"
+                  >
+                    Auto Scroll Content
+                  </div>
+                  <div class="col-8 float-left p-0">
+                    <label class="custom-checkbox display-flex">
+                      <input
+                        type="checkbox"
+                        formControlName="isAutoScroll"
+                        class="vertical-middle-align ml5"
+                        data-md-icheck
+                      />
+                      <div class="checkbox checkbox-left"></div>
+                    </label>
+                  </div>
+                </div>
+              </div> -->
+            </form>
+            <div class="row">
+              <div class="col-12 footer-btn-position">
+                <button
+                  type="button"
+                  class="btn btn-secondary mr-20"
+                  (click)="dismissModel()"
+                >
+                  CANCEL
+                </button>
+                <button
+                  class="btn btn-primary"
+                  (click)="saveIframilySettings()"
+                >
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane bg-setting-box mt15"
+            id="widgetBgTab"
+            *ngIf="settingDisplayflag"
+          >
+            <app-widget-bg-setting
+              [widgetbgsetting]="widgetBgSetting"
+              [widgetType]="widgetType"
+              (emitbgsettingEmbedHtmlOption)="onbgsettingOptions($event)"
+              (closeModalEvent)="dismissModel()"
+            >
+            </app-widget-bg-setting>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

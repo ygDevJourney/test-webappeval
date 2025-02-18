@@ -1,0 +1,255 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header custom-modal-header">Add Countdown Widget</div>
+    <div class="modal-body">
+      <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a
+              href="#countDownSetting"
+              class="nav-link active"
+              aria-controls="setting"
+              role="tab"
+              data-toggle="tab"
+              >Settings</a
+            >
+          </li>
+          <li class="nav-item" style="margin-left: 10px">
+            <a
+              href="#countDownformat"
+              class="nav-link"
+              aria-controls="format"
+              role="tab"
+              data-toggle="tab"
+              (click)="setBackgroundWidgetDetail()"
+              >Format</a
+            >
+          </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div
+            role="tabpanel"
+            class="tab-pane bg-setting-box active"
+            id="countDownSetting"
+          >
+            <form [formGroup]="countDownFormGroup">
+              <div class="news-setting-box">
+                <div class="row mt-10">
+                  <div class="col-12">
+                    <div class="col-12 text-align-left">
+                      Configure your countdown
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="row mt10">
+                    <div class="col-12 p0">
+                      <div
+                        class="col-xs-12 col-sm-6 col-md-4 float-left text-align-left mt10"
+                      >
+                        Countdown to
+                      </div>
+                      <div
+                        class="col-xs-12 col-sm-6 col-md-8 float-left text-align-left mt10"
+                      >
+                        <div class="form-outline datetimepicker">
+                          <div>
+                            <input
+                              type="datetime-local"
+                              class="form-control"
+                              formControlName="eventTime"
+                              id="datetimepickerExample"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <hr />
+
+                <div class="col-12">
+                  <div class="row mt10">
+                    <div class="col-12 p0">
+                      <div
+                        class="col-xs-12 col-sm-6 col-md-4 float-left text-align-left mt10"
+                      >
+                        Countdown Event
+                      </div>
+                      <div
+                        class="col-xs-12 col-sm-6 col-md-8 float-left text-align-left mt10"
+                      >
+                        <input
+                          type="text"
+                          formControlName="eventName"
+                          placeholder="Add the event details here"
+                          class="vertical-middle-align full-width"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr />
+                <div class="col-12">
+                  <div class="row mt10">
+                    <div class="col-12 p0">
+                      <div
+                        class="col-xs-12 col-sm-6 col-md-4 float-left text-align-left mt10"
+                      >
+                        Display
+                      </div>
+                      <div
+                        class="col-xs-12 col-sm-6 col-md-8 float-left text-align-left mt10"
+                      >
+                        <div class="col-xs-12 col-sm-6 col-md-3 float-left">
+                          <label class="custom-checkbox display-flex">
+                            <input
+                              type="checkbox"
+                              formControlName="isDayEnabled"
+                              class="vertical-middle-align ml5"
+                              data-md-icheck
+                            />
+                            <div class="checkbox checkbox-left"></div>
+                            <div class="text-muted fs14 ml10">Days</div>
+                          </label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 float-left">
+                          <label class="custom-checkbox display-flex">
+                            <input
+                              type="checkbox"
+                              formControlName="isHourEnabled"
+                              class="vertical-middle-align ml5"
+                              data-md-icheck
+                            />
+                            <div class="checkbox checkbox-left"></div>
+                            <div class="text-muted fs14 ml10">Hours</div>
+                          </label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 float-left">
+                          <label class="custom-checkbox display-flex">
+                            <input
+                              type="checkbox"
+                              formControlName="isMinuteEnabled"
+                              class="vertical-middle-align ml5"
+                              data-md-icheck
+                            />
+                            <div class="checkbox checkbox-left"></div>
+                            <div class="text-muted fs14 ml10">Minutes</div>
+                          </label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 float-left">
+                          <label class="custom-checkbox display-flex">
+                            <input
+                              type="checkbox"
+                              formControlName="isSecondEnabled"
+                              class="vertical-middle-align ml5"
+                              data-md-icheck
+                            />
+                            <div class="checkbox checkbox-left"></div>
+                            <div class="text-muted fs14 ml10">Seconds</div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="row mt15">
+                  <div class="col-12">
+                    <div
+                      class="col-3 checkbox-title float-left text-align-left"
+                    >
+                      Display
+                    </div>
+                    <div class="col-2 float-left">
+                      <label class="custom-checkbox display-flex">
+                        <input
+                          type="checkbox"
+                          formControlName="isDayEnabled"
+                          class="vertical-middle-align ml5"
+                          data-md-icheck
+                        />
+                        <div class="checkbox checkbox-left"></div>
+                        <div class="text-muted fs14 ml10">Days</div>
+                      </label>
+                    </div>
+                    <div class="col-2 float-left">
+                      <label class="custom-checkbox display-flex">
+                        <input
+                          type="checkbox"
+                          formControlName="isHourEnabled"
+                          class="vertical-middle-align ml5"
+                          data-md-icheck
+                        />
+                        <div class="checkbox checkbox-left"></div>
+                        <div class="text-muted fs14 ml10">Hours</div>
+                      </label>
+                    </div>
+                    <div class="col-2 float-left">
+                      <label class="custom-checkbox display-flex">
+                        <input
+                          type="checkbox"
+                          formControlName="isMinuteEnabled"
+                          class="vertical-middle-align ml5"
+                          data-md-icheck
+                        />
+                        <div class="checkbox checkbox-left"></div>
+                        <div class="text-muted fs14 ml10">Minutes</div>
+                      </label>
+                    </div>
+                    <div class="col-2 float-left">
+                      <label class="custom-checkbox display-flex">
+                        <input
+                          type="checkbox"
+                          formControlName="isSecondEnabled"
+                          class="vertical-middle-align ml5"
+                          data-md-icheck
+                        />
+                        <div class="checkbox checkbox-left"></div>
+                        <div class="text-muted fs14 ml10">Seconds</div>
+                      </label>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-12 footer-btn-position">
+                <button
+                  type="button"
+                  class="btn btn-secondary mr-20"
+                  (click)="dismissModel()"
+                >
+                  CANCEL
+                </button>
+                <button
+                  class="btn btn-primary"
+                  (click)="saveCountDownSetting()"
+                >
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane bg-setting-box"
+            id="countDownformat"
+          >
+            <app-widget-bg-setting
+              [widgetbgsetting]="widgetBgSetting"
+              [widgetType]="widgetType"
+              (emitbgsettingCountDown)="onbgsettingOptions($event)"
+              (closeModalEvent)="dismissModel()"
+            >
+            </app-widget-bg-setting>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

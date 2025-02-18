@@ -1,0 +1,169 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header custom-modal-header">{{ header }}</div>
+    <div class="col-12 modal-body setting-scrolling-div">
+      <div class="content" *ngIf="type == 'addmirrorLimitAlert'">
+        <div class="text-align-left">
+          Current subscription display license qty : {{ mirrorQuantity }}
+        </div>
+        <div class="mt15 text-align-left">
+          You can remove an existing display to free up a license or add
+          additional display licenses by updating your plan.
+        </div>
+      </div>
+
+      <div class="content" *ngIf="type == 'addCalendarLimitAlert'">
+        <div class="text-align-left">
+          Only one Calendar service account is allowed in your current plan.
+          Please upgrade your plan to add more than one Calendar service
+          account.
+        </div>
+      </div>
+
+      <div class="content" *ngIf="type == 'selectedFileExist'">
+        <div class="text-align-left">
+          One or more of the selected file(s) is in use in your display or
+          template. Please unselect them from the appropriate widget on your
+          display and try to delete again.
+        </div>
+      </div>
+
+      <div class="content" *ngIf="type == 'templateLimit'">
+        <div class="text-align-left">
+          You have reached the 10 custom templates limit. To add new ones,
+          please delete some from the 'My Templates' section in your profile,
+          then try again.
+        </div>
+      </div>
+
+      <div class="content" *ngIf="type == 'fileSizeLimit'">
+        <div class="text-align-left">
+          You've exceeded your storage limit. Please delete some files to free
+          up space and then try again.
+        </div>
+      </div>
+
+      <div class="content" *ngIf="type == 'upgradeplan'">
+        <div>
+          <span *ngIf="data.currentPlan != null">
+            You are currently subscribed to the
+            <a
+              href="https://mangodisplay.com/pricing/"
+              target="_blank"
+              class="theme-font-color upperclass"
+              >{{ data.currentPlan }}</a
+            >
+            Plan.
+          </span>
+          <div class="mt10">
+            {{ data.widgetName }} widgets require a
+            <a
+              href="https://mangodisplay.com/pricing/"
+              target="_blank"
+              class="theme-font-color upperclass"
+              >{{ data.planName }}
+            </a>
+            plan or higher. Please update your plan to continue editing.
+          </div>
+        </div>
+      </div>
+
+      <div class="content" *ngIf="type == 'calendarWidgetLimit'">
+        <span *ngIf="data.currentPlan != null">
+          You are currently subscribed to the
+          <a
+            href="https://mangodisplay.com/pricing/"
+            target="_blank"
+            class="theme-font-color upperclass"
+            >{{ data.currentPlan }}</a
+          >
+          Plan.
+        </span>
+        <div class="mt10">
+          Your layout contains more than one calendar widget. A
+          <a
+            href="https://mangodisplay.com/pricing/"
+            target="_blank"
+            class="theme-font-color upperclass"
+            >Pro</a
+          >
+          plan or higher is required to display more than one calendar widget.
+          Please delete the other calendar widgets, or update to continue.
+        </div>
+      </div>
+
+      <div class="content" *ngIf="type == 'preview'">
+        <div>
+          Your layout changes are automatically reflected on your display
+          running the Mango Display App. Please only use this preview when you
+          are not directly in front of that physical display and need to preview
+          how it would look.
+        </div>
+        <div class="mt25">
+          While the preview is open, your display running the Mango Display App
+          could temporarily flicker. It will return to normal once the preview
+          browser window is closed.
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div
+        *ngIf="
+          type != 'preview' &&
+          type != 'templateLimit' &&
+          type != 'selectedFileExist' &&
+          type != 'fileSizeLimit'
+        "
+      >
+        <div class="col-12">
+          <button class="btn btn-secondary" (click)="commonAlertModal.hide()">
+            Cancel
+          </button>
+          <button class="btn btn-primary ml15" (click)="redirectToPayment()">
+            Update Plan
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="type == 'selectedFileExist' || type == 'fileSizeLimit'">
+        <div class="col-12">
+          <button class="btn btn-secondary" (click)="commonAlertModal.hide()">
+            Okay
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="type == 'templateLimit'">
+        <div class="col-12">
+          <button
+            class="btn btn-secondary upperclass"
+            (click)="commonAlertModal.hide()"
+          >
+            Close
+          </button>
+          <button
+            class="btn btn-primary ml15 upperclass"
+            (click)="redirectToManageTemplate()"
+          >
+            Manage Templates
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="type == 'preview'">
+        <div class="col-12">
+          <button class="btn btn-secondary" (click)="commonAlertModal.hide()">
+            Cancel
+          </button>
+          <button
+            class="btn btn-primary ml15"
+            (click)="updatePreviewConfirmation()"
+          >
+            Preview
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

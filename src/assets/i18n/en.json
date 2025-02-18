@@ -1,0 +1,104 @@
+{
+	"AUTHENTICATION": {
+		"LOGIN": {
+			"BUTTONTEXT": "Continue",
+			"FORGOTPASSWORD": "Forgot Password?",
+			"RETURNTEXT": "Don't have an account?",
+			"TITLE": "Login"
+		},
+		"RESETPASSWORD": {
+			"BUTTONTEXT": "Continue",
+			"RETURNTEXT": "Remembered password? return to ",
+			"TITLE": "Reset Password"
+		},
+		"SIGNUP": {
+			"BUTTONTEXT": "Create",
+			"RETURNTEXT": "Already have an account?",
+			"TITLE": "Sign up"
+		}
+	},
+	"DATA": {
+		"DYNAMIC_VALUE": "My name is {{name}}",
+		"TITLE": "Hello world"
+	},
+	"ERROR": {
+		"EMPTYFIELDS": "This field is mandatory to fill",
+		"INVALIDCONFIRMPASSWORD": "The passwords you entered do not match",
+		"INVALIDEMAIL": "Please enter valid email address",
+		"INVALIDENAME": "Please enter valid name",
+		"INVALIDPASSWORD": "The password length must be greater than 6 and less than 20",
+		"SHORTPASSWORD": "The password you entered is too short",
+		"ALREADY_REGISTER_MIRROR":"This mirror is already registered"
+	}, 
+	"INPUTFIELDS": {
+		"CONFIRMPASSWORD": "Confirm Password",
+		"DISPLAYNAME": "Display Name",
+		"EMAIL": "Email",
+		"GENDER": "Gender",
+		"GENDERS": {
+			"FEMALE": "Female",
+			"MALE": "Male",
+			"OTHER": "Other",
+			"UNKNOWN": "Don't Show"
+		},
+		"LANGUAGE": "Langauge",
+		"LANGUAGES": {
+			"ENGLISH": "English",
+			"SPANISH": "Spanish"
+		},
+		"NAME": "Name",
+		"PASSWORD": "Password"
+	},
+	"MIRROR": {
+		"ADD_DISPLAY_TEXT": "Add New Display",
+		"MIRRORSETTING": {
+			"DISPLAYNAME": "Display Name",
+			"SETTING": "Settings",
+			"RENAME_MIRROR_LABEL":"Would you like to rename the display? ",
+			"BUTTON_SAVE_TEXT": "Save",
+			"BUTTON_CANCEL_TEXT": "Cancel"
+		},
+		"MIRRORSETUP": {
+			"BUTTON_FINISH_TEXT": "FINISH",
+			"BUTTON_NEXT_TEXT": "Next",
+			"CATEGORY": {
+				"ANDROID": "Mango Display Android App",
+				"ANDROID_DEVICES_TYPE": "(Android TV, Android tablet)",
+				"LINKEDBROWSER": "Mango Display on your web browser",
+				"LINKEDBROWSER_DEVICES_TYPE": "(PC, Mac, iPad, Raspberry Pi, Smart TV, other browsers)",
+				"AMAZON": "Mango Display Amazon Fire App",
+				"AMAZON_DEVICES_TYPE": "(Amazon Fire TV stick,  Amazon Fire TV, Amazon Fire tablet)",
+				"RASP-BLE": "Mango Display Smart Mirror",
+				"RASP-BLE-BEACON": "",
+				"RASPBERRYPI": "Mango Display Rasberry Pi"
+			},
+			"DEVICECODE_MESSAGE_P1": "Download and open ‘Mango Display’ app on your display.",
+			"DEVICECODE_MESSAGE_P2": "Enter the Display Device Code below.",
+			"RENAME_MESSAGE_P1": "Would you like to rename the display?",
+			"SUCCESS_BUTTON_TEXT": "GO TO DISPLAY SETTINGS",
+			"SUCCESS_MESSAGE_P1": "Congratulations!!! ",
+			"SUCCESS_MESSAGE_P2": "Your new Mango Display",
+			"SUCCESS_MESSAGE_P3": "is successfully added and is ready to use.",
+			"LINKED_BROWSER_SETUP_SUCCESS_MESSAGE_P1": "Congratulations!!! ",
+			"LINKED_BROWSER_SETUP_SUCCESS_MESSAGE_P2": "Your Mango Display URL for",
+			"LINKED_BROWSER_SETUP_SUCCESS_MESSAGE_P3": "is now setup.",
+			"LINKED_BROWSER_SETUP_SUCCESS_MESSAGE_P4": "Use this link to view your display on any browser.",
+			"LINKED_BROWSER_SETUP_SUCCESS_MESSAGE_P5": "Continue to configure your display with the widgets and layout you want.",
+			"WELCOME_BUTTON_TEXT": "GO!",
+			"WELCOME_P1": "Let’s get you started!",
+			"WELCOME_P2": "Make sure that your Mango Display is turned-on and near you."
+		},
+		"TITLE": "My Displays"
+	},
+	"PWAPOPUP": {
+		"TEXT1": "Install this application in your home Screen for quick and easy access when you're on the go.",
+		"TEXT2": "Just tap",
+		"TEXT3": "then add to Home Screen",
+		"TITLE": "Install MangoMirror"
+	},
+	"WIDGETS": {
+		"LAYOUT": {
+			"NAV_BUTTON_TEXT": "My Displays"
+		}
+	}
+}

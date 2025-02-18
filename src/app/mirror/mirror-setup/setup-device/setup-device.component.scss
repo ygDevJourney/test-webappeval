@@ -1,0 +1,146 @@
+.lh26 {
+  line-height: 26px !important;
+}
+
+.nav-container {
+  overflow: hidden;
+}
+
+.message {
+  line-height: 20px;
+  text-align: center;
+  color: #878787;
+}
+
+.plr30 {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.ptb30 {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.plr100 {
+  padding: 0px 100px;
+}
+
+.text-line {
+  border: none;
+  border-bottom: solid #d2d2d2 2px !important;
+  border-radius: 0px;
+  text-align: center;
+}
+
+.text-line:focus {
+  border-bottom: solid #14b268 2px !important;
+}
+
+.setup-message {
+  font-size: 14px;
+  line-height: 35px;
+  color: #878787;
+}
+
+.device-box {
+  background: #ffffff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12),
+    0px 1px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  display: inline-flex;
+  padding: 20px;
+  align-items: center;
+  height: auto;
+  border: 2px solid #ffffff;
+}
+
+.device-box:hover,
+.device-box-active {
+  border: 2px solid #14b268;
+  box-sizing: border-box;
+}
+
+.setup-category-container {
+  padding: 10px 15px;
+}
+
+/** breadcrumbs */
+
+.breadcrumb {
+  font-size: 12px;
+  overflow: hidden;
+  margin-left: 0px;
+  padding: 0;
+  margin: 0px;
+  width: 100%;
+  height: 41px;
+}
+
+.breadcrumb span {
+  float: left;
+}
+
+.breadcrumb span {
+  color: #878787;
+  background: #efefef;
+  position: relative;
+}
+
+.breadcrumb span:after {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-top: 41px solid transparent;
+  /* Go big on the size, and let overflow hide */
+  border-bottom: 41px solid transparent;
+  border-left: 20px solid #efefef;
+  position: absolute;
+  top: 50%;
+  margin-top: -41px;
+  left: 100%;
+  z-index: 2;
+}
+
+.breadcrumb span:before {
+  content: " ";
+  border-top: 41px solid transparent;
+  /* Go big on the size, and let overflow hide */
+  border-bottom: 41px solid transparent;
+  border-left: 20px solid white;
+  position: absolute;
+  top: 50%;
+  margin-top: -41px;
+  margin-left: 1px;
+  left: 100%;
+  z-index: 1;
+}
+
+.breadcrumb span.active,
+.breadcrumb span:hover {
+  background: #14b268;
+  color: #ffffff;
+}
+
+.breadcrumb span.active:after,
+.breadcrumb span:hover:after {
+  border-left-color: #14b268 !important;
+}
+
+/** breadcrumbs end */
+
+.coming-soon-img {
+  position: absolute !important;
+  top: -22px !important;
+  right: 0 !important;
+}
+
+.disable-elem-activity {
+  pointer-events: none;
+}
+
+.md-box {
+  padding: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+}

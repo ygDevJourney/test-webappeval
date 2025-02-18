@@ -1,0 +1,130 @@
+<div class="modal-dialog modal-lg modal-dialog-centered" id="modal1">
+  <div class="modal-content">
+    <div class="modal-header custom-modal-header">Add a Clock widget</div>
+    <div class="modal-body">
+      <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a
+              href="#clock_setting"
+              class="nav-link active"
+              aria-controls="clock_setting"
+              role="tab"
+              data-toggle="tab"
+              >Settings</a
+            >
+          </li>
+          <li class="nav-item" style="margin-left: 10px">
+            <a
+              href="#clock_bg_setting"
+              class="nav-link"
+              aria-controls="clock_bg_setting"
+              role="tab"
+              data-toggle="tab"
+              (click)="setBackgroundWidgetDetail()"
+              >Format</a
+            >
+          </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div
+            role="tabpanel"
+            class="tab-pane active clock-setting-box"
+            id="clock_setting"
+          >
+            <form [formGroup]="clockFormGroup">
+              <div style="margin-top: 10px">
+                <div class="row col-12 mt15">
+                  <div class="col-5 col-sm-6 text-align-left mt10 plr0">
+                    Show Greeting Message
+                  </div>
+                  <div class="col-7 col-sm-6 text-align-left mt10 plr0">
+                    <div class="switchToggle">
+                      <input
+                        type="checkbox"
+                        id="greeting-switch"
+                        [disabled]="!clockEnabled"
+                        formControlName="isGreetingMessage"
+                      />
+                      <label for="greeting-switch">Toggle</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row col-12 mt10 justify-center">
+                  <div
+                    class="col-5 col-sm-6 float-left text-align-left mt10 plr0"
+                  >
+                    Time zone
+                  </div>
+                  <div
+                    class="col-7 col-sm-6 float-left text-align-left mt10 plr0"
+                  >
+                    <select
+                      name="timeZone"
+                      formControlName="timeZoneId"
+                      #timezone
+                      class="btn btn-secondary text-align-left"
+                      style="height: 35px; width: 210px"
+                      (change)="selectTimezone()"
+                    >
+                      <option
+                        *ngFor="let timezone of availableTimeZoneList"
+                        [ngValue]="timezone"
+                      >
+                        {{ timezone }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row col-12 mt10">
+                  <div
+                    class="col-5 col-sm-6 float-left text-align-left mt10 plr0"
+                  >
+                    Current Time
+                  </div>
+                  <div
+                    class="col-7 col-sm-6 float-left text-align-left mt10 plr0"
+                  >
+                    {{ current_time }}
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="row">
+              <div class="col-12 footer-btn-position">
+                <button
+                  type="button"
+                  class="btn btn-secondary mr-20"
+                  (click)="dismissModel()"
+                >
+                  CANCEL
+                </button>
+                <button class="btn btn-primary" (click)="saveClockSettings()">
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            role="tabpanel"
+            class="tab-pane bg-setting-box"
+            id="clock_bg_setting"
+          >
+            <app-widget-bg-setting
+              [widgetbgsetting]="widgetBgSetting"
+              [widgetType]="widgetType"
+              (emitbgsettingOptions)="onbgsettingOptions($event)"
+              (closeModalEvent)="dismissModel()"
+            >
+            </app-widget-bg-setting>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

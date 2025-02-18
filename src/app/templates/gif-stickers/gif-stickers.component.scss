@@ -1,0 +1,412 @@
+// tenore api changes
+//  .custom-modal-header {
+//   display: block;
+//   font-weight: 900;
+//   font-family: sans-serif;
+//   font-size: 19px;
+// }
+// .search {
+//   display: flex;
+//   padding: 15px 0;
+// }
+// input.search-input {
+//   width: 60%;
+//   height: 35px;
+//   padding: 7px;
+// }
+
+// button.search-btn {
+//   background: linear-gradient(
+//     45deg,
+//     rgb(153, 51, 255) 0%,
+//     rgb(255, 102, 102) 100%
+//   );
+//   color: #fff;
+//   border: none;
+//   margin-left: 16px;
+//   border-radius: 7px;
+//   padding: 0 22px;
+//   font-weight: 900;
+// }
+// .gifs-stickers-section {
+//   height: 260px;
+//   overflow-y: scroll;
+//   border: 1px solid #80808054;
+//   box-shadow: 1px 2px 2px 3px #80808045;
+// }
+// .slider {
+//   -webkit-appearance: none;
+//   width: auto;
+//   height: 8px;
+//   width: calc(100% - 40px);
+//   border-radius: 5px;
+//   background: #c6c6c6;
+//   outline: none;
+//   opacity: 0.7;
+//   -webkit-transition: 0.2s;
+//   transition: opacity 0.2s;
+// }
+
+// .slider::-webkit-slider-thumb {
+//   -webkit-appearance: none;
+//   appearance: none;
+//   width: 20px;
+//   height: 20px;
+//   border-radius: 50%;
+//   background: #ffffff;
+//   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+//   cursor: pointer;
+// }
+
+// .slider::-moz-range-thumb {
+//   width: 20px;
+//   height: 20px;
+//   border-radius: 50%;
+//   background: #ffffff;
+//   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+//   cursor: pointer;
+// }
+// .gifs-stickers-section {
+//   display: flex;
+//   flex-wrap: wrap;
+// }
+
+// .every-gif {
+//   padding: 10px;
+// }
+// .watermark {
+//   text-align: right;
+//   font-weight: 900;
+//   font-size: 14px;
+//   font-family: sans-serif;
+//   margin-top: 14px;
+// }
+
+// .preview img {
+//   border: 1px solid gray;
+//   padding: 7px;
+//   box-shadow: 5px 5px 18px grey;
+//   max-height: 110px;
+// }
+// .selected-btn {
+//   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s;
+//   background: linear-gradient(
+//     -135deg,
+//     rgb(74, 144, 226) 0%,
+//     rgb(148, 56, 255) 100%
+//   );
+//   border-radius: 22px;
+//   color: #fff;
+// }
+// .stickers-btn,
+// .gifs-btn {
+//   border: none;
+//   font-weight: bold;
+//   border-radius: 22px;
+//   height: 40px;
+// }
+// .btn-section {
+//   display: flex;
+//   padding: 9px 5px;
+//   font-size: 19px;
+// }
+// .gifs-stickers-section img {
+//   flex: 1 0 25%;
+// }
+
+// .giphy-gif:hover {
+//   border: 3px solid #dcdcdc;
+// }
+
+// .modal-body {
+//   height: 480px;
+//   .gif-setting-box {
+//     height: 400px !important;
+//     overflow: hidden !important;
+//     padding: 0 10px;
+//     .gifs-stickers-section {
+//       height: 230px;
+//       overflow: auto;
+//       margin-top: 10px;
+//     }
+//   }
+// }
+
+// @media (min-height: 700px) {
+//   .modal-body {
+//     height: 580px;
+//     .gif-setting-box {
+//       height: 500px !important;
+//       overflow: hidden !important;
+//       padding: 0 10px;
+//       .gifs-stickers-section {
+//         height: 330px;
+//         overflow: auto;
+//         margin-top: 10px;
+//       }
+//     }
+//   }
+// }
+
+// @media (min-height: 800px) {
+//   .modal-body {
+//     height: 680px;
+//     .gif-setting-box {
+//       height: 600px !important;
+//       overflow: hidden !important;
+//       padding: 0 10px;
+//       .gifs-stickers-section {
+//         height: 430px;
+//         overflow: auto;
+//         margin-top: 10px;
+//       }
+//     }
+//   }
+// }
+
+// @media (min-height: 900px) {
+//   .modal-body {
+//     height: 780px;
+//     .gif-setting-box {
+//       height: 700 !important;
+//       overflow: hidden !important;
+//       padding: 0 10px;
+//       .gifs-stickers-section {
+//         height: 530px;
+//         overflow: auto;
+//         margin-top: 10px;
+//       }
+//     }
+//   }
+// }
+
+// .grid-container {
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+//   grid-auto-rows: 10px; /* Small row height to allow for flexible item heights */
+//   gap: 10px;
+// }
+
+// .grid-item {
+//   background-color: #fff;
+//   border: 1px solid #ddd;
+//   padding: 10px;
+//   box-sizing: border-box;
+// }
+
+// .grid-item img {
+//   width: 100%;
+//   display: block;
+// }
+
+// gify changes
+
+.custom-modal-header {
+  display: block;
+  font-weight: 900;
+  font-family: sans-serif;
+  font-size: 19px;
+}
+.search {
+  display: flex;
+  padding: 15px 0;
+}
+input.search-input {
+  width: 60%;
+  height: 35px;
+  padding: 7px;
+}
+
+button.search-btn {
+  background: linear-gradient(
+    45deg,
+    rgb(153, 51, 255) 0%,
+    rgb(255, 102, 102) 100%
+  );
+  color: #fff;
+  border: none;
+  margin-left: 16px;
+  border-radius: 7px;
+  padding: 0 22px;
+  font-weight: 900;
+}
+.gifs-stickers-section {
+  height: 260px;
+  overflow-y: scroll;
+  border: 1px solid #80808054;
+  box-shadow: 1px 2px 2px 3px #80808045;
+}
+.slider {
+  -webkit-appearance: none;
+  width: auto;
+  height: 8px;
+  width: calc(100% - 40px);
+  border-radius: 5px;
+  background: #c6c6c6;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+.gifs-stickers-section {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.every-gif {
+  padding: 10px;
+}
+.watermark {
+  text-align: right;
+  font-weight: 900;
+  font-size: 14px;
+  font-family: sans-serif;
+  margin-top: 14px;
+}
+
+.preview img {
+  border: 1px solid gray;
+  padding: 7px;
+  box-shadow: 5px 5px 18px grey;
+  max-height: 110px;
+}
+
+.selected-btn {
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s;
+  background: linear-gradient(
+    -135deg,
+    rgb(74, 144, 226) 0%,
+    rgb(148, 56, 255) 100%
+  );
+  border-radius: 22px;
+  color: #fff;
+}
+.stickers-btn,
+.gifs-btn {
+  border: none;
+  font-weight: bold;
+  border-radius: 22px;
+  height: 40px;
+}
+.btn-section {
+  display: flex;
+  padding: 9px 5px;
+  font-size: 19px;
+}
+
+.gifs-stickers-section img {
+  margin: 8px;
+  flex: 1 0 25%;
+}
+
+.giphy-gif:hover {
+  border: 3px solid #dcdcdc;
+}
+
+// @media (max-width: 700px) {
+//   .modal-body {
+//     .tab-content {
+//       .news-setting-box {
+//         .search {
+//           display: flex;
+//           padding: 2px 0;
+//           margin-left: 14px;
+//           .search-input {
+//             height: 29px;
+//           }
+//         }
+//         .gifs-stickers-section {
+//           height: 280px;
+//           overflow: auto;
+//           margin-top: 10px;
+//         }
+//       }
+//     }
+//   }
+//   .gifs-stickers-section img {
+//     flex: 1 0 25%;
+//     margin: 4px;
+//   }
+// }
+
+.modal-body {
+  height: 480px;
+  .gif-setting-box {
+    height: 400px !important;
+    overflow: hidden !important;
+    padding: 0 10px;
+    .gifs-stickers-section {
+      height: 230px;
+      overflow: auto;
+      margin-top: 10px;
+    }
+  }
+}
+
+@media (min-height: 700px) {
+  .modal-body {
+    height: 580px;
+    .gif-setting-box {
+      height: 500px !important;
+      overflow: hidden !important;
+      padding: 0 10px;
+      .gifs-stickers-section {
+        height: 330px;
+        overflow: auto;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+@media (min-height: 800px) {
+  .modal-body {
+    height: 680px;
+    .gif-setting-box {
+      height: 600px !important;
+      overflow: hidden !important;
+      padding: 0 10px;
+      .gifs-stickers-section {
+        height: 430px;
+        overflow: auto;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+@media (min-height: 900px) {
+  .modal-body {
+    height: 780px;
+    .gif-setting-box {
+      height: 700 !important;
+      overflow: hidden !important;
+      padding: 0 10px;
+      .gifs-stickers-section {
+        height: 530px;
+        overflow: auto;
+        margin-top: 10px;
+      }
+    }
+  }
+}

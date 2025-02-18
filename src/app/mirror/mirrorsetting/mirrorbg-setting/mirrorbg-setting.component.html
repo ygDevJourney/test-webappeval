@@ -1,0 +1,274 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="custom-modal-header">Fonts & Colors</div>
+      <div class="tab-pane mt15 bg-setting-box">
+        <div class="text-align-left">
+          <div>
+            These default settings apply to all widgets unless you customize
+            individual ones.
+          </div>
+          <div class="bg-box mt15">
+            <div class="row mt15">
+              <div class="col-12">
+                <div class="float-left">Font Style</div>
+                <div class="float-right">
+                  <div class="custom-select-container">
+                    <div class="disp-dropdown">
+                      <div
+                        (click)="toggleOptions($event)"
+                        class="btn-secondary"
+                      >
+                        <div
+                          type="button"
+                          class="col-12 custom-select"
+                          [style.font-family]="
+                            settingOptions.backgroundSetting.fontFamily
+                          "
+                        >
+                          {{ settingOptions.backgroundSetting.fontFamily }}
+                        </div>
+                        <span class="p2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="14"
+                            height="12"
+                            fill="currentColor"
+                            class="bi bi-chevron-down"
+                            viewBox="0 0 16 16"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+
+                      <div *ngIf="showOptions" class="options-list">
+                        <div
+                          *ngFor="let font of availableFonts"
+                          class="text-align-left custom-option"
+                          (click)="selectOption(font.googleFontName)"
+                          [style.font-family]="font.googleFontName"
+                        >
+                          <div>
+                            {{ font.googleFontName }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt20">
+              <div class="col-12">
+                <div class="float-left">Font Color</div>
+                <div class="float-right">
+                  <input
+                    type="color"
+                    id="disp_font_color"
+                    class="btn btn-secondary"
+                    style="width: 155px; height: 35px"
+                    [(ngModel)]="settingOptions.backgroundSetting.fontColor"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt20">
+              <div class="col-12">
+                <div class="float-left">Page background color</div>
+                <div class="float-right">
+                  <input
+                    type="color"
+                    id="disp_bg_color"
+                    class="btn btn-secondary"
+                    style="width: 155px; height: 35px"
+                    [(ngModel)]="
+                      settingOptions.backgroundSetting.pageBackgroundColor
+                    "
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div
+                  class="col-12 mt15 justify-center fs-20"
+                  style="height: 30px"
+                  [style.backgroundColor]="
+                    settingOptions.backgroundSetting.pageBackgroundColor
+                  "
+                  [style.color]="settingOptions.backgroundSetting.fontColor"
+                  [style.font-family]="
+                    settingOptions.backgroundSetting.fontFamily
+                  "
+                >
+                  This is preview of your text!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-box mt15">
+            <div class="row mt20">
+              <div class="col-12">
+                <div class="float-left fit-content-width fw-bold">
+                  Widget Background Appearance
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt20">
+              <div class="col-12">
+                <div class="float-left">Widget background color</div>
+                <div class="float-right">
+                  <input
+                    type="color"
+                    [(ngModel)]="
+                      settingOptions.backgroundSetting.backgroundColor
+                    "
+                    id="favcolor"
+                    name="favcolor"
+                    value="#ff0000"
+                    class="btn btn-secondary"
+                    style="width: 155px; height: 35px"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt20">
+              <div class="col-12">
+                <div class="float-left">Widget background effect</div>
+                <div class="float-right">
+                  <select
+                    name="bg-effect"
+                    id="shapes"
+                    class="btn btn-secondary"
+                    style="height: 35px; width: 155px; color: black !important"
+                    [(ngModel)]="backgroundEffect"
+                  >
+                    <option value="Blur">Blur</option>
+                    <option value="Transparency">Transparency</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt20" *ngIf="backgroundEffect == 'Transparency'">
+              <div class="col-12">
+                <div class="float-left fit-content-width">
+                  Widget background transparency %
+                </div>
+                <div class="float-right justify-center">
+                  <span>0%</span>
+                  <input
+                    type="range"
+                    [(ngModel)]="settingOptions.backgroundSetting.transparency"
+                    min="0"
+                    max="10"
+                    class="slider mlr10"
+                    id="myRange"
+                    style="width: 90%"
+                  />
+                  <span>100%</span>
+                </div>
+              </div>
+              <div class="col-12 text-align-left">
+                <span class="fs-9"
+                  >(Increase to see more of your background images)</span
+                >
+              </div>
+            </div>
+
+            <div class="row mt20" *ngIf="backgroundEffect == 'Blur'">
+              <div class="col-12">
+                <div class="float-left fit-content-width">
+                  Widget background blur %
+                </div>
+                <div class="float-right justify-center">
+                  0%
+                  <input
+                    type="range"
+                    [(ngModel)]="settingOptions.backgroundSetting.blur"
+                    min="0"
+                    max="100"
+                    class="slider mlr10"
+                    id="myRange"
+                    style="width: 90%"
+                  />
+                  100%
+                </div>
+              </div>
+              <div class="col-12 text-align-left">
+                <span class="fs-9"
+                  >(Creates a frosted glass effect overlay to read text better
+                  over background images)</span
+                >
+              </div>
+            </div>
+
+            <div class="row mt20">
+              <div class="col-12">
+                <div class="float-left">Widget corners</div>
+                <div class="float-right">
+                  <select
+                    name="shapes"
+                    [(ngModel)]="settingOptions.backgroundSetting.corner"
+                    id="shapes"
+                    class="btn btn-secondary"
+                    style="height: 35px; width: 155px"
+                  >
+                    <option selected value="rounded">ROUNDED</option>
+                    <option value="square">SQUARE</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt20">
+              <div class="col-12">
+                <div class="float-left">Widget shadow</div>
+                <div class="float-right">
+                  <label class="custom-checkbox display-block">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="settingOptions.backgroundSetting.shadow"
+                      class="vertical-middle-align ml5"
+                      data-md-icheck
+                    />
+                    <div class="checkbox checkbox-left"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 footer-btn-position">
+        <button
+          type="button"
+          class="btn btn-secondary mr-20"
+          data-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onAddBackgroundSetting()"
+          data-dismiss="modal"
+        >
+          SAVE
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

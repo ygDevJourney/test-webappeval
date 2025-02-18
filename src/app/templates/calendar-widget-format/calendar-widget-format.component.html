@@ -1,0 +1,735 @@
+<form [formGroup]="calendarFormatFormGroup" class="mt10">
+  <div id="div1">
+    <div class="row">
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left lh30">Calendar Type</div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': calendarType === 'List' }"
+            (click)="calendarType = 'List'"
+          >
+            <i
+              *ngIf="calendarType === 'List'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            List</a
+          >
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': calendarType === 'Schedule' }"
+            (click)="calendarType = 'Schedule'"
+          >
+            <i
+              *ngIf="calendarType === 'Schedule'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            Schedule</a
+          >
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': calendarType === 'Monthly' }"
+            (click)="calendarType = 'Monthly'"
+          >
+            <i
+              *ngIf="calendarType === 'Monthly'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            Monthly</a
+          >
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': calendarType === 'Weeks' }"
+            (click)="calendarType = 'Weeks'"
+          >
+            <i
+              *ngIf="calendarType === 'Weeks'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            Weeks</a
+          >
+          <div class="mt5 text-muted">
+            <div *ngIf="calendarType === 'Schedule'">
+              Displays days as columns with events as blocks on an hourly time
+              grid.
+            </div>
+
+            <div *ngIf="calendarType === 'List'">
+              Displays upcoming events in a list, based on events selected
+              below.
+            </div>
+
+            <div *ngIf="calendarType === 'Monthly'">
+              The classic wall calendar format. Displays days and events from
+              first week of current month.
+            </div>
+            <div *ngIf="calendarType === 'Weeks'">
+              Displays events for current week and the number of weeks selected
+              below.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10" *ngIf="calendarType === 'Monthly'">
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left">Month to display</div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <select
+            name="m_selectedmonth"
+            formControlName="m_selectedMonth"
+            class="btn btn-secondary"
+            style="width: 250px; height: 35px"
+          >
+            <option
+              *ngFor="let obj of calendar_monthview_selectedMonth"
+              [value]="obj.value"
+            >
+              {{ obj.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10" *ngIf="calendarType === 'Monthly'">
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left">Weeks to Show</div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <select
+            name="month_weeksToShow"
+            formControlName="m_weeksToShow"
+            class="btn btn-secondary"
+            style="width: 250px; height: 35px"
+          >
+            <option
+              *ngFor="let obj of calendar_monthview_weeksToShow"
+              [value]="obj.value"
+            >
+              {{ obj.name }}
+            </option>
+          </select>
+          <div class="text-muted">Number of weeks to display.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10" *ngIf="calendarType === 'Weeks'">
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left">Weeks to Show</div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <select
+            name="week_weeksToShow"
+            formControlName="w_weeksToShow"
+            class="btn btn-secondary"
+            style="width: 135px; height: 35px"
+          >
+            <option *ngFor="let obj of week_range" [value]="obj">
+              {{ obj }}
+            </option>
+          </select>
+          <div class="text-muted">Number of weeks to display.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10 text-align-left" *ngIf="calendarType === 'Schedule'">
+      <div class="col-4 float-left text-align-left">
+        <div class="col-12">Days Selection</div>
+      </div>
+      <div class="col-8 float-left">
+        <div>
+          <input
+            type="radio"
+            id="current_week"
+            value="current_week"
+            name="schedule_days_selection"
+            (click)="schedule_days_selection = 'current_week'"
+            formControlName="schedule_days_selection"
+          />
+          <label for="current_week">Show current week</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="current_day"
+            value="current_day"
+            name="schedule_days_selection"
+            (click)="schedule_days_selection = 'current_day'"
+            formControlName="schedule_days_selection"
+          />
+          <label for="current_day">Show current day only</label>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row mt10"
+      *ngIf="
+        calendarType === 'Monthly' ||
+        calendarType === 'Weeks' ||
+        (calendarType === 'Schedule' &&
+          calendarFormatFormGroup.value.schedule_days_selection ===
+            'current_week')
+      "
+    >
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left">Week Start</div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': weekStartWith === 'Sunday' }"
+            (click)="weekStartWith = 'Sunday'"
+          >
+            <i
+              *ngIf="weekStartWith === 'Sunday'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            Sunday</a
+          >
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': weekStartWith === 'Monday' }"
+            (click)="weekStartWith = 'Monday'"
+          >
+            <i
+              *ngIf="weekStartWith === 'Monday'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            Monday</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10" *ngIf="calendarType === 'List'">
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left">Events to show</div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <div class="col-8 flex float-left p-0">
+            <div>
+              <input
+                type="radio"
+                id="Today"
+                name="list_event_type"
+                value="Today"
+                formControlName="list_event_type"
+                (click)="changeListEventType('Today')"
+              />
+              <label for="Today"
+                >Today's
+                <span>Events</span>
+              </label>
+            </div>
+            <div class="mt10">
+              <input
+                id="Tomorrow"
+                type="radio"
+                name="list_event_type"
+                value="Tomorrow"
+                formControlName="list_event_type"
+                (click)="changeListEventType('Tomorrow')"
+              />
+              <label for="Tomorrow">Tomorrow's <span>Events</span></label>
+            </div>
+            <div class="mt10">
+              <input
+                id="next_x_event"
+                type="radio"
+                name="list_event_type"
+                value="next_x_event"
+                formControlName="list_event_type"
+                (click)="changeListEventType('next_x_event')"
+              />
+              <label for="next_x_event">Next </label>
+              <span class="mlr10">
+                <select
+                  name="numberOfEvent"
+                  formControlName="numberOfEvent"
+                  class="btn btn-secondary"
+                  style="width: 75px; height: 35px"
+                >
+                  <option *ngFor="let obj of eventRangeSelection" [value]="obj">
+                    {{ obj }}
+                  </option>
+                </select>
+              </span>
+              <span>Events</span>
+            </div>
+            <div class="mt10">
+              <input
+                id="next_x_days"
+                type="radio"
+                name="list_event_type"
+                value="next_x_days"
+                formControlName="list_event_type"
+                (click)="changeListEventType('next_x_days')"
+              />
+              <label for="next_x_days">Next </label>
+              <span class="mlr10">
+                <select
+                  name="list_no_days"
+                  formControlName="list_no_days"
+                  class="btn btn-secondary"
+                  style="width: 75px; height: 35px"
+                >
+                  <option *ngFor="let obj of dayRangeSelection" [value]="obj">
+                    {{ obj }}
+                  </option>
+                </select> </span
+              >days Events
+            </div>
+
+            <div class="mt15" *ngIf="isDp_event == true">
+              <div class="col-12 p-0 float-left">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    formControlName="isPastEventEnabled"
+                    class="vertical-middle-align"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                  <span class="ml15 fs-16"> Don't display past events </span>
+                </label>
+              </div>
+            </div>
+
+            <div
+              class="mt15"
+              *ngIf="
+                calendarFormatFormGroup.get('list_event_type')?.value ==
+                'next_x_event'
+              "
+            >
+              <div class="col-12 p-0 float-left">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    formControlName="isInprogressEventEnabled"
+                    class="vertical-middle-align"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                  <span class="ml15 fs-16">
+                    Don't display in progress events
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10" *ngIf="calendarType === 'List'">
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left lh30">Scrolling</div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': scrolling === 'Off' }"
+            (click)="scrolling = 'Off'"
+          >
+            <i
+              *ngIf="scrolling === 'Off'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            Off</a
+          >
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': scrolling === 'Slow' }"
+            (click)="scrolling = 'Slow'"
+          >
+            <i
+              *ngIf="scrolling === 'Slow'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            Slow</a
+          >
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': scrolling === 'Fast' }"
+            (click)="scrolling = 'Fast'"
+          >
+            <i
+              *ngIf="scrolling === 'Fast'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            Fast</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10" *ngIf="calendarType === 'Monthly'">
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left lh30">Scrolling</div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <!-- <a  class="btn cal-btn-primary pd6" [ngClass]="{'cal-primary-active': m_scroll === 'Off'}"  (click)="m_scroll= 'Off';"  > <i *ngIf="m_scroll === 'Off'"  class="fa fa-check" aria-hidden="true"></i> Off</a> -->
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': m_scroll === 'Slow' }"
+            (click)="m_scroll = 'Slow'"
+          >
+            <i
+              *ngIf="m_scroll === 'Slow'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            Slow</a
+          >
+          <a
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': m_scroll === 'Fast' }"
+            (click)="m_scroll = 'Fast'"
+          >
+            <i
+              *ngIf="m_scroll === 'Fast'"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i>
+            Fast</a
+          >
+          <div class="text-muted fs12">
+            As all dates in the month are shown, events that don’t fit will
+            scroll. Increasing the widget size reduces scrolling.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10" *ngIf="calendarType === 'Monthly'">
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left lh30">Date Size</div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <a
+            *ngFor="let obj of calendar_monthview_dateSize"
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{ 'cal-primary-active': m_date_fontsize === obj.value }"
+            (click)="m_date_fontsize = obj.value"
+          >
+            <i
+              *ngIf="m_date_fontsize === obj.name"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i
+            >{{ obj.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10" *ngIf="calendarType === 'Monthly'">
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left lh30">Date Alignment</div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <a
+            *ngFor="let obj of calendar_monthview_dateAlignment"
+            class="btn cal-btn-primary pd6"
+            [ngClass]="{
+              'cal-primary-active': m_date_allignment === obj.value
+            }"
+            (click)="m_date_allignment = obj.value"
+          >
+            <i
+              *ngIf="m_date_allignment === obj.value"
+              class="fa fa-check"
+              aria-hidden="true"
+            ></i
+            >{{ obj.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <hr style="width: 95%" *ngIf="calendarType === 'Schedule'" />
+
+    <div class="row mt10" *ngIf="calendarType === 'Schedule'">
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left">Schedule start hour</div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <select
+            name="day_slot_start"
+            formControlName="day_start_time"
+            class="btn btn-secondary"
+            style="width: 135px; height: 35px"
+          >
+            <option
+              *ngFor="let start_time of week_time_slot_selection"
+              [value]="start_time"
+            >
+              {{ start_time }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10" *ngIf="calendarType === 'Schedule'">
+      <div class="col-12">
+        <div class="col-4 float-left text-align-left">Schedule end hour</div>
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <select
+            name="day_slot_end"
+            id="day_end_time"
+            formControlName="day_end_time"
+            class="btn btn-secondary"
+            style="width: 135px; height: 35px"
+          >
+            <option
+              *ngFor="let end_time of week_time_slot_selection"
+              [value]="end_time"
+            >
+              {{ end_time }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <hr style="width: 95%" *ngIf="calendarType === 'Schedule'" />
+
+    <div class="row mt20" *ngIf="calendarType != 'Schedule'">
+      <div class="col-12 justify-center">
+        <div class="col-4 checkbox-title float-left text-align-left">
+          Show event name in
+        </div>
+
+        <!-- <div class="col-3 float-left">
+          <label class="custom-checkbox display-flex">
+            <input
+              type="checkbox"
+              formControlName="word_wrap"
+              class="vertical-middle-align ml5"
+              data-md-icheck
+            />
+            <div class="checkbox checkbox-left"></div>
+          </label>
+        </div> -->
+
+        <div class="col-8 btn-group btn-group-justified float-left block">
+          <select
+            name="word_wrap"
+            formControlName="word_wrap"
+            class="btn btn-secondary"
+            style="width: 250px; height: 35px"
+          >
+            <option
+              *ngFor="let obj of calendar_wrap_option"
+              [value]="obj.value"
+            >
+              {{ obj.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row mt20"
+      *ngIf="
+        calendarType === 'Monthly' ||
+        calendarType === 'Weeks' ||
+        (calendarType === 'Schedule' &&
+          calendarFormatFormGroup.value.schedule_days_selection ===
+            'current_week')
+      "
+    >
+      <div class="col-12">
+        <div class="col-9 checkbox-title float-left text-align-left">
+          Show the weekdays only (hide the weekends)
+        </div>
+        <div class="col-3 float-left">
+          <label class="custom-checkbox display-flex">
+            <input
+              type="checkbox"
+              formControlName="showWeekDaysOnly"
+              class="vertical-middle-align ml5"
+              data-md-icheck
+            />
+            <div class="checkbox checkbox-left"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row mt10"
+      *ngIf="
+        calendarType === 'Monthly' ||
+        calendarType === 'Schedule' ||
+        calendarType === 'List' ||
+        calendarType === 'Weeks'
+      "
+    >
+      <div class="col-12">
+        <div class="col-9 checkbox-title float-left text-align-left">
+          Show event locations
+        </div>
+        <div class="col-3 float-left">
+          <label class="custom-checkbox display-flex">
+            <input
+              type="checkbox"
+              formControlName="showLocation"
+              class="vertical-middle-align ml5"
+              data-md-icheck
+            />
+            <div class="checkbox checkbox-left"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10" *ngIf="calendarType === 'Monthly'">
+      <div class="col-12">
+        <div class="col-9 checkbox-title float-left text-align-left">
+          Show Calendar color legend
+        </div>
+        <div class="col-3 float-left">
+          <label class="custom-checkbox display-flex">
+            <input
+              type="checkbox"
+              formControlName="showLegends"
+              class="vertical-middle-align ml5"
+              data-md-icheck
+            />
+            <div class="checkbox checkbox-left"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row mt10"
+      *ngIf="
+        calendarType === 'Monthly' ||
+        calendarType === 'Schedule' ||
+        calendarType === 'List' ||
+        calendarType === 'Weeks'
+      "
+    >
+      <div class="col-12">
+        <div class="col-9 checkbox-title float-left text-align-left">
+          Show event end times
+        </div>
+        <div class="col-3 float-left">
+          <label class="custom-checkbox display-flex">
+            <input
+              type="checkbox"
+              formControlName="showEndDate"
+              class="vertical-middle-align ml5"
+              data-md-icheck
+            />
+            <div class="checkbox checkbox-left"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt10" *ngIf="calendarType === 'List'">
+      <div class="col-12">
+        <div class="col-9 checkbox-title float-left text-align-left">
+          Display event time and name in same row
+        </div>
+        <div class="col-3 float-left">
+          <label class="custom-checkbox display-flex">
+            <input
+              type="checkbox"
+              formControlName="isConcatEnabled"
+              class="vertical-middle-align ml5"
+              data-md-icheck
+            />
+            <div class="checkbox checkbox-left"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row mt10"
+      *ngIf="
+        calendarType === 'Monthly' ||
+        calendarType === 'Schedule' ||
+        calendarType === 'Weeks'
+      "
+    >
+      <div class="col-12">
+        <div
+          class="col-9 checkbox-title float-left text-align-left"
+          *ngIf="calendarType === 'Monthly'"
+        >
+          Show title (month name)
+        </div>
+        <div
+          class="col-9 checkbox-title float-left text-align-left"
+          *ngIf="calendarType === 'Schedule' || calendarType === 'Weeks'"
+        >
+          Show title (dates selected)
+        </div>
+        <div class="col-3 float-left">
+          <label class="custom-checkbox display-flex">
+            <input
+              type="checkbox"
+              formControlName="schedule_title"
+              class="vertical-middle-align ml5"
+              data-md-icheck
+            />
+            <div class="checkbox checkbox-left"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row mt10"
+      *ngIf="
+        calendarType === 'Monthly' ||
+        calendarType === 'List' ||
+        calendarType === 'Weeks'
+      "
+    ></div>
+
+    <div class="row mt10" *ngIf="calendarType === 'Monthly'">
+      <div class="col-12">
+        <div
+          class="col-12 float-left text-align-left"
+          *ngIf="calendarType === 'Monthly'"
+        >
+          Display photos on special days like birthdays, events & more!
+          <a
+            href="https://mangodisplay.com/digital-calendar-display/"
+            target="blank"
+          >
+            Learn more</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-12 footer-btn-position">
+    <button
+      type="button"
+      class="btn btn-secondary mr-20"
+      (click)="dismissModel()"
+    >
+      CANCEL
+    </button>
+    <button class="btn btn-primary" (click)="oncalendarFormatEmit()">
+      SAVE
+    </button>
+  </div>
+</div>

@@ -1,0 +1,128 @@
+.modal-body {
+  height: 480px;
+  .news-setting-box {
+    height: 280px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    padding: 0 10px;
+  }
+}
+
+@media (min-height: 700px) {
+  .modal-body {
+    height: 580px;
+    .news-setting-box {
+      height: 380px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (min-height: 800px) {
+  .modal-body {
+    height: 680px;
+    .news-setting-box {
+      height: 480px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (min-height: 900px) {
+  .modal-body {
+    height: 780px;
+    .news-setting-box {
+      height: 580 !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+.sub-list-container {
+  padding-left: 20px !important;
+}
+
+.news-setting-box {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.3px;
+  color: #333333;
+  mix-blend-mode: normal;
+  cursor: pointer;
+}
+.active-news-option {
+  height: 16px;
+  width: 8px;
+  background: transparent;
+  border-right: 3px solid #14b268;
+  border-bottom: 3px solid #14b268;
+  transform: rotate(45deg);
+}
+.headline-count {
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.1px;
+  color: rgba(75, 81, 85, 0.5);
+}
+.news-source {
+  font-weight: 600;
+}
+.headline-count .dropdown-toggle::after {
+  display: none !important;
+}
+.headline-count .dropdown-menu {
+  text-align: center !important;
+  min-width: 60px !important;
+  max-width: 60px !important;
+}
+.selected-count {
+  font-weight: 600 !important;
+}
+
+// @media screen and (max-width: 768px) {
+//   .modal-body {
+//     min-height: 530px !important;
+//   }
+//   .mobile-mb50 {
+//     margin-bottom: 50px !important;
+//   }
+// }
+
+.nav-tabs > li > a.active,
+.nav-tabs > .active > a:hover,
+.nav-tabs > li > a:hover {
+  text-decoration: none;
+  font-weight: bold !important;
+  border-radius: 0px;
+  border-bottom-width: 4px !important;
+  border-bottom-style: solid !important;
+  border-bottom-color: #14b268 !important;
+  color: #000 !important;
+  background-color: transparent !important;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #ddd;
+  .nav-link {
+    &.active {
+      border-color: transparent !important;
+    }
+  }
+  li {
+    a {
+      color: gray !important;
+      font-weight: bold !important;
+      border-radius: 0px;
+      border-bottom-width: 4px;
+      border-color: transparent !important;
+    }
+  }
+}

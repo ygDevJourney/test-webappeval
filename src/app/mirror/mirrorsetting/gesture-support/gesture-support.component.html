@@ -1,0 +1,239 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="custom-modal-header">Touch or mouse control</div>
+      <div class="pb10">
+        For devices with built-in touch or mouse support only
+      </div>
+      <div class="tab-pane mt25 bg-setting-box mlr15 pr10">
+        <div class="col-12 text-align-left bg-box">
+          <div class="fw-bold">Navigate</div>
+          <div class="row mt15">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">Swipe left or right to turn pages</div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="gesture.touch_page_swipe"
+                    class="vertical-middle-align ml5"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt20">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">Tap and hold to pause page rotation</div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="gesture.touch_page_hold"
+                    class="vertical-middle-align ml5"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt20">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">
+                Swipe up or down on the calendar widget to see more dates
+              </div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="gesture.touch_calendar_scroll"
+                    class="vertical-middle-align ml5"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 text-align-left bg-box mt15">
+          <div class="fw-bold">Update</div>
+          <div class="row mt20">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">Tap to mark 'Chores' completed</div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="gesture.touch_chores_complete"
+                    class="vertical-middle-align ml5"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt20">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">Tap to mark 'To-do & Tasks' completed</div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="gesture.touch_todo_complete"
+                    class="vertical-middle-align ml5"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 text-align-left bg-box mt15">
+          <div class="fw-bold">Modify</div>
+          <div class="row mt15">
+            <div class="col-12 p0 justify-center">
+              <div class="col-9">
+                Double tap the calendar widget to add or edit events
+              </div>
+              <div class="col-3 justify-end">
+                <label class="custom-checkbox display-flex">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="gesture.touch_calendar_edit"
+                    class="vertical-middle-align ml5"
+                    (ngModelChange)="onCheckboxChange($event)"
+                    data-md-icheck
+                  />
+                  <div class="checkbox checkbox-left"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt10" #calendarAccountDetails>
+            <div class="col-12 p0" *ngIf="gesture.touch_calendar_edit">
+              <div class="col-12" *ngFor="let account of accountList">
+                <div
+                  class="col-12 p0 justify-center justify-content-left flex-wrap justify-space-between"
+                  *ngIf="
+                    ['google', 'outlook', 'icalAccount'].includes(
+                      account.calendarType
+                    )
+                  "
+                >
+                  <div class="justify-center justify-content-left ptb5">
+                    <div *ngIf="account.calendarType == 'outlook'">
+                      <img
+                        alt=""
+                        height="16px"
+                        width="18px"
+                        src="../../../assets/icons/logo/outlook_calendar.png"
+                      />
+                    </div>
+                    <div *ngIf="account.calendarType == 'icalAccount'">
+                      <img
+                        alt=""
+                        height="16px"
+                        width="18px"
+                        src="../../../assets/icons/logo/apple.svg"
+                      />
+                    </div>
+                    <div *ngIf="account.calendarType == 'google'">
+                      <img
+                        alt=""
+                        height="16px"
+                        width="18px"
+                        src="../../../assets/icons/logo/google_calendar.png"
+                      />
+                    </div>
+                    <div class="ml5">
+                      {{ account.sourceAccount }}
+                    </div>
+                  </div>
+
+                  <div class="justify-center ptb5">
+                    <div
+                      *ngIf="
+                        account.isWriteAccess ||
+                        account.calendarType == 'icalAccount'
+                      "
+                    >
+                      <div class="float-right pr10">
+                        <div style="width: 20px">
+                          <div class="active-tick ml15"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="
+                        !account.isWriteAccess &&
+                        account.calendarType != 'icalAccount'
+                      "
+                    >
+                      <div class="col-12 p0">
+                        <div
+                          class="col-12"
+                          [ngClass]="{
+                            'box-shadow-none': account.calendarType != 'google',
+                            'google-box':
+                              account.calendarType == 'google' ||
+                              account.calendarType == 'outlook' ||
+                              account.calendarType == 'icalAccount'
+                          }"
+                          (click)="updateGrantAccess(account)"
+                        >
+                          <img
+                            src="../../../assets/icons/logo/google_calendar.png"
+                            class="google-calendar-icon"
+                            *ngIf="account.calendarType == 'google'"
+                          />
+
+                          <img
+                            src="../../../assets/icons/logo/outlook_calendar.png"
+                            class="google-calendar-icon"
+                            *ngIf="account.calendarType == 'outlook'"
+                          />
+
+                          <span
+                            *ngIf="
+                              account.calendarType == 'google' ||
+                              account.calendarType == 'outlook'
+                            "
+                            class="ml10"
+                            >Grant Edit Access</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 footer-btn-position">
+        <button
+          type="button"
+          class="btn btn-secondary mr-20"
+          (click)="dismissModel()"
+        >
+          CANCEL
+        </button>
+        <button class="btn btn-primary" (click)="updateGesture()">SAVE</button>
+      </div>
+    </div>
+  </div>
+</div>

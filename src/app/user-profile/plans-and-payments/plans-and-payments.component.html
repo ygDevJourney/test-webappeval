@@ -1,0 +1,323 @@
+<div class="main-container">
+  <div id="nav-container">
+    <div class="mirror-nav">
+      <strong>Payments & Plans</strong>
+      <div class="right-menu-button cursor-pointer" (click)="gotoMirrorList()">
+        <img class="mt5" alt="" src="../../assets/icons/cross.svg" />
+      </div>
+    </div>
+  </div>
+  <div class="col-12 mt15">
+    <h3 class="mt15 fw-6">Pricing Plans to bring your screens to life</h3>
+    <h5 class="mt15 fs14 fw-6 theme-font-color" style="color: #3e4555">
+      30 DAY FREE TRIAL WITH ANY PLAN
+    </h5>
+    <h5 class="mt15 fs14" style="color: #8d97ad">
+      Upgrade anytime. Downgrade anytime. Cancel anytime.
+    </h5>
+  </div>
+
+  <div class="col-12">
+    <div class="col-12 justify-center">
+      <div class="month-free-text">2 months FREE</div>
+    </div>
+  </div>
+
+  <div class="col-12 justify-center">
+    <div class="col-12">
+      <div class="btn-group btn-group-justified block plan-toggle">
+        <span> Monthly </span>
+        <div class="switchToggle ml10 mr-10 mt10">
+          <input
+            type="checkbox"
+            id="plan-switch"
+            [(ngModel)]="isSelectedCategory"
+            (change)="changeplan()"
+          />
+          <label class="col-12" for="plan-switch">Toggle</label>
+        </div>
+        <span> Yearly </span>
+        <span style="margin-top: -23px">
+          <img
+            src="../../../assets/icons/wire.svg"
+            height="57px"
+            width="37px"
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="error-text">Get 2 months free with yearly plan!</div> -->
+
+  <div
+    class="col-12 mt15"
+    style="display: flex; flex-wrap: wrap; padding-bottom: 17px"
+  >
+    <div
+      class="col-lg-4 col-md-6 col-sm-12 text-align-left paymnet-plan-box"
+      *ngFor="let plan of visiblePlanList"
+    >
+      <div
+        class="col-12 payment-plan-desc-box sub-pl-bg"
+        *ngIf="plan.type == plancategory"
+      >
+        <div class="header mt5">
+          <h5 class="fs-40 fw-6 sub-fc-g">{{ plan.planName }}</h5>
+          <h5 class="fs-10 fw-6 plan-name-desc-title">
+            {{ plan.planSubDesc }}
+          </h5>
+        </div>
+        <div class="col-12 mt25">
+          <div class="col-12 fw-6 plan-price">
+            <!-- <sup class="currency">$</sup> -->
+            <span>${{ plan.price }}</span>
+            <span *ngIf="plan.type == 'monthly'">/mo</span>
+            <span *ngIf="plan.type == 'yearly'">/yr</span>
+          </div>
+          <div class="col-12 p-0 mt10" id="plan_discount">
+            <div *ngIf="plan.planName == 'Plus'">
+              <h5 class="plan-feature-title-col">2 display licenses.</h5>
+            </div>
+            <div *ngIf="plan.planName == 'Pro'">
+              <h5 class="plan-feature-title-col">3 display licenses.</h5>
+              <h5
+                class="mt10 plan-feature-title-col"
+                *ngIf="plan.type == 'monthly'"
+              >
+                additional displays: $2.99 /mo
+              </h5>
+              <h5
+                class="mt10 plan-feature-title-col"
+                *ngIf="plan.type == 'yearly'"
+              >
+                additional displays: $29.99 /yr
+              </h5>
+            </div>
+            <div *ngIf="plan.planName == 'Business'">
+              <h5 class="plan-feature-title-col">3 display licenses.</h5>
+              <h5
+                class="mt10 plan-feature-title-col"
+                *ngIf="plan.type == 'monthly'"
+              >
+                additional displays: $5.99 /mo
+              </h5>
+              <h5
+                class="mt10 plan-feature-title-col"
+                *ngIf="plan.type == 'yearly'"
+              >
+                additional displays: $59.99 /yr
+              </h5>
+            </div>
+          </div>
+          <div class="description" id="feature_detail">
+            <div *ngIf="plan.planName == 'Plus'">
+              <h5 class="plan-feature-desc-col">All Free features and...</h5>
+              <div class="plan-feature-title-col mt10">Calendar</div>
+              <div class="plan-feature-desc-col plan-feature-list">
+                List, Schedule, Monthly & Weekly views
+                <div>Google or Microsoft Calendars</div>
+                <div>Single calendar source</div>
+                <div>Single calendar widget per display</div>
+              </div>
+              <div class="plan-feature-title-col mt10">Background Photos</div>
+              <div class="plan-feature-desc-col">
+                Display Apple Photos or Google Photos
+              </div>
+              <div class="plan-feature-title-col mt10">Custom Notes</div>
+              <div class="plan-feature-desc-col">
+                Display messages or custom text content
+              </div>
+            </div>
+            <div *ngIf="plan.planName == 'Pro'">
+              <div class="plan-feature-desc-col">All Plus features and...</div>
+              <div class="plan-feature-title-col mt10">Calendar</div>
+              <div class="plan-feature-desc-col plan-feature-list">
+                <div>Apple iCloud Calendars</div>
+                <div>Any Internet Calendar (iCal or ICS)</div>
+                <div>Multiple calendar sources</div>
+                <div>Unlimited calendar widgets & views</div>
+                <div>
+                  Allows you to combine calendar sources and/or display multiple
+                  views
+                </div>
+              </div>
+              <div class="plan-feature-title-col mt10">To-do & Tasks</div>
+              <div class="plan-feature-desc-col plan-feature-list">
+                <div>Google Tasks</div>
+                <div>Microsoft To Do</div>
+                <div>Todoist</div>
+              </div>
+              <div class="plan-feature-title-col mt10">Photo Widget</div>
+              <div class="plan-feature-desc-col">
+                <div>Unlimited Apple Photos or Google Photo widgets</div>
+                <div>GIF's and Stickers</div>
+              </div>
+              <div class="plan-feature-title-col mt10">Chores</div>
+              <div class="plan-feature-desc-col">
+                <div>Display and track chores by family member</div>
+              </div>
+
+              <div class="plan-feature-title-col mt10">Meal Plan</div>
+              <div class="plan-feature-desc-col">
+                <div>Display weekly meal plan with images</div>
+              </div>
+
+              <div class="plan-feature-title-col mt10">Countdown</div>
+              <div class="plan-feature-desc-col">
+                <div>Countdown to vacations, birthdays and more</div>
+              </div>
+
+              <div class="plan-feature-title-col mt10">Templates</div>
+              <div class="plan-feature-desc-col">
+                <div>
+                  Save your display layouts as personalized templates (like for
+                  Christmas, Halloween, or Standardize the design of all your
+                  office displays)
+                </div>
+                <div>
+                  Apply different standard and personalized templates to your
+                  display at any time
+                </div>
+              </div>
+
+              <div class="plan-feature-title-col mt10">
+                Touch or mouse control
+              </div>
+              <div class="plan-feature-desc-col">
+                <div>
+                  Swipe between pages, tap to complete chores and tasks. More
+                  details
+                  <a
+                    href="https://help.mangodisplay.com/en/articles/9001423-touch-capabilities-and-interactivity"
+                    target="_blank"
+                    class="theme-font-color"
+                    >here</a
+                  >.
+                </div>
+              </div>
+
+              <div class="plan-feature-title-col mt10">My Files</div>
+              <div class="plan-feature-desc-col">
+                <div>
+                  Upload photos or images directly from your phone or computer
+                  to your display.
+                </div>
+                <div>250 MB storage space</div>
+              </div>
+            </div>
+            <div *ngIf="plan.planName == 'Business'">
+              <div class="plan-feature-desc-col">All Pro features and...</div>
+              <div class="plan-feature-title-col mt10">
+                Google docs
+                <span class="plan-feature-desc-col"
+                  >(Docs, sheets, slides)</span
+                >
+              </div>
+              <div class="plan-feature-title-col mt10">
+                Microsoft Office docs
+                <span class="plan-feature-desc-col"
+                  >(Word, Excel, PowerPoint)</span
+                >
+              </div>
+              <div class="plan-feature-title-col mt10">PDF Docs</div>
+              <div class="plan-feature-title-col mt10">
+                Airtable
+                <span class="plan-feature-desc-col"></span>
+              </div>
+              <div class="plan-feature-title-col mt10">
+                Video
+                <span class="plan-feature-desc-col"
+                  >(YouTube, Vimeo, Others)</span
+                >
+              </div>
+              <div class="plan-feature-title-col mt10">Embed any website</div>
+              <div class="plan-feature-title-col mt10">
+                Embed any HTML or JavaScript
+              </div>
+              <div class="plan-feature-title-col mt10">My Files</div>
+              <div class="plan-feature-desc-col">
+                <div>
+                  Upload PDF, Videos or Microsoft Office files directly from
+                  your computer to your display
+                </div>
+                <div>1 GB storage space</div>
+              </div>
+              <div class="plan-feature-title-col mt10">99.9% Uptime SLA</div>
+            </div>
+
+            <div *ngIf="plan.planName == 'Health'">
+              <div class="plan-feature-desc-col">All Pro features and...</div>
+              <div class="plan-feature-title-col mt10">
+                Sources - Apple Health
+              </div>
+              <div class="plan-feature-title-col mt10">Activity</div>
+              <div class="plan-feature-desc-col">
+                Steps, Distance, Flights Climbed Active Energy, Total Energy,
+                Resting Endergy Move, Exercise Minutes, stand
+              </div>
+
+              <div class="plan-feature-title-col mt10">Vitals</div>
+              <div class="plan-feature-desc-col">
+                Blood Pressure, Blood Glucose, Heart Rate
+              </div>
+
+              <div class="plan-feature-title-col mt10">Nutrition</div>
+              <div class="plan-feature-desc-col">
+                Protein, Sugar, Energy, Fat, Cholesterol Carbs, Fiber, Sodium,
+                Water
+              </div>
+
+              <div class="plan-feature-title-col mt10">Sleep</div>
+              <div class="plan-feature-desc-col">Time asleep, Time in bed</div>
+
+              <div class="plan-feature-title-col mt10">Body</div>
+              <div class="plan-feature-desc-col">
+                Body Mass Index, Body Fat Percentage, Weight
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom mt25 justify-center">
+          <div class="plan_button">
+            <button
+              class="btn btn_active"
+              [disabled]="isPaymentInitiated"
+              (click)="isPaymentInitiated = true; createCheckoutSession(plan)"
+            >
+              Choose Plan
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row col-12">
+    <div *ngIf="currentSubscription == null" class="col-12 mt15 fs-10">
+      <div class="col-12" style="text-align: left">
+        You will not be charged until the end of your 30-Day Free Trial. By
+        starting your 30-Day Free Trial you are agreeing to the
+        <a
+          href="https://mangodisplay.com/mango-mirror-30-days-free-trial-terms-and-conditions"
+          target="_blank"
+          class="theme-font-color"
+          >30-Day Free Trial Terms and Conditions</a
+        >
+        .
+      </div>
+      <div class="col-12" style="text-align: left">
+        At the end of your trial, you'll be charged a recurring fee for the
+        amount of the plan chosen, unless you decide to cancel. All Plan
+        features will be available immediately in your account. All prices in US
+        dollars. Cancel any time directly from your account.
+      </div>
+    </div>
+
+    <div class="col-12 mtb15 fs-12">
+      Payments are handled securely via
+      <a href="https://stripe.com/" target="_blank" class="theme-font-color"
+        >Stripe</a
+      >
+    </div>
+  </div>
+</div>

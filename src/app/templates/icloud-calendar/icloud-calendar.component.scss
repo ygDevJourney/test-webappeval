@@ -1,0 +1,107 @@
+.ls-auto {
+  list-style: auto;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.bl-link {
+  cursor: pointer;
+  color: #007bff !important;
+}
+
+.device-box {
+  background: #ffffff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12),
+    0px 1px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  display: flex;
+  padding: 15px;
+  align-items: center;
+  height: auto;
+  justify-content: center;
+}
+
+.device-box:hover,
+.device-box-active {
+  border: 2px solid #14b268;
+  box-sizing: border-box;
+}
+
+.modal-body {
+  height: 400px;
+  .icloud-setting-box {
+    height: 380px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    padding: 0 10px;
+  }
+}
+
+@media (min-height: 700px) {
+  .modal-body {
+    height: 500px;
+    .icloud-setting-box {
+      height: 480px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (min-height: 800px) {
+  .modal-body {
+    height: 600px;
+    .icloud-setting-box {
+      height: 580px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (min-height: 900px) {
+  .modal-body {
+    height: 700px;
+    .icloud-setting-box {
+      height: 680 !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+// .icloud-btn-primary {
+//   padding: 10px 16px;
+//   background: #ffffff !important;
+//   border-radius: 4px;
+//   border: 2px solid #14b268 !important;
+//   font-size: 14px;
+//   line-height: 14px;
+//   letter-spacing: 1.25px;
+//   color: black !important;
+//   outline: none !important;
+// }
+
+// .icloud-primary-active {
+//   background: #14b268 !important;
+//   color: #ffffff !important;
+// }
+
+// .icloud-btn-primary:hover,
+// .icloud-btn-primary:not(:disabled):not(.disabled).active,
+// .icloud-btn-primary:not(:disabled):not(.disabled):active,
+// .show > .icloud-btn-primary.dropdown-toggle {
+//   border-color: #14b268 !important;
+//   background: #14b268 !important;
+//   color: #ffffff !important;
+// }

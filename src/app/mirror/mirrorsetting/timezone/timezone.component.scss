@@ -1,0 +1,87 @@
+.modal-body {
+  height: auto;
+  max-height: 510px;
+  .timezone-setting-box {
+    max-height: 410px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    padding: 0 10px;
+  }
+}
+@media (min-height: 500px) {
+  .modal-body {
+    height: auto;
+    max-height: 410px;
+    .timezone-setting-box {
+      max-height: 310px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (min-height: 550px) {
+  .modal-body {
+    height: auto;
+    max-height: 460px;
+    .timezone-setting-box {
+      max-height: 360px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (min-height: 600px) {
+  .modal-body {
+    height: auto;
+    max-height: 510px;
+    .timezone-setting-box {
+      max-height: 410px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (min-height: 700px) {
+  .modal-body {
+    height: auto;
+    max-height: 610px;
+    .timezone-setting-box {
+      max-height: 510px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (min-height: 800px) {
+  .modal-body {
+    height: auto;
+    max-height: 710px;
+    .timezone-setting-box {
+      max-height: 610px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (min-height: 900px) {
+  .modal-body {
+    height: auto;
+    max-height: 810px;
+    .timezone-setting-box {
+      max-height: 710px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}

@@ -1,0 +1,761 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div
+      class="modal-header custom-modal-header"
+      *ngIf="isFamilyCalendarSeleted == false"
+    >
+      Add a Calendar widget
+    </div>
+    <div
+      class="modal-header custom-modal-header"
+      *ngIf="isFamilyCalendarSeleted == true"
+    >
+      Calendar Photo Settings
+    </div>
+
+    <div class="modal-body">
+      <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul
+          class="nav nav-tabs"
+          role="tablist"
+          *ngIf="isFamilyCalendarSeleted == false"
+        >
+          <li class="nav-item">
+            <a
+              href="#calendarTab1"
+              class="nav-link active"
+              aria-controls="calendarTab1"
+              role="tab"
+              data-toggle="tab"
+              >Calendars
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              href="#calendarTab3"
+              class="nav-link"
+              aria-controls="calendarTab2"
+              role="tab"
+              data-toggle="tab"
+              >Settings</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="#calendarTab2"
+              class="nav-link"
+              aria-controls="calendarTab2"
+              role="tab"
+              data-toggle="tab"
+              (click)="setBackgroundWidgetDetail()"
+              >Format</a
+            >
+          </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div
+            role="tabpanel"
+            class="tab-pane active mt10 sub-list-container calendar-setting-box"
+            id="calendarTab1"
+          >
+            <div *ngIf="isFamilyCalendarSeleted == false">
+              <div class="row col-12" *ngIf="isAppleCalendarBlockOn == true">
+                <p class="full-width text-align-left fw-bold">Steps:</p>
+                <p>
+                  1. Download the 'Mango Connect' App from the Apple App Store.
+                </p>
+                <p>
+                  2. Log in to the 'Mango Connect' App using your current Mango
+                  Display account details.
+                </p>
+                <p>
+                  3. Select this display shown and enable the Calendar and/or
+                  Reminders
+                </p>
+                <p>
+                  4. Approve access to your Apple Calendar and/or Reminders when
+                  prompted
+                </p>
+                <p>
+                  5. Wait for 2-3 minutes until you data gets connected and
+                  transferred.
+                </p>
+                <p>
+                  After completion of above steps please click
+                  <span (click)="redirectToHomePage()" style="color: blue">
+                    here</span
+                  >
+                  to refresh your data, then return back to this Calendar widget
+                  to select your Apple Calendar data.
+                </p>
+              </div>
+              <div class="row" *ngIf="isAppleCalendarBlockOn == false">
+                <div
+                  class="col-12 mt15 text-align-left mb5"
+                  *ngIf="isAnySourceAdded == true"
+                >
+                  <strong>Expand account to select specific Calendars</strong>
+                </div>
+
+                <div
+                  class="col-12 display-grid mt10"
+                  *ngFor="let account of accountList; let indexNumber = index"
+                >
+                  <div class="panel-group">
+                    <div class="panel panel-default display-grid">
+                      <div class="panel-heading">
+                        <div
+                          class="panel-title"
+                          (click)="getCalendarList(indexNumber)"
+                        >
+                          <a
+                            class="float-left fit-content-width collapsed"
+                            data-toggle="collapse"
+                            href="#collapse{{ indexNumber }}"
+                          >
+                            <span *ngIf="account.calendarType == 'outlook'"
+                              ><img
+                                alt=""
+                                class="mb5"
+                                height="16px"
+                                width="18px"
+                                src="../../../assets/icons/logo/outlook_calendar.png"
+                            /></span>
+                            <span *ngIf="account.calendarType == 'google'"
+                              ><img
+                                alt=""
+                                class="mb5"
+                                height="16px"
+                                width="18px"
+                                src="../../../assets/icons/logo/google_calendar.png"
+                            /></span>
+                            <span
+                              *ngIf="
+                                account.calendarType == 'icloud' ||
+                                account.calendarType == 'icalAccount' ||
+                                account.calendarType == 'icalUrl'
+                              "
+                              ><img
+                                alt=""
+                                class="mb5"
+                                height="16px"
+                                width="18px"
+                                src="../../../assets/icons/logo/apple.svg"
+                            /></span>
+                            <span *ngIf="account.calendarType == 'ics'"
+                              ><img
+                                alt=""
+                                class="mb5"
+                                height="16px"
+                                width="18px"
+                                src="../../../assets/icons/logo/ics-calendar.png"
+                            /></span>
+                            <span
+                              class="ml5"
+                              *ngIf="account.calendarType != 'icloud'"
+                              >{{ account.sourceAccount }}</span
+                            >
+                            <span
+                              class="ml5"
+                              *ngIf="account.calendarType == 'icloud'"
+                              >Apple iCloud (via Mango Connect App)
+                            </span>
+                          </a>
+                          <div
+                            class="float-right pr10"
+                            *ngIf="account.calendarType != 'icloud'"
+                          >
+                            <img
+                              alt=""
+                              height="16px"
+                              width="18px"
+                              src="../../../assets/icons/delete.svg"
+                              (click)="
+                                $event.stopPropagation();
+                                removeAccount(account.id, account.calendarType)
+                              "
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        id="collapse{{ indexNumber }}"
+                        class="full-width panel-collapse collapse"
+                      >
+                        <div *ngIf="account.calendarType == 'icloud'">
+                          <div
+                            class="display-grid ml10 fs12"
+                            *ngIf="account.calendarList !== undefined"
+                          >
+                            <div
+                              class="full-width mt5"
+                              *ngIf="isIcloudCalendarAvailable == true"
+                            >
+                              calendar
+                            </div>
+                            <div
+                              class="full-width"
+                              *ngFor="
+                                let calendar of account.calendarList;
+                                let calendarIndex = index
+                              "
+                              (click)="
+                                changeCalendarStatus(
+                                  indexNumber,
+                                  calendarIndex,
+                                  calendar.calendarId,
+                                  account.id
+                                )
+                              "
+                            >
+                              <div
+                                class="float-left fit-content-width mt5 justify-center"
+                                *ngIf="calendar.type == 'calendar'"
+                              >
+                                <input
+                                  type="color"
+                                  id="favcolor"
+                                  name="favcolor"
+                                  value="{{ calendar.backgroundColor }}"
+                                  style="
+                                    width: 25px;
+                                    height: 26px;
+                                    padding: 0px;
+                                    background: none;
+                                    border: none;
+                                  "
+                                  [disabled]="true"
+                                />
+                                <span class="ml5"
+                                  >{{ calendar.calendarName }}
+                                </span>
+                              </div>
+
+                              <div
+                                class="float-right pr10"
+                                *ngIf="calendar.type == 'calendar'"
+                              >
+                                <div style="display: inline-block; width: 20px">
+                                  <div
+                                    class="active-tick ml15"
+                                    *ngIf="calendar.active"
+                                  ></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="full-width mt5"
+                              *ngIf="isIcloudReminderAvailable == true"
+                            >
+                              Reminder
+                            </div>
+                            <div
+                              class="full-width"
+                              *ngFor="
+                                let reminder of account.calendarList;
+                                let reminderIndex = index
+                              "
+                              (click)="
+                                changeCalendarStatus(
+                                  indexNumber,
+                                  reminderIndex,
+                                  reminder.calendarId,
+                                  account.id
+                                )
+                              "
+                            >
+                              <div
+                                class="float-left fit-content-width mt5 justify-center"
+                                *ngIf="reminder.type == 'reminder'"
+                              >
+                                <input
+                                  type="color"
+                                  id="favcolor"
+                                  name="favcolor"
+                                  value="{{ reminder.backgroundColor }}"
+                                  style="
+                                    width: 25px;
+                                    height: 26px;
+                                    padding: 0px;
+                                    background: none;
+                                    border: none;
+                                  "
+                                  [disabled]="true"
+                                />
+                                <span class="ml5"
+                                  >{{ reminder.calendarName }}
+                                </span>
+                              </div>
+
+                              <div
+                                class="float-right pr10"
+                                *ngIf="reminder.type == 'reminder'"
+                              >
+                                <div style="display: inline-block; width: 20px">
+                                  <div
+                                    class="active-tick ml15"
+                                    *ngIf="reminder.active"
+                                  ></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngIf="account.isCalendarRequestSent === true">
+                            <div class="loader"></div>
+                          </div>
+                          <div
+                            class="col-12 fs12 p10 error-text"
+                            *ngIf="account.isCalendarAccessFailed == true"
+                          >
+                            Permissions have expired. Please delete and add your
+                            account back.
+                          </div>
+                        </div>
+
+                        <div *ngIf="account.calendarType != 'icloud'">
+                          <div
+                            class="display-grid ml10 fs12"
+                            *ngIf="account.calendarList !== undefined"
+                          >
+                            <div
+                              class="full-width"
+                              *ngIf="account.calendarType == 'ics'"
+                            >
+                              (Click color to change)
+                            </div>
+                            <div
+                              class="full-width mt5"
+                              *ngFor="
+                                let calendar of account.calendarList;
+                                let calendarIndex = index
+                              "
+                              (click)="
+                                changeCalendarStatus(
+                                  indexNumber,
+                                  calendarIndex,
+                                  calendar.calendarId,
+                                  account.id
+                                )
+                              "
+                            >
+                              <div
+                                class="float-left fit-content-width justify-center"
+                              >
+                                <input
+                                  type="color"
+                                  id="favcolor"
+                                  name="favcolor"
+                                  value="{{ calendar.backgroundColor }}"
+                                  style="
+                                    width: 25px;
+                                    height: 26px;
+                                    padding: 0px;
+                                    background: none;
+                                    border: none;
+                                  "
+                                  [disabled]="account.calendarType != 'ics'"
+                                  [(ngModel)]="calendar.backgroundColor"
+                                  (click)="$event.stopPropagation()"
+                                  (focusout)="
+                                    updateCalendarColour(
+                                      calendar.calendarId,
+                                      account.id,
+                                      calendar.backgroundColor
+                                    )
+                                  "
+                                />
+                                <img
+                                  alt=""
+                                  height="25px"
+                                  *ngIf="calendar.isPhotoCalendar == true"
+                                  class="ml5"
+                                  src="../../../assets/icons/active.png"
+                                  (click)="
+                                    $event.stopPropagation();
+                                    openFamilyAccount(
+                                      indexNumber,
+                                      calendarIndex,
+                                      calendar.calendarId,
+                                      account
+                                    )
+                                  "
+                                />
+                                <img
+                                  alt=""
+                                  height="23px"
+                                  *ngIf="
+                                    calendar.isPhotoCalendar == false &&
+                                    account.calendarType != 'outlook' &&
+                                    account.calendarType != 'icalUrl' &&
+                                    account.calendarType != 'ics' &&
+                                    account.calendarType != 'icalAccount'
+                                  "
+                                  class="ml5"
+                                  src="../../../assets/icons/inactive.png"
+                                  (click)="
+                                    $event.stopPropagation();
+                                    openFamilyAccount(
+                                      indexNumber,
+                                      calendarIndex,
+                                      calendar.calendarId,
+                                      account
+                                    )
+                                  "
+                                />
+                                <span class="ml5"
+                                  >{{ calendar.calendarName }}
+                                </span>
+                              </div>
+
+                              <div class="float-right pr10 mb10">
+                                <div style="display: inline-block; width: 20px">
+                                  <div
+                                    class="active-tick ml15"
+                                    *ngIf="calendar.active"
+                                  ></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngIf="account.isCalendarRequestSent === true">
+                            <div class="loader"></div>
+                          </div>
+                          <div
+                            class="col-12 fs12 p10 error-text"
+                            *ngIf="account.isCalendarAccessFailed == true"
+                          >
+                            Permissions have expired. Please delete and add your
+                            account back.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr width="95%" class="mt30" *ngIf="isAnySourceAdded == true" />
+                <div
+                  class="col-12"
+                  [ngClass]="{ mt15: isAnySourceAdded == false }"
+                >
+                  <div
+                    class="text-align-center cursor-pointer justify-center"
+                    (click)="addGoogleAccount()"
+                  >
+                    <img src="../../../assets/icons/add-screen.svg" alt="" />
+                    <img
+                      alt=""
+                      class="ml10"
+                      height="16px"
+                      width="18px"
+                      src="../../../assets/icons/logo/google_calendar.png"
+                    />
+                    <span class="ml5"> Add Google Account</span>
+                  </div>
+                </div>
+                <div class="col-12 mt10">
+                  <div
+                    class="text-align-center cursor-pointer justify-center"
+                    (click)="addNewOutlookAccount()"
+                  >
+                    <img src="../../../assets/icons/add-screen.svg" alt="" />
+                    <img
+                      alt=""
+                      class="ml10"
+                      height="16px"
+                      width="18px"
+                      src="../../../assets/icons/logo/outlook_calendar.png"
+                    />
+                    <span class="ml5"> Add Microsoft Outlook Account</span>
+                  </div>
+                </div>
+                <div class="col-12 mt10">
+                  <div
+                    class="text-align-center cursor-pointer justify-center"
+                    (click)="
+                      upgradeNeeded == true
+                        ? redirectToPaymentPage()
+                        : openIcloudDataModal()
+                    "
+                  >
+                    <img src="../../../assets/icons/add-screen.svg" alt="" />
+                    <img
+                      alt=""
+                      class="ml10"
+                      height="17px"
+                      width="18px"
+                      src="../../../assets/icons/logo/apple.svg"
+                    />
+                    <span class="ml5"> Add Apple iCloud Calendar</span>
+                    <img
+                      *ngIf="upgradeNeeded == true"
+                      (click)="redirectToPaymentPage()"
+                      alt=""
+                      class="ml10"
+                      height="16px"
+                      width="110px"
+                      src="../../../assets/icons/upgrade_pro.svg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div class="col-12 mt10">
+                  <div
+                    class="text-align-center cursor-pointer justify-center"
+                    (click)="
+                      upgradeNeeded == true
+                        ? redirectToPaymentPage()
+                        : openIcsDataModal()
+                    "
+                  >
+                    <img src="../../../assets/icons/add-screen.svg" alt="" />
+                    <img
+                      alt=""
+                      class="ml10"
+                      height="17px"
+                      width="18px"
+                      src="../../../assets/icons/logo/ics-calendar.png"
+                    />
+                    <span class="ml5"> Add Calendar URL (iCal or ICS)</span>
+                    <img
+                      *ngIf="upgradeNeeded == true"
+                      (click)="redirectToPaymentPage()"
+                      alt=""
+                      class="ml10"
+                      height="16px"
+                      width="110px"
+                      src="../../../assets/icons/upgrade_pro.svg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- inner pane start -->
+            <div
+              id="innerPanel"
+              *ngIf="isFamilyCalendarSeleted == true"
+              class="row bg-setting-box"
+            >
+              <div class="col-12">
+                <div
+                  class="float-left fit-content-width"
+                  style="
+                    text-align: left;
+                    word-break: break-all;
+                    pointer-events: none;
+                  "
+                >
+                  Account > {{ account.sourceAccount }} >
+                  {{ currentFamilyCalendar.calendarName }}
+                </div>
+              </div>
+
+              <hr style="width: 95%" />
+
+              <div class="col-12">
+                <div class="float-left fit-content-width">Photo calendar</div>
+                <div class="float-right">
+                  <div class="switchToggle">
+                    <input
+                      type="checkbox"
+                      id="calendarphoto-switch"
+                      [(ngModel)]="isPhotoCalendar"
+                    />
+                    <label for="calendarphoto-switch">Toggle</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="float-left fit-content-width">
+                  <span class="fs-9"
+                    >Displays photos in calendar monthly view only.<a
+                      href="https://mangodisplay.com/digital-calendar-display/"
+                      target="blank"
+                    >
+                      Learn more</a
+                    >
+                  </span>
+                </div>
+              </div>
+
+              <hr style="width: 95%" />
+
+              <div class="col-12">
+                <div class="float-left fit-content-width">
+                  Image display options:
+                </div>
+              </div>
+
+              <div class="col-sm-12 text-align-left">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <label class="selected mt10">
+                      <input
+                        type="radio"
+                        name="imageResolution"
+                        value="Crop"
+                        [(ngModel)]="imageResolution"
+                      />
+                      Crop image to section that fills cell
+                    </label>
+                  </div>
+                  <div class="col-sm-12">
+                    <label class="mt10">
+                      <input
+                        type="radio"
+                        name="imageResolution"
+                        value="Default"
+                        [(ngModel)]="imageResolution"
+                      />
+                      Keep original image aspect ratio
+                    </label>
+                  </div>
+                  <div class="col-sm-12">
+                    <label class="mt10">
+                      <input
+                        type="radio"
+                        name="imageResolution"
+                        value="Stretch"
+                        [(ngModel)]="imageResolution"
+                      />
+                      Stretch image to completely fill cell
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Inner panel end -->
+
+            <!---->
+            <div class="row" *ngIf="isFamilyCalendarSeleted == true">
+              <div class="col-12 footer-btn-position">
+                <button
+                  type="button"
+                  class="btn btn-secondary mr-20"
+                  (click)="backToCalendar()"
+                >
+                  CANCEL
+                </button>
+                <button class="btn btn-primary" (click)="saveFamilyCalendar()">
+                  SAVE
+                </button>
+              </div>
+            </div>
+            <div class="row" *ngIf="isFamilyCalendarSeleted == false">
+              <div class="col-12 footer-btn-position">
+                <div *ngIf="isAppleCalendarBlockOn == true">
+                  <button
+                    type="button"
+                    class="btn btn-secondary mr-20"
+                    (click)="isAppleCalendarBlockOn = false"
+                  >
+                    Okay
+                  </button>
+                </div>
+                <div *ngIf="isAppleCalendarBlockOn == false">
+                  <button
+                    type="button"
+                    class="btn btn-secondary mr-20"
+                    (click)="dismissModel()"
+                  >
+                    CANCEL
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    (click)="saveCalendarSettings()"
+                  >
+                    SAVE
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane mt15 calendar-setting-box"
+            id="calendarTab2"
+          >
+            <app-widget-bg-setting
+              [widgetbgsetting]="widgetBgSetting"
+              [widgetType]="widgetType"
+              (emitbgsettingCalenderOptions)="onbgsettingOptions($event)"
+              (closeModalEvent)="dismissModel()"
+            >
+            </app-widget-bg-setting>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane mt15 calendar-setting-box"
+            id="calendarTab3"
+          >
+            <app-calendar-widget-format
+              [category]="category"
+              (closeModalEvent)="dismissModel()"
+              (updateWidgetStatusEventEmiter)="
+                updatecalendarWidgetStatus($event)
+              "
+              [activeLayout]="activeLayout"
+              [calendarWidgetObject]="calendarWidgetObject"
+            >
+            </app-calendar-widget-format>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div></div>
+
+<div
+  class="modal fade"
+  bsModal
+  #calendarQuantityAlert="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-common-alert
+    [commonAlertModal]="commonAlertModal"
+    [type]="'addCalendarLimitAlert'"
+    [header]="'Calendar Account Limit Reached'"
+    [data]=""
+  ></app-common-alert>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #icloudAlert="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-icloud-calendar
+    [icloudAlertModal]="icloudAlertModal"
+    [widgetSettingId]="widgetSettingId"
+    (icloudCalendarEventEmiter)="updatedIcloudData($event)"
+  ></app-icloud-calendar>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #icsCalendarAlert="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-ics-calendar
+    [icsCalendarAlertModal]="icsCalendarAlertModal"
+    [widgetSettingId]="widgetSettingId"
+    (icsCalendarEventEmiter)="updatedIcloudData($event)"
+    [category]="category"
+  ></app-ics-calendar>
+</div>

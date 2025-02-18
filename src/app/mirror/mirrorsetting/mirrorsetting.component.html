@@ -1,0 +1,286 @@
+<div id="nav-container" class="header">
+  <div>
+    <strong>{{ "MIRROR.MIRRORSETTING.SETTING" | translate }}</strong>
+  </div>
+  <div
+    class="right-menu-button"
+    style="cursor: pointer"
+    (click)="backToLayoutScreen()"
+  >
+    <span><img src="../../../assets/icons/cross.svg" alt="" /></span>
+  </div>
+</div>
+
+<div id="ms-container">
+  <div class="content-box mt30">
+    <div class="row" routerLink="update-device-code">
+      <div class="col-6 text-align-left">Display Device Code</div>
+      <div class="col-6 text-align-right c-pointer">
+        <div class="float-right ml5">
+          <div class="right-triangular"></div>
+        </div>
+        <div class="float-right ellipses" style="width: 80%">
+          {{ macAddress }}
+        </div>
+      </div>
+    </div>
+    <div class="row mt25" routerLink="rename-mirror">
+      <div class="col-6 text-align-left">Name</div>
+      <div class="col-6 text-align-right c-pointer">
+        <div class="float-right ml5">
+          <div class="right-triangular"></div>
+        </div>
+        <div class="float-right ellipses" style="width: 80%">
+          {{ mirrorName }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt25" data-toggle="modal" data-target="#themeSetting">
+      <div class="col-6 text-align-left c-pointer">Fonts & Colors</div>
+      <div class="col-6 text-align-right c-pointer">
+        <div class="float-right ml5">
+          <div class="right-triangular"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt25" (click)="gotoTemplateOptionPage()">
+      <div class="col-6 text-align-left c-pointer">Templates</div>
+      <div class="col-6 text-align-right c-pointer">
+        <div
+          class="float-right ml5"
+          *ngIf="this.currentSubscriptionHirarchy > 1"
+        >
+          <div class="right-triangular"></div>
+        </div>
+        <div
+          class="float-right ellipses"
+          style="width: 80%"
+          *ngIf="this.currentSubscriptionHirarchy < 2"
+        >
+          <img
+            class="upgrade-plan"
+            src="../../../assets/icons/upgrade_pro.svg"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt25" (click)="gotoOverlayControlPage()">
+      <div class="col-6 text-align-left c-pointer">Visual Overlays 🎉</div>
+      <div class="col-6 text-align-right c-pointer">
+        <div
+          class="float-right ml5"
+          *ngIf="this.currentSubscriptionHirarchy > 1"
+        >
+          <div class="right-triangular"></div>
+        </div>
+        <div
+          class="float-right ellipses"
+          style="width: 80%"
+          *ngIf="this.currentSubscriptionHirarchy < 2"
+        >
+          <img
+            class="upgrade-plan"
+            src="../../../assets/icons/upgrade_pro.svg"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt25" (click)="gotoGestureControlPage()">
+      <div class="col-6 text-align-left c-pointer">Touch or mouse control</div>
+      <div class="col-6 text-align-right c-pointer">
+        <div
+          class="float-right ml5"
+          *ngIf="this.currentSubscriptionHirarchy > 1"
+        >
+          <div class="right-triangular"></div>
+        </div>
+        <div
+          class="float-right ellipses"
+          style="width: 80%"
+          *ngIf="this.currentSubscriptionHirarchy < 2"
+        >
+          <img
+            class="upgrade-plan"
+            src="../../../assets/icons/upgrade_pro.svg"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt25" (click)="openOrientationModal()">
+      <div class="col-6 text-align-left">Display Orientation</div>
+      <div class="col-6 text-align-right c-pointer">
+        <div class="float-right ml5">
+          <div class="right-triangular"></div>
+        </div>
+        <div class="float-right ellipses" style="width: 80%">
+          {{ currentOrientation }}
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row mt25"
+      data-toggle="modal"
+      data-target="#timezoneSetting"
+      (click)="timeZoneModal.show()"
+    >
+      <div class="col-6 text-align-left c-pointer">Time zone</div>
+      <div class="col-6 text-align-right c-pointer">
+        <div class="float-right ml5">
+          <div class="right-triangular"></div>
+        </div>
+        <div class="float-right ellipses" style="width: 80%">
+          {{ timeZoneId }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt25">
+      <div class="col-12">
+        <div class="float-left">24-Hour Time format</div>
+        <div class="float-right">
+          <div class="switchToggle">
+            <input
+              type="checkbox"
+              id="timeFormat-switch"
+              [(ngModel)]="is24Hourformat"
+              (change)="updateTimeFormat(is24Hourformat)"
+            />
+            <label for="timeFormat-switch">Toggle</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- (click)="openResetConfirmationModal()" -->
+  <div
+    *ngIf="deviceType != 'Linked Browser'"
+    class="preview text-align-left"
+    (click)="updatePreview()"
+  >
+    Preview
+  </div>
+
+  <div class="factory-box">
+    <div class="text-align-left" (click)="openResetConfirmationModal()">
+      Reset & Remove
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="themeSetting"
+  role="dialog"
+  tabindex="-1"
+  aria-labelledby="dialog-static-name"
+>
+  <app-mirrorbg-setting
+    [activeMirror]="activeMirror"
+    (emitbgsetting)="getBgSettings($event)"
+  ></app-mirrorbg-setting>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #confirmFactoryReset="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-confirm-factory-reset
+    [confirmFactoryResetModal]="confirmFactoryResetModal"
+    [macAddress]="macAddress"
+    [mirrorName]="mirrorName"
+  ></app-confirm-factory-reset>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #orientation="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-mirror-orientation-setting
+    [orientationModal]="orientationModal"
+  ></app-mirror-orientation-setting>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #preview="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-common-alert
+    [commonAlertModal]="commonAlertModal"
+    [type]="'preview'"
+    [header]="'PREVIEW'"
+    [data]=""
+    (updatePreviewEventEmiter)="updatePreview()"
+  ></app-common-alert>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #timezone="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-timezone
+    [timeZoneModal]="timeZoneModal"
+    [activeMirror]="activeMirror"
+    (emitTimezoneSetting)="getTimezoneSetting($event)"
+  ></app-timezone>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #gesture="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-gesture-support
+    [gestureModal]="gestureModal"
+    [activeMirror]="activeMirror"
+    [userCredentials]="userCredentials"
+  ></app-gesture-support>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #overlay="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-overlay-support
+    [overlayModal]="overlayModal"
+    [activeMirror]="activeMirror"
+  ></app-overlay-support>
+</div>

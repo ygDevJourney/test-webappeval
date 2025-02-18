@@ -1,0 +1,105 @@
+.nav-tabs > li > a.active,
+.nav-tabs > .active > a:hover,
+.nav-tabs > li > a:hover {
+  text-decoration: none;
+  font-weight: bold !important;
+  border-radius: 0px;
+  border-bottom-width: 4px !important;
+  border-bottom-style: solid !important;
+  border-bottom-color: #14b268 !important;
+  color: #000 !important;
+  background-color: transparent !important;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #ddd;
+  .nav-link {
+    &.active {
+      border-color: transparent !important;
+    }
+  }
+  li {
+    a {
+      color: gray !important;
+      font-weight: bold !important;
+      border-radius: 0px;
+      border-bottom-width: 4px;
+      border-color: transparent !important;
+    }
+  }
+}
+
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css");
+.panel-title > a:before {
+  float: left !important;
+  font-family: FontAwesome;
+  content: "\f068";
+  color: red;
+  padding-right: 5px;
+}
+.panel-title > a.collapsed:before {
+  float: left !important;
+  content: "\f067";
+  color: green;
+  padding-right: 5px;
+}
+.panel-title > a:hover,
+.panel-title > a:active,
+.panel-title > a:focus {
+  text-decoration: none;
+}
+
+.footer-btn-position {
+  bottom: 0;
+  padding: 15px;
+}
+
+.modal-body {
+  height: 480px;
+  .mc-setting-box {
+    height: 340px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    padding: 0 10px;
+  }
+}
+
+@media (min-height: 700px) {
+  .modal-body {
+    height: 580px;
+    .mc-setting-box {
+      height: 440px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (min-height: 800px) {
+  .modal-body {
+    height: 680px;
+    .mc-setting-box {
+      height: 540px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (min-height: 900px) {
+  .modal-body {
+    height: 780px;
+    .mc-setting-box {
+      height: 640 !important;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: 0 10px;
+    }
+  }
+}
+
+.collapse.show {
+  display: block !important;
+}

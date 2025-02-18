@@ -1,0 +1,157 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header custom-modal-header">
+            Update Health Widget Details
+        </div>
+
+        <div class="modal-body">
+            <div role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <!-- <li class="nav-item" ><a href="#healthTab1" class="nav-link active" aria-controls="healthTab1" role="tab" data-toggle="tab">Account </a>
+
+                    </li> -->
+                    <li class="nav-item" ><a href="#healthTab2" class="nav-link active" aria-controls="healthTab2" role="tab" data-toggle="tab">Settings</a>
+
+                    </li>
+                    <li class="nav-item" ><a href="#healthTab3" class="nav-link" aria-controls="healthTab3" role="tab" data-toggle="tab" (click)="setBackgroundWidgetDetail()">Format</a>
+
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane mt10 setting-scrolling-div" id="healthTab1">
+                        <div class="news-setting-box">
+                            <div class="row">
+                                <div class="col-12 mt15 text-align-left">
+                                    <strong>Select Account</strong>
+                                </div>
+                                <div class="col-12 mt10">
+                                    <div class="text-align-center">
+                                        <img src="../../../assets/icons/add-screen.svg" alt="" />
+                                        <img alt="" class="ml10" height="16px" width="18px" src="../../../assets/icons/logo/apple.svg"/>
+                                        <span class="ml5"> Apple Health (via Mango Connect App) </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt10">
+                                    <div class="text-align-center">
+                                        <img src="../../../assets/icons/add-screen.svg" alt="" />
+                                        <img alt="" class="ml10" height="16px" width="18px" src="../../../assets/icons/logo/fitbit.png"/>
+                                        <span class="ml5"> FitBit Account</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       <div class="row">
+                            <div class="col-12 footer-btn-position">
+                                <button type="button" class="btn btn-secondary mr-20" (click)="dismissModel()">CANCEL</button>
+                                <!-- <button class="btn btn-primary" (click)="saveCalendarSettings()">SAVE</button>                                 -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- setting for health wodget-->
+                    <div role="tabpanel" class="tab-pane active mt10" id="healthTab2" >
+                        <div class="health-setting-box">
+                            <div class="col-12 pl15 text-align-left mt10" *ngIf="isAppleHealthDataAvailable==false">
+                                Apple Health (via Mango Connect App) <img src="../../../assets/icons/refresh.png" height="20" width="20" class="float-right cursor-pointer" (click)="checkHealthDataAvailability()">
+                                <p class="fw-bold mt15"> Steps:</p>
+                                <p>1. Download the 'Mango Connect' App from the Apple App Store.</p>
+                                <p>2. Log in to the 'Mango Connect' App using your current Mango Display account details.</p>
+                                <p>3. Select this display shown and select: Health->Apple Health</p>
+                                <p>4. Approve access to your Apple Health data when prompted </p>
+                                <p>5. Wait for 2-3 minutes until you data gets connected and transferred.</p>
+
+                                <p class="mt10">After completion of above steps please click the refresh icon to check.</p>
+                            </div>
+                            <div class="row" *ngIf="isAppleHealthDataAvailable==true">
+                                <div class="col-12">    
+                                    <div class="pl15 float-left text-align-left lh30 fw-bold">
+                                        Apple Health
+                                    </div>
+                                    <div class="pr20 btn-group btn-group-justified float-right block">
+                                        <div class="switchToggle ml5">
+                                            <input type="checkbox" id="apple-health-switch" [(ngModel)]="isAppleHealthEnabled" (click)="updateAppleHealthToggle()" />
+                                            <label for="apple-health-switch">Toggle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-12">
+                                    <div class="col-12 mt10 setting-scrolling-div" *ngIf="isAppleHealthEnabled==true">
+                                        <div class="col-12" *ngFor="let healthWidget of appleHealthWidget | keyvalue;let index = index">
+                                            <div class="col-12 text-align-left mt5 captilize" style="background-color: lightgray;">
+                                                <span *ngIf="healthWidget.key!='bodyAndWeight' && healthWidget.key!='vital'
+                                                && !healthWidget.key.includes('diastolic')">
+                                                    {{healthWidget.key}}
+                                                </span>
+                                                <span *ngIf="healthWidget.key=='bodyAndWeight'">Body & Weight</span>
+                                                <span *ngIf="healthWidget.key=='vital'">Vitals</span>                                                
+                                                <span *ngIf="healthWidget.key.includes('diastolic')"></span>
+                                            </div>
+                                            
+                                             <div class="row col-12" *ngFor="let widget of healthWidget.value">
+                                                <div *ngIf="!widget.displayName.includes('Diastolic')" class="full-width mt10" (click)="changeHealthWidgetSetting(widget, 'Apple Health',healthWidget.key)">
+                                                    <div class="float-left fit-content-width">
+                                                        {{widget.displayName.includes('Systolic')?"Blood Pressure":widget.displayName}}
+                                                    </div>
+                                                    <div class="float-right pr10" *ngIf="widget.status == 'on'">
+                                                        <div class="active-health-option"></div>
+                                                    </div>
+                                                </div>                                                
+                                            </div>   
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- <div class="row">
+                                <div class="col-12">    
+                                    <div class="pl15 float-left text-align-left lh30 fw-bold">
+                                        Fitbit
+                                    </div>
+                                    <div class="pr20 btn-group btn-group-justified float-right block">
+                                        <div class="switchToggle ml5">
+                                            <input type="checkbox" id="fitbit-switch" [(ngModel)]="isFitbitEnabled" (click)="updateFitbitToggle()" />
+                                            <label for="fitbit-switch">Toggle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-12">
+                                    <div class="col-12 mt10 setting-scrolling-div" *ngIf="isFitbitEnabled==true">
+                                        <div class="col-12" *ngFor="let fitBitWidget of fitBitWidgets | keyvalue;let index = index">
+                                            <div class="col-12 text-align-left mt5" style="background-color: lightgray;">
+                                                {{fitBitWidget.key}}
+                                            </div>
+                                            
+                                             <div class="row col-12" *ngFor="let widget of fitBitWidget.value">
+                                                <div class="full-width mt10" (click)="changeHealthWidgetSetting(widget, 'Fitbit', fitBitWidget.key)">
+                                                    <div class="float-left fit-content-width">
+                                                        {{widget.displayName}}
+                                                    </div>
+                                                    <div class="float-right pr10" *ngIf="widget.status == 'on'">
+                                                        <div class="active-health-option"></div>
+                                                    </div>
+                                                </div>                                                
+                                            </div>   
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <!-- <hr> -->
+                            <div class="row">
+                                <div class="col-12 footer-btn-position">
+                                    <button type="button" class="btn btn-secondary mr-20" (click)="dismissModel()">CANCEL</button>
+                                    <button class="btn btn-primary" (click)="saveHealthSettings()">SAVE</button>                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- format for health widget-->
+                    <div role="tabpanel" class="tab-pane mt15 bg-setting-box" id="healthTab3" *ngIf="settingDisplayflag">
+                        <app-widget-bg-setting [widgetbgsetting]="widgetBgSetting" [widgetType]="widgetType" (emitbgsettingHealthOptions)="updatebackgroundSettings($event)" (closeModalEvent)="dismissModel()"> </app-widget-bg-setting>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

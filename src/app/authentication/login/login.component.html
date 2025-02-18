@@ -1,0 +1,58 @@
+<div id="login-container" class="container" (keyup.enter)="login()">
+    <div class="logo-container">
+        <img class="img-fluid h45" alt="" src="../../../assets/icons/logo/MangoDisplay_Logo.png">
+        <!-- <div class="beta-text">Beta</div> -->
+    </div>
+    <div class="field-container">
+        <!-- <div class="title">{{ 'AUTHENTICATION.LOGIN.TITLE' | translate }}</div> -->
+        <div class="title">Login</div>
+        <div class="mt60">
+            <div class="row text-align-left">
+                <div class="col-12">
+                    <div class="md-form">
+                        <input mdbInput type="email" id="email" class="form-control" [(ngModel)]="email">
+                        <!-- <label for="email" class="">{{ 'INPUTFIELDS.EMAIL' | translate }}</label> -->
+                        <label for="email" class="">Email</label>
+                        
+                        <span class="error-text">{{emailErrorMessage}}</span>
+                    </div>
+                </div>
+                <div class="col-12 mt25">
+                    <div class="md-form">
+                        <input mdbInput type="password" id="password" class="form-control" [(ngModel)]="password" maxlength="20">
+                        <!-- <label for="password" class="">{{ 'INPUTFIELDS.PASSWORD' | translate }}</label> -->
+                        <label for="password" class="">Password</label>
+                        
+                        <span class="error-text">{{passwordErrorMessage}}</span>
+                    </div>
+                    <img class="password-eye" (click)="changePasswordType()"
+                        src="../../../assets/icons/password_eye.svg" alt="">
+                    <div class="forgot-password-link mt10">
+                        <span routerLink="/forgot-password">
+                            Forgot Password?
+                            <!-- {{ 'AUTHENTICATION.LOGIN.FORGOTPASSWORD' | translate }} -->
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt50">
+                <div class="col-12 text-align-center">
+                    <button class="btn btn-primary"
+                        (click)="login()">
+                        <!-- {{ 'AUTHENTICATION.LOGIN.BUTTONTEXT' | translate }} -->
+                        Continue
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="signup-text mt35 mb40">
+        <!-- {{ 'AUTHENTICATION.LOGIN.RETURNTEXT' | translate }}  -->
+        Don't have an account?
+        <span class="link" [routerLink]="['/signup']">
+            <!-- {{ 'AUTHENTICATION.SIGNUP.TITLE' | translate }} -->
+            Sign up
+        </span>
+        
+    </div>
+</div>

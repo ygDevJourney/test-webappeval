@@ -1,0 +1,107 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="custom-modal-header">
+        <span class="category-header">
+          Add Widgets +
+          <!-- <img
+            alt=""
+            src="../../../assets/icons/widget_icon/plus_categoryicon.svg"
+          /> -->
+        </span>
+        <div class="custom-close-btn" (click)="closeModal()">
+          <img alt="" src="../../../assets/icons/white-cross.svg" />
+        </div>
+      </div>
+      <!-- <div class="informative-text mt10">Click on the widget to add</div> -->
+      <div class="widget-category-container mt10">
+        <div class="row">
+          <div
+            class="col-sm-12 col-md-6 col-lg-4 col-12 mt15 display-flex"
+            *ngFor="let category of categoryList"
+          >
+            <div
+              class="widgets-category-box col-12 flex"
+              [ngClass]="{
+                pb0:
+                  category.widgetType == 'Calendar' && category.message == 'pro'
+              }"
+              (click)="selectCategory(category.widgetType)"
+            >
+              <div class="justify-center col-12 p-0">
+                <img
+                  alt=""
+                  src="{{ category.iconpath }}"
+                  height="23"
+                  class="col-3 p-0"
+                />
+                <div class="col-6 p0 text-align-left fs12 ml5">
+                  {{ category.display }}
+                </div>
+                <div class="col-3 p-0 fs-20 text-align-right">+</div>
+                <img
+                  class="coming-soon-image"
+                  *ngIf="category.widgetType === 'Twitter'"
+                  src="../../../assets/icons/coming-soon.svg"
+                  alt=""
+                />
+                <div
+                  class="upgrade-plan"
+                  *ngIf="category.widgetType == 'Calendar'"
+                >
+                  <img
+                    *ngIf="category.message == 'upgrade_pro'"
+                    src="../../../assets/icons/widget_icon/sub_pro.svg"
+                    alt=""
+                  />
+                </div>
+
+                <img
+                  class="upgrade-plan"
+                  height="24px"
+                  width="60px"
+                  *ngIf="category.message == 'pro'"
+                  src="../../../assets/icons/widget_icon/pro_flex.svg"
+                  alt=""
+                />
+
+                <img
+                  class="upgrade-plan"
+                  *ngIf="category.message == 'business'"
+                  src="../../../assets/icons/widget_icon/business_flex.svg"
+                  height="24px"
+                  width="60px"
+                  alt=""
+                />
+
+                <img
+                  class="upgrade-plan"
+                  *ngIf="category.message == 'sub'"
+                  src="../../../assets/icons/widget_icon/sub_star.svg"
+                  alt=""
+                />
+              </div>
+              <div
+                class="col-12 fs-9 justify-center p-0 additinal-calendar-message"
+                *ngIf="
+                  category.widgetType == 'Calendar' && category.message == 'pro'
+                "
+              >
+                *Plus plan: 1 calendar limit met
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row col-12 mt30 justify-center">
+          You are currently on the
+          <span class="theme-font-color mlr5"> {{ currentPlan }} </span> plan.
+          <a href="https://mangodisplay.com/pricing/" target="_blank">
+            <span class="ml5 theme-font-color">View </span>
+            <span style="color: white">plans & features.</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

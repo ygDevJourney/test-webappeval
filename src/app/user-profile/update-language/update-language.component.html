@@ -1,0 +1,37 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-body setting-scrolling-div">
+      <div class="custom-modal-header fw-bold">Update Profile Language</div>
+      <div class="clock-setting-box mt35">
+        <div class="row">
+          <div class="col-12">
+              <div class="row mt10">
+                  <div class="col-12">
+                      <div class="col-xs-12 col-sm-6 float-left text-align-left">
+                          Choose Language
+                      </div>
+                      <div class="col-xs-12 col-sm-6 float-left text-align-left">
+                          <select name="language" [(ngModel)]="selectedLanguage" id="language" class="btn btn-secondary" style="height: 35px; width: 210px;">
+                              <option *ngFor="let language of supportedlanguage | CustomSort: 'asc':'name'" [ngValue]="language">{{language.name}}</option>
+                          </select>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-12 mt35">
+            <button
+              class="btn btn-secondary"
+              (click)="discardChanges()"
+            >
+              Cancel
+            </button>
+            <button class="btn btn-primary ml15" (click)="updatelanguage()">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

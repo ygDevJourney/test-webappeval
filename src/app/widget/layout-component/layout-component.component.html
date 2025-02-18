@@ -1,0 +1,929 @@
+<div id="nav-container">
+  <div class="mirror-nav">
+    <div class="left-menu-button display-flex" (click)="gotoMirrorList()">
+      <div class="left-arrow"></div>
+      <div id="my-display" class="display-button">
+        {{ "WIDGETS.LAYOUT.NAV_BUTTON_TEXT" | translate }}
+      </div>
+    </div>
+    <div class="nav-title">
+      <strong>{{ userMirrorDetails.mirrorName }}</strong>
+    </div>
+    <div class="right-menu-button">
+      <a
+        *ngIf="deviceType == 'Linked Browser'"
+        class="btn btn-primary"
+        (click)="onViewDisplay()"
+        style="
+          padding: 2px 5px;
+          font-size: 9px;
+          margin-right: 5px;
+          color: white;
+        "
+        >View Display</a
+      >
+      <img
+        src="../../../assets/icons/setting-gear.svg"
+        (click)="gotoMirrorSetting()"
+        alt=""
+      />
+    </div>
+  </div>
+</div>
+<div id="layout-container" class="container">
+  <div class="row mt10">
+    <div class="col-12 mb10">
+      <form id="select-display" style="display: inline-flex">
+        <div
+          class="left-triangular mr5"
+          (click)="changeLayout(activeLayout - 1)"
+        ></div>
+        <div
+          class="page-index-container sortable-container no-select"
+          style="white-space: nowrap"
+          [dragula]="'pagecontainer'"
+        >
+          <div
+            (click)="changeLayout(index)"
+            style="white-space: nowrap"
+            class="page-index sortable-item"
+            *ngFor="let widgetSetting of widgetSettings; let index = index"
+          >
+            <div
+              *ngIf="index >= startIndex && index <= endIndex"
+              [ngClass]="
+                activeLayout === index ? 'active-page' : 'inactive-page'
+              "
+            >
+              {{ index + 1 }}
+            </div>
+          </div>
+        </div>
+        <div
+          class="right-triangular ml5"
+          (click)="changeLayout(activeLayout + 1)"
+        ></div>
+      </form>
+      <img
+        class="align-add-layout-btn mt5"
+        alt=""
+        (click)="addNewLayoutScreen()"
+        src="../../../assets/icons/add-screen.svg"
+      />
+    </div>
+    <div
+      class="col-12 justify-center"
+      style="min-height: 0px"
+      *ngFor="let widgetSetting of widgetSettings; let index = index"
+    >
+      <div
+        class="layout"
+        *ngIf="activeLayout === index"
+        [style.height.px]="layoutParentBoundary"
+        [style.maxHeight.px]="layoutParentBoundary"
+        [ngStyle]="lmdWidth ? { 'width.px': lmdWidth } : { width: '100%' }"
+        [style.position]="'relative'"
+      >
+        <div
+          class="action-container justify-evenly"
+          id="action-screen"
+          [ngClass]="
+            largeScreen ? 'large-action-screen' : 'small-action-screen'
+          "
+        >
+          <div class="actions action-background">
+            <div>Background</div>
+            <div class="ml15">
+              <div class="switchToggle">
+                <input
+                  type="checkbox"
+                  id="background-switch"
+                  [checked]="widgetSetting.isBackgroundImage"
+                  (change)="
+                    updateBackgroundImageStatus(
+                      index,
+                      widgetSetting.isBackgroundImage
+                    )
+                  "
+                />
+                <label for="background-switch">Toggle</label>
+              </div>
+            </div>
+          </div>
+          <div class="actions action-timer">
+            <div
+              class="full-width"
+              [ngClass]="{ 'visibility-hidden': widgetSettings.length < 2 }"
+            >
+              <div class="float-left" *ngIf="largeScreen">Page Timer</div>
+              <div
+                *ngIf="widgetSetting.isAutoPageRotation == true"
+                class="float-right delay-time"
+                (click)="openTimePicker(widgetSetting)"
+              >
+                {{ widgetSetting.delay }}&nbsp;s
+                <div class="down-arrow ml5" style="margin-top: 4px"></div>
+              </div>
+              <div
+                *ngIf="widgetSetting.isAutoPageRotation == false"
+                class="float-right delay-time"
+                (click)="openTimePicker(widgetSetting)"
+              >
+                off
+                <div class="down-arrow ml5" style="margin-top: 4px"></div>
+              </div>
+            </div>
+          </div>
+          <div class="actions action-delete-screen">
+            <div *ngIf="largeScreen">
+              <div *ngIf="pageSize > 1">Delete Page</div>
+            </div>
+            <div *ngIf="largeScreen">
+              <div *ngIf="pageSize == 1">Clear Page</div>
+            </div>
+            <div [class.align-delete-center]="!largeScreen">
+              <img
+                [class.ml15]="largeScreen"
+                height="21px"
+                alt=""
+                src="../../../assets/icons/delete.svg"
+                (click)="openPageDeleteConfirmationModal(index)"
+              />
+            </div>
+          </div>
+
+          <div class="actions action-delete-screen">
+            <div *ngIf="largeScreen">
+              <div>Widget Layers</div>
+            </div>
+            <div [class.align-delete-center]="!largeScreen">
+              <img
+                [class.ml15]="largeScreen"
+                *ngIf="category == 'stack'"
+                height="21px"
+                alt=""
+                src="../../../assets/icons/stack.svg"
+                (click)="category = undefined"
+              />
+              <img
+                *ngIf="category == undefined || category != 'stack'"
+                [class.ml15]="largeScreen"
+                height="21px"
+                alt=""
+                src="../../../assets/icons/blank_stack.png"
+                (click)="openStack(index)"
+              />
+            </div>
+            <div
+              id="stack_element"
+              class="stack_widget"
+              *ngIf="category == 'stack'"
+            >
+              <app-widgetlayer
+                [category]="category"
+                [activeLayout]="activeLayout"
+                (closeStackEmiter)="ClickedOut()"
+              ></app-widgetlayer>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            id="widgets-dragdrop"
+            [style.height.px]="height"
+            class="mt5 layoutHeight"
+            #widgetBoundary
+          >
+            <div
+              *ngFor="
+                let widget of widgetSetting.widgets;
+                let widgetIndex = index
+              "
+            >
+              <div *ngIf="widget.status === 'on'">
+                <div
+                  id="widgetbox{{ index }}{{ widgetIndex }}"
+                  class="align-item-center widget-box resizable-widget widget first-step"
+                  [class.clock-widget]="widget.contentType === 'clock'"
+                  [class.quotes-widget]="widget.contentType === 'quotes'"
+                  [class.countdown-widget]="widget.contentType === 'count_down'"
+                  [class.health-widget]="
+                    widget.widgetMasterCategory === 'Apple Health' ||
+                    widget.widgetMasterCategory === 'Fitbit'
+                  "
+                  [class.news-widget]="widget.widgetMasterCategory === 'News'"
+                  [class.calendar-widget]="widget.contentType === 'calendar'"
+                  [class.image-widget]="widget.contentType === 'image'"
+                  [class.gif-widget]="widget.contentType === 'gif'"
+                  [class.notes-widget]="
+                    widget.widgetMasterCategory === 'stickyNotes'
+                  "
+                  [class.mealplan-widget]="
+                    widget.widgetMasterCategory === 'Meal Plan'
+                  "
+                  [class.weather-widget]="
+                    widget.contentType === 'weather' ||
+                    widget.contentType === '24 Hour Weather Forecast' ||
+                    widget.contentType === '5 Day Weather Forecast'
+                  "
+                  [class.google-docs-widget]="
+                    widget.contentType === 'google_doc'
+                  "
+                  [class.microsoft-docs-widget]="
+                    widget.contentType === 'microsoft_office_doc'
+                  "
+                  [class.embed-html-widget]="
+                    widget.contentType === 'embed_html'
+                  "
+                  [class.embed-website-widget]="
+                    widget.contentType === 'embed_website'
+                  "
+                  [class.pdf-doc-widget]="widget.contentType === 'pdf'"
+                  [class.video-widget]="widget.contentType === 'video'"
+                  [class.airtable-widget]="widget.contentType === 'airtable'"
+                  [class.todo-widget]="widget.contentType === 'todo'"
+                  [class.chores-widget]="widget.contentType === 'chores'"
+                  [ngClass]="
+                    selectedWidgetId === widget.widgetSettingId
+                      ? 'z-index-999 active-widget'
+                      : ''
+                  "
+                  ngDraggable
+                  ngResizable
+                  [rzHandles]="'n,e,s,w,se,sw,ne,nw'"
+                  [bounds]="widgetBoundary"
+                  [rzMinWidth]="105"
+                  [rzMinHeight]="50"
+                  [inBounds]="true"
+                  [rzContainment]="widgetBoundary"
+                  (click)="changeSelectedWidget(widget); activateWidget(widget)"
+                  [zIndex]="900 - widget.zindex"
+                  [position]="{ x: widget.xPos, y: widget.yPos }"
+                  (stopped)="onDragEnd($event, widget.widgetSettingId)"
+                  (started)="onDragBegin($event)"
+                  (rzStop)="onResizeStop($event, widget.widgetSettingId)"
+                  (rzStart)="onResizeStart($event)"
+                  [style.width.px]="widget.width"
+                  [style.height.px]="widget.height"
+                >
+                  <div class="row">
+                    <div class="col-12 fixed-icon-height">
+                      <div
+                        class="float-left"
+                        [ngClass]="
+                          selectedWidgetId === widget.widgetSettingId
+                            ? 'z-index-999 r_position'
+                            : 'z-index-0'
+                        "
+                      >
+                        <img
+                          *ngIf="selectedWidgetId === widget.widgetSettingId"
+                          class="cursor-pointer"
+                          alt=""
+                          src="../../../assets/icons/trash.svg"
+                          (click)="
+                            openWidgetDeleteConfirmationModal(widgetIndex)
+                          "
+                        />
+
+                        <img
+                          *ngIf="
+                            isPinAvailable &&
+                            !widget.pinned &&
+                            selectedWidgetId === widget.widgetSettingId
+                          "
+                          class="ml5 cursor-pointer"
+                          alt=""
+                          src="../../../assets/icons/pinned.svg"
+                          (click)="
+                            openPinWidgetConfirmationModal(
+                              widget.contentId,
+                              widget.widgetSettingId
+                            )
+                          "
+                        />
+                        <img
+                          *ngIf="
+                            widget.pinned &&
+                            selectedWidgetId === widget.widgetSettingId
+                          "
+                          class="ml5"
+                          alt=""
+                          src="../../../assets/icons/pinned_success.svg"
+                          (click)="
+                            openUnpinConfirmationModal(
+                              widget.contentId,
+                              widget.widgetSettingId
+                            )
+                          "
+                        />
+                      </div>
+                      <div
+                        class="float-right"
+                        [ngClass]="
+                          selectedWidgetId === widget.widgetSettingId
+                            ? 'z-index-999 r_position'
+                            : 'z-index-0'
+                        "
+                      >
+                        <img
+                          class="mr5 cursor-pointer"
+                          *ngIf="selectedWidgetId === widget.widgetSettingId"
+                          alt=""
+                          src="../../../assets/icons/edit.svg"
+                          (click)="
+                            openWidgetCategorySettingModal(
+                              widget.widgetMasterCategory,
+                              widget,
+                              true
+                            )
+                          "
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row centered-widget-box">
+                    <div class="col-12">
+                      <div class="widget-tiles mt10 full-width">
+                        <div class="widget-name">
+                          {{
+                            widget.displayName.includes("Systolic")
+                              ? "Blood Pressure"
+                              : widget.displayName
+                          }}
+                          <span *ngIf="category == 'stack'">{{
+                            widget.zindex
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="saving-text"
+          [class.saved-text]="changeLayoutStatus === 'Saved to Display'"
+          *ngIf="changeLayoutStatus !== null"
+        >
+          {{ changeLayoutStatus }}
+        </div>
+        <div id="add-widgets" class="add-widgets" (click)="openCategoryModal()">
+          <img
+            src="../../../assets/icons/add-widget.svg"
+            alt=""
+            style="margin-top: -3px; margin-left: -2px"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  bsModal
+  #timePicker="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-sizes-name1"
+  [config]="{ backdrop: 'static' }"
+>
+  <app-custom-time-picker
+    (updateDelayEventEmitter)="updateDelay()"
+    [timePickerModal]="timePickerModal"
+    [timePickerObject]="timePickerObject"
+    [activeLayout]="activeLayout"
+  ></app-custom-time-picker>
+</div>
+<div
+  bsModal
+  #widgetsCategory="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-sizes-name1"
+  [config]="{ backdrop: 'static' }"
+>
+  <app-widget-category
+    (openWidgetCategorySetting)="
+      openWidgetCategorySettingModal($event, null, false)
+    "
+    [widgetsCategoryModal]="widgetsCategoryModal"
+    [category]="category"
+  >
+  </app-widget-category>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #quoteSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-quote-setting
+    [category]="category"
+    [quoteSettingModal]="quoteSettingModal"
+    [quotesWidgetObject]="quotesWidgetObject"
+    [activeLayout]="activeLayout"
+  >
+  </app-quote-setting>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #confirmDeleteWidget="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-confirm-delete-widget
+    (confirmedDeleteWidget)="deleteWidget($event)"
+    [confirmDeleteWidgetModal]="confirmDeleteWidgetModal"
+  ></app-confirm-delete-widget>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #confirmViewDisplayWidget="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-confirm-view-display
+    (confirmedViewDisplayWidget)="viewDisplay()"
+    [confirmViewDisplayWidgetModal]="confirmViewDisplayWidgetModal"
+    [displayUrl]="viewdisplayurl"
+  ></app-confirm-view-display>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #upgradeSubscription="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-upgrade-subscription
+    (stripePopup)="openStripeCheckoutPopup($event)"
+    [newSelectedPlan]="activeSubscription"
+    [parentScreen]="'layout'"
+    [operation]="operation"
+    [upgradeSubscriptionModal]="upgradeSubscriptionModal"
+  ></app-upgrade-subscription>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #confirmDeletePage="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-confirm-delete-page
+    (confirmedDeletePage)="deleteLayoutPage($event)"
+    [confirmDeletePageModal]="confirmDeletePageModal"
+  ></app-confirm-delete-page>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #confirmPinWidget="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-confirm-pin-widget
+    (confirmedPinWidget)="pinnedWidgetStatus($event)"
+    [confirmPinwidgetModal]="confirmPinwidgetModal"
+  ></app-confirm-pin-widget>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #confirmUnpinWidget="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-confirm-unpin-widget
+    (confirmedUnpinWidget)="confirmedUnpinWidget($event)"
+    [confirmUnpinwidgetModal]="confirmUnpinwidgetModal"
+  ></app-confirm-unpin-widget>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #clockSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-clock-setting
+    [category]="category"
+    [clockSettingModal]="clockSettingModal"
+    [activeLayout]="activeLayout"
+    [changeDetector]="changeDetector"
+    [clockWidgetObject]="clockWidgetObject"
+  ></app-clock-setting>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #newsSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-news-setting
+    (updateNewsCountEventEmiter)="setNewsHeadLineCount($event)"
+    (updateWidgetStatusEventEmiter)="updateWidgetStatusEventEmiter()"
+    [category]="category"
+    [newsChangeDetector]="newsChangeDetector"
+    [newsSettingModal]="newsSettingModal"
+    [activeLayout]="activeLayout"
+  ></app-news-setting>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #calendarSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-calendar-setting
+    (updateWidgetStatusEventEmiter)="updateWidgetFromCalendarModal($event)"
+    [category]="category"
+    [calendarWidgetObject]="calendarWidgetObject"
+    [userCredentials]="userCredentials"
+    [calendarSettingModal]="calendarSettingModal"
+    [activeLayout]="activeLayout"
+  ></app-calendar-setting>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #weatherSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-weather-setting
+    (updateWeatherStatusEventEmiter)="updateWidgetFromWeatherModal($event)"
+    [category]="category"
+    [weatherSettingModal]="weatherSettingModal"
+    [activeLayout]="activeLayout"
+    [weatherWidgetObject]="weatherWidgetObject"
+  ></app-weather-setting>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #backgroundImage="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-background-image
+    (updateBackgroundImageEventEmiter)="updateBackgroundImageModal($event)"
+    [googlePhotoCredentials]="googlePhotoCredentials"
+    [category]="category"
+    [backgroundImageModal]="backgroundImageModal"
+    [activeLayout]="activeLayout"
+  ></app-background-image>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #notesSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-sticky-notes-setting
+    [category]="category"
+    [notesSettingModal]="notesSettingModal"
+    [activeLayout]="activeLayout"
+    [notesWidgetObject]="notesWidgetObject"
+  ></app-sticky-notes-setting>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #healthSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-health-setting-widget
+    [category]="category"
+    [healthSettingModal]="healthSettingModal"
+    [activeLayout]="activeLayout"
+    (updateWidgetStatusEventEmiter)="updateWidgetStatusEventEmiter()"
+  ></app-health-setting-widget>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #imageSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-image
+    [category]="category"
+    [imageSettingModal]="imageSettingModal"
+    [imageWidgetGooglePhotoCredentials]="imageWidgetGooglePhotoCredentials"
+    [imageWidgetObject]="imageWidgetObject"
+    [activeLayout]="activeLayout"
+  ></app-image>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #gifSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-gif-stickers
+    [gifSettingModal]="gifSettingModal"
+    [activeLayout]="activeLayout"
+    [gifWidgetObject]="gifWidgetObject"
+  ></app-gif-stickers>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #commonAlert="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-common-alert
+    [commonAlertModal]="commonAlertModal"
+    [type]="commonAlertType"
+    [header]="commonAlertHeader"
+    [data]="commonAlertData"
+  ></app-common-alert>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #videoSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-video-iframely
+    [videoSettingModal]="videoSettingModal"
+    [activeLayout]="activeLayout"
+    [videoWidgetObject]="videoWidgetObject"
+    [category]="category"
+  ></app-video-iframely>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #asanaSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-asana-iframely
+    [asanaSettingModal]="asanaSettingModal"
+    [activeLayout]="activeLayout"
+    [asanaWidgetObject]="asanaWidgetObject"
+    [category]="category"
+  ></app-asana-iframely>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #trelloSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-trello-iframely
+    [trelloSettingModal]="trelloSettingModal"
+    [activeLayout]="activeLayout"
+    [trelloWidgetObject]="trelloWidgetObject"
+    [category]="category"
+  ></app-trello-iframely>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #googleMapSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-google-mapiframely
+    [googleMapSettingModal]="googleMapSettingModal"
+    [activeLayout]="activeLayout"
+    [googleMapWidgetObject]="googleMapWidgetObject"
+    [category]="category"
+  ></app-google-mapiframely>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #airtableSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-airtable-iframely
+    [airtableSettingModal]="airtableSettingModal"
+    [activeLayout]="activeLayout"
+    [airTableWidgetObject]="airTableWidgetObject"
+    [category]="category"
+  ></app-airtable-iframely>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #googleDocSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-google-doc-iframely
+    [googleDocSettingModal]="googleDocSettingModal"
+    [activeLayout]="activeLayout"
+    [googleDocWidgetObject]="googleDocWidgetObject"
+    [category]="category"
+  ></app-google-doc-iframely>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #microsoftOfficeDocSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-microsoft-doc-iframely
+    [microsoftOfficeDocSettingModal]="microsoftOfficeDocSettingModal"
+    [activeLayout]="activeLayout"
+    [microsoftOfficeWidgetObject]="microsoftOfficeWidgetObject"
+    [category]="category"
+  ></app-microsoft-doc-iframely>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #embedWebsiteSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-embed-website
+    [embedWebsiteSettingModal]="embedWebsiteSettingModal"
+    [activeLayout]="activeLayout"
+    [embedWebsiteWidgetObject]="embedWebsiteWidgetObject"
+    [category]="category"
+  ></app-embed-website>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #embedHtmlSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-embed-html
+    [embedHtmlSettingModal]="embedHtmlSettingModal"
+    [activeLayout]="activeLayout"
+    [embedHtmlWidgetObject]="embedHtmlWidgetObject"
+    [category]="category"
+  ></app-embed-html>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #pdfSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-pdf-document
+    [pdfSettingModal]="pdfSettingModal"
+    [activeLayout]="activeLayout"
+    [pdfWidgetObject]="pdfWidgetObject"
+    [category]="category"
+  ></app-pdf-document>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #todoSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-todo
+    [todoSettingModal]="todoSettingModal"
+    [activeLayout]="activeLayout"
+    [todoTaskCredentials]="todoTaskCredentials"
+    [todoWidgetObject]="todoWidgetObject"
+    [category]="category"
+  ></app-todo>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #countDownSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-count-down-widget
+    [category]="category"
+    [countDownSettingModal]="countDownSettingModal"
+    [countDownWidget]="countDownWidgetObject"
+    [activeLayout]="activeLayout"
+  ></app-count-down-widget>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #choresSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-chores
+    [choresSettingModal]="choresSettingModal"
+    [activeLayout]="activeLayout"
+    [choresTaskCredentials]="choresTaskCredentials"
+    [choresWidgetObject]="choresWidgetObject"
+    [category]="category"
+  ></app-chores>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #mealSetting="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <app-meal-plan
+    (updateWidgetStatusEventEmiter)="updateWidgetFromCalendarModal($event)"
+    [category]="category"
+    [mealWidgetObject]="mealWidgetObject"
+    [mealSettingModal]="mealSettingModal"
+    [activeLayout]="activeLayout"
+  ></app-meal-plan>
+</div>

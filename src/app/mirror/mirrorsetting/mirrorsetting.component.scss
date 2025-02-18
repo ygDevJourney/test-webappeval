@@ -1,0 +1,63 @@
+.custom-modal-header {
+  text-align: center;
+  width: 100%;
+  font-weight: 600;
+  text-decoration: underline;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px;
+  letter-spacing: 0.1px;
+  color: #333333;
+}
+
+.content-box {
+  border-top: 0.5px solid #c8c7cb;
+  border-bottom: 0.5px solid #c8c7cb;
+  background: #ffffff;
+  color: #666666;
+  font-size: 15px;
+  padding: 25px 20px;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+.c-pointer {
+  cursor: pointer;
+}
+
+.factory-box {
+  border-top: 0.5px solid #c8c7cb;
+  border-bottom: 0.5px solid #c8c7cb;
+  background: #ffffff;
+  color: #666666;
+  font-size: 15px;
+  padding: 15px 20px;
+  cursor: pointer;
+}
+
+.preview {
+  background: #ffffff;
+  color: #666666;
+  font-size: 15px;
+  padding: 15px 20px;
+  cursor: pointer;
+}
+
+.coming-soon-text {
+  color: #14b268;
+  opacity: 0.5;
+}
+
+.bg-c-green {
+  background-color: #14b268;
+  padding: 1px;
+}
+
+.theme-label {
+  color: #14b268;
+  font-size: 25px;
+  margin: -7px 0px 0px 10px;
+}
