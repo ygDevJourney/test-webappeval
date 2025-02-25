@@ -155,8 +155,14 @@ export class ClockSettingComponent implements OnInit, OnChanges {
   }
 
   onbgsettingOptions(event) {
-    this.newBgSetting = event;
-    this.onAddBackgroundSetting();
+    if (event) {
+      this.newBgSetting = event;
+      this.onAddBackgroundSetting();
+    } else {
+      if (this.clockFormGroup.dirty) {
+        this.saveClockSettings(false);
+      }
+    }
   }
 
   onAddBackgroundSetting() {
@@ -166,10 +172,14 @@ export class ClockSettingComponent implements OnInit, OnChanges {
       widgetBackgroundSettingModel: this.newBgSetting,
     };
     this.commonFunction.updateWidgetSettings(this.newBgSetting, payload);
+    if (this.clockFormGroup.dirty) {
+      this.saveClockSettings(false);
+    }
     this.clockSettingModal.hide();
   }
 
   dismissModel() {
+    this.clockFormGroup.markAsPristine();
     this.clockSettingModal.hide();
   }
 
@@ -177,13 +187,14 @@ export class ClockSettingComponent implements OnInit, OnChanges {
     this.mapCurrentlySelectedTimezone(this.clockFormGroup.value.timeZoneId);
   }
 
-  saveClockSettings() {
+  saveClockSettings(isSelf: boolean = false) {
     let payload = this.clockFormGroup.value;
     payload["id"] = this.clockWidgetData.id;
     payload["widgetSetting"] = {
       id: this.clockWidgetObject.widgetSettingId,
     };
 
+  if (this.clockFormGroup.dirty) {
     this.loadingSpinner.show();
     this._clockService.updateClockSetting(payload).subscribe(
       (res: any) => {
@@ -201,11 +212,16 @@ export class ClockSettingComponent implements OnInit, OnChanges {
         this.storage.set("activeWidgetDetails", this.widgetLayoutDetails);
         this._dataService.setWidgetSettingsLayout(this.widgetLayoutDetails);
         this.clockSettingModal.hide();
+        this.clockFormGroup.markAsPristine();
       },
       (err: any) => {
         this.loadingSpinner.hide();
         this.toastr.error(err.error.message, "Error");
       }
     );
+  }
+    if (isSelf) {
+      this._dataService.setWidgetBgSetting('Save');
+    }
   }
 }

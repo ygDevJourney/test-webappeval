@@ -7,6 +7,7 @@ import {
   Output,
 } from "@angular/core";
 import { Component, OnInit } from "@angular/core";
+import { DataService } from "src/app/service/data.service";
 import {
   Fonts,
   SupportedFontSize,
@@ -19,8 +20,7 @@ import {
   styleUrls: ["./widget-bg-setting.component.scss"],
 })
 export class WidgetBgSettingComponent
-  implements OnInit, OnChanges, AfterViewInit
-{
+  implements OnInit, OnChanges, AfterViewInit {
   availableFontSize: any[] = SupportedFontSize;
   defaultFontSize: any[] = [{ name: "auto fit", value: "default" }];
   supportedCustomTitleNameModification: any[] = [
@@ -61,6 +61,9 @@ export class WidgetBgSettingComponent
     titleBackgroundColor: "#FCFCFC",
     titleAlignment: "center",
   };
+
+  previewBgSettingOptions = Object.assign({}, this.bgSettingOptions);
+
 
   @Input() widgetType: any;
 
@@ -127,7 +130,7 @@ export class WidgetBgSettingComponent
     "mealplan",
   ];
 
-  constructor() {
+  constructor(private _dataService: DataService) {
     let defaultFontFamily = {
       id: 0,
       googleFontName: "default",
@@ -154,7 +157,15 @@ export class WidgetBgSettingComponent
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._dataService.getWidgetBgSetting().subscribe(message => {
+      if (message != null) {
+        if(this.checkIfObjectsChanged()){
+          this.onBackgroundOptionEmit();
+        }
+      }
+    });
+  }
 
   toggleOptions(event: Event, type: string): void {
     if (type == "body") {
@@ -186,7 +197,6 @@ export class WidgetBgSettingComponent
     if (changes.widgetbgsetting !== undefined) {
       if (changes.widgetbgsetting.currentValue !== undefined) {
         this.bgSettingOptions = changes.widgetbgsetting.currentValue;
-
         if (this.bgSettingOptions.widgetname == undefined) {
           this.bgSettingOptions["widgetname"] = "";
         }
@@ -214,11 +224,23 @@ export class WidgetBgSettingComponent
         } else {
           this.backgroundEffect = "Blur";
         }
+
+        this.previewBgSettingOptions = Object.assign({}, this.bgSettingOptions);
       }
     }
   }
 
-  onGetBackgroundColor() {}
+  onGetBackgroundColor() { }
+
+  checkIfObjectsChanged(): boolean {
+    const currentObject = JSON.stringify(this.bgSettingOptions);
+    const previewObject = JSON.stringify(this.previewBgSettingOptions);
+    if (currentObject !== previewObject) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   onBackgroundOptionEmit() {
     if (this.selectedTitleBGColor == "default") {
@@ -251,7 +273,11 @@ export class WidgetBgSettingComponent
     if (this.widgetType.toLowerCase() === "calendar") {
       this.emitbgsettingCalenderOptions.emit(this.bgSettingOptions);
     } else if (this.widgetType.toLowerCase() === "clock") {
-      this.emitbgsettingOptions.emit(this.bgSettingOptions);
+      if(this.checkIfObjectsChanged()){
+        this.emitbgsettingOptions.emit(this.bgSettingOptions);
+      }else{
+        this.emitbgsettingOptions.emit(undefined);
+      } 
     } else if (this.widgetType.toLowerCase() === "weather") {
       this.emitbgsettingWeatherOptions.emit(this.bgSettingOptions);
     } else if (this.widgetType.toLowerCase() === "news") {
@@ -296,6 +322,7 @@ export class WidgetBgSettingComponent
     } else if (this.widgetType.toLowerCase() === "mealplan") {
       this.emitbgsettingMealPlanOptions.emit(this.bgSettingOptions);
     }
+
   }
 
   dismissModel() {

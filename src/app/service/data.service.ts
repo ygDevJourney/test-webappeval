@@ -19,8 +19,16 @@ export class DataService {
   private customTemplateList = new BehaviorSubject(null);
   private addedCalendarAccountList = new BehaviorSubject(null);
   currentsubscriptionStatus = false;
+  private widgetBgSetting = new BehaviorSubject(null);
 
   constructor(private storage: LocalStorageService) {}
+  
+  public getWidgetBgSetting(): Observable<any> {
+    return this.widgetBgSetting.asObservable();
+  }
+  public setWidgetBgSetting(updatedBgSetting: any) {
+    this.widgetBgSetting.next(updatedBgSetting);
+  }
 
   public getCustomTemplateList(): Observable<any> {
     return this.customTemplateList.asObservable();
