@@ -161,6 +161,8 @@ export class ClockSettingComponent implements OnInit, OnChanges {
     } else {
       if (this.clockFormGroup.dirty) {
         this.saveClockSettings(false);
+      } else {
+        this.clockSettingModal.hide();
       }
     }
   }
@@ -196,6 +198,7 @@ export class ClockSettingComponent implements OnInit, OnChanges {
 
   if (this.clockFormGroup.dirty) {
     this.loadingSpinner.show();
+    this.clockFormGroup.markAsPristine();
     this._clockService.updateClockSetting(payload).subscribe(
       (res: any) => {
         this.loadingSpinner.hide();
@@ -212,13 +215,16 @@ export class ClockSettingComponent implements OnInit, OnChanges {
         this.storage.set("activeWidgetDetails", this.widgetLayoutDetails);
         this._dataService.setWidgetSettingsLayout(this.widgetLayoutDetails);
         this.clockSettingModal.hide();
-        this.clockFormGroup.markAsPristine();
       },
       (err: any) => {
         this.loadingSpinner.hide();
         this.toastr.error(err.error.message, "Error");
       }
     );
+  } else {
+    if(isSelf) {
+      this.clockSettingModal.hide();
+    }
   }
     if (isSelf) {
       this._dataService.setWidgetBgSetting('Save');
